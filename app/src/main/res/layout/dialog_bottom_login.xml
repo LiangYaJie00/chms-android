@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <!-- 顶部的拖动条 -->
+    <View
+        android:id="@+id/drag_handle"
+        android:layout_width="60dp"
+        android:layout_height="4dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_drag_handle" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/login_horizontal_margin"
+            android:layout_marginTop="30dp"
+            android:text="@string/login_dialog_title"
+            style="@style/loginTitle"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/login_horizontal_margin"
+            android:layout_marginTop="10dp"
+            android:text="@string/login_dialog_subtitle"
+            style="@style/loginContent"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/login_horizontal_margin"
+            android:layout_marginTop="50dp"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/tv_email_login"
+                style="@style/loginNormalText"/>
+
+            <EditText
+                android:id="@+id/edt_dbl_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:hint="@string/edt_email_hint_login"
+                android:inputType="textEmailAddress"
+                android:padding="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/bg_edittext_normal"
+                android:paddingStart="15dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/login_horizontal_margin"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/tv_password_login"
+                style="@style/loginNormalText"/>
+
+            <EditText
+                android:id="@+id/edt_dbl_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:hint="@string/edt_password_hint_login"
+                android:inputType="textPassword"
+                android:padding="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/bg_edittext_normal"
+                android:paddingStart="15dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_dbl_forget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/login_horizontal_margin"
+            android:layout_marginTop="30dp"
+            android:text="@string/tv_forget"
+            style="@style/loginAccountStateText"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_dbl_not_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/login_horizontal_margin"
+            android:layout_marginTop="100dp"
+            android:text="@string/tv_have_not_account"
+            style="@style/loginAccountStateText"/>
+
+        <Button
+            android:id="@+id/btn_dbl_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/btn_login_login"
+            style="@style/loginBtnStyle"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

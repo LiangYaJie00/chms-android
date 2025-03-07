@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--自定义标题栏-->
+    <declare-styleable name="TitleBar">
+        <attr name="titleText" format="string" />
+    </declare-styleable>
+</resources>

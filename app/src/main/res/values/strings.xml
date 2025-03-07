@@ -1,3 +1,40 @@
 <resources>
     <string name="app_name">CHMS-Android</string>
+    <string name="hello_world">Hello World!</string>
+
+    <!--登录相关文案-->
+    <string name="login_dialog_title">登录</string>
+    <string name="login_dialog_subtitle">请登录你的账户</string>
+    <string name="tv_email_login">你的邮箱：</string>
+    <string name="edt_email_hint_login">请输入账户邮箱</string>
+    <string name="tv_password_login">你的密码：</string>
+    <string name="edt_password_hint_login">请输入账户密码</string>
+    <string name="tv_forget">忘记密码？</string>
+    <string name="tv_have_not_account">我还没有账户</string>
+    <string name="btn_login_login">登录</string>
+
+    <!--注册相关文案-->
+    <string name="register_dialog_title">注册</string>
+    <string name="register_dialog_subtitle">创建你自己的账户</string>
+    <string name="tv_email_register">邮箱：</string>
+    <string name="edt_email_hint_register">请输入账户邮箱</string>
+    <string name="tv_password_register">密码：</string>
+    <string name="edt_password_hint_register">请输入账户密码</string>
+    <string name="tv_password_confirm_register">密码确认：</string>
+    <string name="edt_password_confirm_hint_register">密码确认</string>
+    <string name="tv_code_register">验证码：</string>
+    <string name="edt_code_hint_register">验证码</string>
+    <string name="tv_send_code">发送验证码</string>
+    <string name="tv_have_account">我已经拥有了账户</string>
+    <string name="btn_login_register">注册</string>
+
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
 </resources>
