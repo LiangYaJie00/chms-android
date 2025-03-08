@@ -1,5 +1,6 @@
 package com.example.chms_android.login.dialog
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.example.chms_android.R
 import com.example.chms_android.databinding.DialogBottomLoginBinding
+import com.example.chms_android.login.activity.PwdForgetActivity
 import com.example.chms_android.login.vm.LoginActivityVM
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -49,15 +51,17 @@ class LoginBottomDialog: BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         // 忘记密码操作
         binding.tvDblForget.setOnClickListener {
-
+            val intent = Intent(requireActivity(), PwdForgetActivity::class.java)
+            requireActivity().startActivity(intent)
         }
 
         // 没有账户的操作（跳转到注册界面）
         binding.tvDblNotAccount.setOnClickListener {
-
+            dismiss()
+            val registerBottomDialog = RegisterBottomDialog()
+            registerBottomDialog.show(parentFragmentManager, "RegisterBottomDialog")
         }
 
         // 登录操作

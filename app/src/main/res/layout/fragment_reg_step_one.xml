@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".login.fragment.RegStepOneFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:divider="?android:attr/dividerHorizontal"
+        android:showDividers="middle"
+        android:dividerPadding="20dp">
+
+        <EditText
+            android:id="@+id/edt_frso_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginHorizontal="@dimen/login_horizontal_margin"
+            android:drawableLeft="@drawable/baseline_mail_24"
+            android:drawablePadding="5dp"
+            android:hint="@string/edt_email_hint_register"
+            android:inputType="textEmailAddress"
+            android:padding="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/bg_edittext_normal"
+            android:paddingStart="15dp" />
+
+        <EditText
+            android:id="@+id/edt_frso_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginHorizontal="@dimen/login_horizontal_margin"
+            android:layout_marginTop="30dp"
+            android:drawableLeft="@drawable/baseline_lock_24"
+            android:drawablePadding="5dp"
+            android:hint="@string/edt_password_hint_register"
+            android:inputType="textPassword"
+            android:padding="5dp"
+            android:background="@drawable/bg_edittext_normal"
+            android:paddingStart="15dp" />
+
+        <EditText
+            android:id="@+id/edt_frso_password_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginHorizontal="@dimen/login_horizontal_margin"
+            android:layout_marginTop="30dp"
+            android:drawableLeft="@drawable/baseline_water_lock_24"
+            android:drawablePadding="5dp"
+            android:hint="@string/edt_password_confirm_hint_register"
+            android:inputType="textPassword"
+            android:padding="5dp"
+            android:background="@drawable/bg_edittext_normal"
+            android:paddingStart="15dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/login_horizontal_margin"
+            android:layout_marginTop="30dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edt_frso_code"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:layout_marginEnd="10dp"
+                android:hint="@string/edt_code_hint_register"
+                android:inputType="textPassword"
+                android:padding="5dp"
+                android:background="@drawable/bg_edittext_normal"
+                android:paddingStart="15dp" />
+
+            <com.example.chms_android.ui.components.VerificationCodeButton
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1.5"
+                android:text="@string/tv_send_code"
+                android:textSize="@dimen/title_size_14"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:paddingHorizontal="5dp"
+                android:background="@drawable/btn_background_login" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:divider="?android:attr/dividerHorizontal"
+        android:showDividers="beginning"
+        android:dividerPadding="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_frso_have_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/login_horizontal_margin"
+            android:layout_marginTop="10dp"
+            android:text="@string/tv_have_account"
+            style="@style/loginAccountStateText" />
+
+        <Button
+            android:id="@+id/btn_frso_next_step"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/btn_login_next_step"
+            style="@style/loginBtnStyle" />
+
+    </LinearLayout>
+
+</RelativeLayout>

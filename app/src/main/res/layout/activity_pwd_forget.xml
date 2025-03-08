@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".login.activity.PwdForgetActivity">
+
+    <com.example.chms_android.ui.components.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleText="@string/forget_pwd_title" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/login_horizontal_margin"
+            android:paddingHorizontal="@dimen/login_horizontal_padding"
+            android:layout_marginTop="10dp"
+            android:text="@string/forget_pwd_content"
+            style="@style/forgetContent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/login_horizontal_margin"
+            android:layout_marginTop="50dp"
+            android:orientation="vertical"
+            android:divider="?android:attr/dividerHorizontal"
+            android:showDividers="middle"
+            android:dividerPadding="10dp"
+            tools:ignore="MissingConstraints">
+
+            <EditText
+                android:id="@+id/edt_apf_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:drawableLeft="@drawable/baseline_mail_24"
+                android:drawablePadding="5dp"
+                android:hint="@string/forget_pwd_email"
+                android:inputType="textEmailAddress"
+                android:padding="5dp"
+                android:layout_marginVertical="20dp"
+                android:background="@drawable/bg_edittext_normal"
+                android:paddingStart="15dp" />
+
+            <EditText
+                android:id="@+id/edt_apf_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:drawableLeft="@drawable/baseline_lock_24"
+                android:drawablePadding="5dp"
+                android:hint="@string/forget_pwd_new"
+                android:inputType="textPassword"
+                android:padding="5dp"
+                android:layout_marginVertical="20dp"
+                android:background="@drawable/bg_edittext_normal"
+                android:paddingStart="15dp" />
+
+            <EditText
+                android:id="@+id/edt_apf_password_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:drawableLeft="@drawable/baseline_water_lock_24"
+                android:drawablePadding="5dp"
+                android:hint="@string/forget_pwd_confirm"
+                android:inputType="textPassword"
+                android:padding="5dp"
+                android:layout_marginVertical="20dp"
+                android:background="@drawable/bg_edittext_normal"
+                android:paddingStart="15dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/edt_apf_code"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:layout_marginEnd="10dp"
+                    android:hint="@string/edt_code_hint_register"
+                    android:inputType="textPassword"
+                    android:padding="5dp"
+                    android:background="@drawable/bg_edittext_normal"
+                    android:paddingStart="15dp" />
+
+                <com.example.chms_android.ui.components.VerificationCodeButton
+                    android:id="@+id/btn_apf_send_code"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1.5"
+                    android:text="@string/tv_send_code"
+                    android:textSize="@dimen/title_size_14"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:paddingHorizontal="5dp"
+                    android:background="@drawable/btn_background_login" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_apf_reset_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/login_vertical_margin"
+            android:layout_marginHorizontal="@dimen/login_horizontal_margin"
+            android:background="@drawable/btn_background_login"
+            android:text="@string/forget_pwd_btn_reset"
+            android:letterSpacing="0.4"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+
+</LinearLayout>

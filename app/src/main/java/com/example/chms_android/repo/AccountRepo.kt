@@ -1,5 +1,6 @@
 package com.example.chms_android.repo
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
@@ -35,6 +36,7 @@ object AccountRepo {
 
                         // TODO 跳转到主页面
                         val intent = Intent(context, MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         context.startActivity(intent)
                         // 弹出登录成功的提示框
                         ToastUtil.show(context, "Login successful: Welcome ${userResponse.user.name}!", Toast.LENGTH_SHORT)
@@ -142,6 +144,9 @@ object AccountRepo {
                         if (result.code == "200") {
                             // 弹出登录成功的提示框
                             ToastUtil.show(context, "UpdatePassword successful: ${result.message}!", Toast.LENGTH_SHORT)
+                            // 回到登录界面
+                            val activity = context as Activity
+                            activity.finish()
                         } else {
                             // 弹出登录失败的提示框
                             ToastUtil.show(context, "UpdatePassword failed: ${result.message}", Toast.LENGTH_SHORT)

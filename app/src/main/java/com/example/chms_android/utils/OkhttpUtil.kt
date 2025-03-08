@@ -10,12 +10,32 @@ import org.json.JSONObject
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
+class CustomCookieJar : CookieJar {
+    // 用于存储特定路径的 Cookies
+    private var specificPathCookies: List<Cookie> = listOf()
+
+    override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
+        if (url.encodedPath == "/chms/user/auth/sendCode") {
+            // 存储从 /sendCode 接口接收到的 cookies
+            specificPathCookies = cookies
+        }
+    }
+
+    override fun loadForRequest(url: HttpUrl): List<Cookie> {
+        return when (url.encodedPath) {
+            "/chms/user/auth/updatePassword", "/chms/user/auth/register" -> specificPathCookies
+            else -> listOf()
+        }
+    }
+}
+
 object OkhttpUtil {
     private const val BASE_URL = Constants.BASE_URL
 
     // 初始化OkHttpClient
     private val client: OkHttpClient by lazy {
         OkHttpClient.Builder()
+            .cookieJar(CustomCookieJar())
             .connectTimeout(10, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .build()
@@ -91,7 +111,7 @@ object OkhttpUtil {
 
         // 根据需要添加 token 头
         if (needsToken) {
-            requestBuilder.header("Authorization", "Bearer ${TokenUtil.getToken(context)}")
+            requestBuilder.header("Authorization", "${TokenUtil.getToken(context)}")
         }
 
         val request = requestBuilder.build()

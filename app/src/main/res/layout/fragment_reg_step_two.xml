@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".login.fragment.RegStepTwoFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:divider="?android:attr/dividerHorizontal"
+        android:showDividers="middle"
+        android:dividerPadding="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/login_horizontal_margin"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center_vertical"-->
+<!--                android:text="@string/tv_email_register"-->
+<!--                style="@style/loginNormalText"/>-->
+
+            <EditText
+                android:id="@+id/edt_dbr_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:drawableLeft="@drawable/baseline_id_card_24"
+                android:drawablePadding="5dp"
+                android:hint="@string/tv_register_name"
+                android:inputType="textEmailAddress"
+                android:padding="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/bg_edittext_normal"
+                android:paddingStart="15dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/login_horizontal_margin"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center_vertical"-->
+<!--                android:text="@string/tv_password_register"-->
+<!--                style="@style/loginNormalText"/>-->
+
+            <EditText
+                android:id="@+id/edt_dbr_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:drawableLeft="@drawable/baseline_smartphone_24"
+                android:drawablePadding="5dp"
+                android:hint="@string/tv_register_phone"
+                android:inputType="textPassword"
+                android:padding="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/bg_edittext_normal"
+                android:paddingStart="15dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/login_horizontal_margin"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_register_role"
+                android:textSize="@dimen/title_size_16"
+                android:textColor="@color/black"
+                android:textAlignment="center"
+                android:letterSpacing="0.2"/>
+
+<!--            <EditText-->
+<!--                android:id="@+id/edt_dbr_password_confirm"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center_vertical"-->
+<!--                android:drawableLeft="@drawable/baseline_water_lock_24"-->
+<!--                android:drawablePadding="5dp"-->
+<!--                android:hint="@string/edt_password_confirm_hint_register"-->
+<!--                android:inputType="textPassword"-->
+<!--                android:padding="5dp"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:background="@drawable/bg_edittext_normal"-->
+<!--                android:paddingStart="15dp" />-->
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:paddingStart="15dp"
+                android:spinnerMode="dropdown" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:divider="?android:attr/dividerHorizontal"
+        android:showDividers="beginning"
+        android:dividerPadding="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_dbr_have_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/login_horizontal_margin"
+            android:layout_marginTop="10dp"
+            android:text="@string/btn_register_previous_step"
+            style="@style/loginAccountStateText" />
+
+        <Button
+            android:id="@+id/btn_dbr_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/btn_login_register"
+            style="@style/loginBtnStyle" />
+
+    </LinearLayout>
+
+</RelativeLayout>

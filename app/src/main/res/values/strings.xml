@@ -16,17 +16,33 @@
     <!--注册相关文案-->
     <string name="register_dialog_title">注册</string>
     <string name="register_dialog_subtitle">创建你自己的账户</string>
-    <string name="tv_email_register">邮箱：</string>
-    <string name="edt_email_hint_register">请输入账户邮箱</string>
-    <string name="tv_password_register">密码：</string>
-    <string name="edt_password_hint_register">请输入账户密码</string>
-    <string name="tv_password_confirm_register">密码确认：</string>
+    <string name="tv_email_register">邮箱*：</string>
+    <string name="edt_email_hint_register">账户邮箱</string>
+    <string name="tv_password_register">密码*：</string>
+    <string name="edt_password_hint_register">账户密码</string>
+    <string name="tv_password_confirm_register">密码确认*：</string>
     <string name="edt_password_confirm_hint_register">密码确认</string>
-    <string name="tv_code_register">验证码：</string>
+    <string name="tv_have_account">我已经拥有了账户</string>
+    <string name="btn_login_next_step">下一步</string>
+
+    <string name="tv_register_name">用户名称(选填)</string>
+    <string name="tv_register_phone">手机号(选填)</string>
+    <string name="tv_register_role">请选择你的角色*</string>
+    <string name="btn_register_previous_step">上一步</string>
+    <string name="btn_login_register">注册</string>
+
+    <!--忘记密码相关的文案-->
+    <string name="forget_pwd_title">忘记密码</string>
+    <string name="forget_pwd_content">我们将通过给您发送验证码来重置密码。</string>
+    <string name="forget_pwd_email">请输入账户邮箱</string>
+    <string name="forget_pwd_new">请输入新的密码</string>
+    <string name="forget_pwd_confirm">请确认密码</string>
+    <string name="forget_pwd_btn_reset">重置密码</string>
+
+    <!--验证码相关文案-->
+    <string name="tv_code_register">验证码*：</string>
     <string name="edt_code_hint_register">验证码</string>
     <string name="tv_send_code">发送验证码</string>
-    <string name="tv_have_account">我已经拥有了账户</string>
-    <string name="btn_login_register">注册</string>
 
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
@@ -37,4 +53,5 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
