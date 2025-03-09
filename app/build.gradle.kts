@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -69,5 +71,10 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     // https://mvnrepository.com/artifact/com.google.code.gson/gson
     implementation("com.google.code.gson:gson:2.10.1")
-
+    // https://mvnrepository.com/artifact/androidx.room/room-runtime
+    implementation("androidx.room:room-runtime:2.5.2")
+    // https://mvnrepository.com/artifact/androidx.room/room-compiler
+    kapt("androidx.room:room-compiler:2.5.2")
+    // https://mvnrepository.com/artifact/androidx.room/room-ktx
+    implementation("androidx.room:room-ktx:2.5.2")
 }

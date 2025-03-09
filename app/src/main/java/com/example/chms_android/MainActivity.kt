@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.chms_android.database.DatabaseProvider
 import com.example.chms_android.databinding.ActivityMainBinding
 import com.example.chms_android.login.activity.LoginActivity
 
@@ -19,6 +20,9 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // 数据库初始化操作
+        DatabaseProvider.initDatabase(this)
 
         // 初始化 View Binding
         binding = ActivityMainBinding.inflate(layoutInflater)

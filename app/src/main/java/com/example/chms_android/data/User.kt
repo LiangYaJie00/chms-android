@@ -1,9 +1,12 @@
-import androidx.annotation.Keep
-import com.example.chms_android.data.Role
-import java.io.Serializable
+package com.example.chms_android.data
+
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.time.LocalDateTime
 
+@Entity(tableName = "user")
 data class User(
+    @PrimaryKey(autoGenerate = true)
     val userId: Int? = null,
     val name: String,
     val email: String,
@@ -16,6 +19,4 @@ data class User(
     val weight: Int,
     val isVerified: Boolean,
     val loginTime: LocalDateTime? = null
-) : Serializable {
-
-}
+)
