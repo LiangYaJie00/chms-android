@@ -7,6 +7,11 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import com.example.chms_android.R
 
+// 定义接口
+interface OnVerificationButtonClickListener {
+    fun shouldStartCountDown(view: VerificationCodeButton): Boolean
+}
+
 class VerificationCodeButton @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : AppCompatButton(context, attrs, defStyleAttr) {
@@ -16,8 +21,21 @@ class VerificationCodeButton @JvmOverloads constructor(
     private val totalMillis: Long = 60000 // 60秒
     private val countDownInterval: Long = 1000 // 每秒更新一次
 
+    // 外部设置的点击监听接口
+    private var externalClickListener: OnVerificationButtonClickListener? = null
+
     init {
         text = defaultText
+
+        // 使用内部的点击事件逻辑
+        super.setOnClickListener { view ->
+            // 检查外部监听器是否允许开始倒计时
+            val startCountDown = externalClickListener?.shouldStartCountDown(this) ?: true
+            if (startCountDown) {
+                startCountDown()
+            }
+        }
+
 
         // 显式设置文本居中
         textAlignment = TEXT_ALIGNMENT_CENTER
@@ -27,7 +45,6 @@ class VerificationCodeButton @JvmOverloads constructor(
         val colorStateList = ContextCompat.getColorStateList(context, R.color.bg_btn_code_send)
         ViewCompat.setBackgroundTintList(this, colorStateList)
 
-        setOnClickListener { startCountDown() }
     }
 
     private fun startCountDown() {
@@ -46,6 +63,11 @@ class VerificationCodeButton @JvmOverloads constructor(
                 text = defaultText
             }
         }.start()
+    }
+
+    // 提供一个方法供外部调用以设置监听器
+    fun setOnVerificationButtonClickListener(listener: OnVerificationButtonClickListener) {
+        externalClickListener = listener
     }
 
     override fun onDetachedFromWindow() {

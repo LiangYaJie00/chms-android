@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.chms_android.R
 import com.example.chms_android.databinding.ActivityPwdForgetBinding
 import com.example.chms_android.login.vm.PwdForgetActivityVM
+import com.example.chms_android.ui.components.OnVerificationButtonClickListener
+import com.example.chms_android.ui.components.VerificationCodeButton
 
 class PwdForgetActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPwdForgetBinding
@@ -31,10 +33,12 @@ class PwdForgetActivity : AppCompatActivity() {
     }
 
     private fun setListener() {
-        binding.btnApfSendCode.setOnClickListener {
-            val email = binding.edtApfEmail.text.toString()
-            viewModel.getCode(email, this)
-        }
+        binding.btnApfSendCode.setOnVerificationButtonClickListener(object : OnVerificationButtonClickListener {
+            override fun shouldStartCountDown(view: VerificationCodeButton): Boolean {
+                val email = binding.edtApfEmail.text.toString()
+                return viewModel.getCode(email, this@PwdForgetActivity)
+            }
+        })
 
         binding.btnApfResetPwd.setOnClickListener {
             val email = binding.edtApfEmail.text.toString()

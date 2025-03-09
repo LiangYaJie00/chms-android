@@ -11,7 +11,7 @@
         android:layout_marginTop="20dp"
         android:orientation="vertical"
         android:divider="?android:attr/dividerHorizontal"
-        android:showDividers="middle"
+        android:showDividers="end"
         android:dividerPadding="20dp">
 
         <EditText
@@ -64,6 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/login_horizontal_margin"
             android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -80,6 +81,7 @@
                 android:paddingStart="15dp" />
 
             <com.example.chms_android.ui.components.VerificationCodeButton
+                android:id="@+id/btn_frso_send_code"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1.5"

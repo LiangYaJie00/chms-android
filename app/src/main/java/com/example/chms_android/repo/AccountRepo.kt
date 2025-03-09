@@ -77,6 +77,7 @@ object AccountRepo {
 
                         // TODO 跳转到主页面
                         val intent = Intent(context, MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         context.startActivity(intent)
                         // 弹出登录成功的提示框
                         ToastUtil.show(context, "Register successful: Welcome ${userResponse.user.name}!", Toast.LENGTH_SHORT)

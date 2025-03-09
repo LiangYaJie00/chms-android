@@ -11,6 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.chms_android.databinding.FragmentRegStepOneBinding
 import com.example.chms_android.login.dialog.LoginBottomDialog
 import com.example.chms_android.login.vm.RegisterDialogVM
+import com.example.chms_android.ui.components.OnVerificationButtonClickListener
+import com.example.chms_android.ui.components.VerificationCodeButton
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 /**
@@ -44,6 +46,13 @@ class RegStepOneFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.btnFrsoSendCode.setOnVerificationButtonClickListener(object : OnVerificationButtonClickListener {
+            override fun shouldStartCountDown(view: VerificationCodeButton): Boolean {
+                val email = binding.edtFrsoEmail.text.toString()
+                return viewModel.getCode(email, requireActivity())
+            }
+        })
+
         binding.tvFrsoHaveAccount.setOnClickListener {
             closeDialog()
             val loginBottomDialog = LoginBottomDialog()
@@ -51,8 +60,12 @@ class RegStepOneFragment : Fragment() {
         }
 
         binding.btnFrsoNextStep.setOnClickListener {
+            val email = binding.edtFrsoEmail.text.toString()
+            val pwd = binding.edtFrsoPassword.text.toString()
+            val pwdConfirm = binding.edtFrsoPasswordConfirm.text.toString()
+            val code = binding.edtFrsoCode.text.toString()
             // 跳转到下一步页面
-            viewModel.goToNextPage()
+            viewModel.goToNextPage(email, pwd, pwdConfirm, code, requireActivity())
         }
     }
 

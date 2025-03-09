@@ -23,11 +23,12 @@ class PwdForgetActivityVM: ViewModel() {
         }
     }
 
-    fun getCode(email: String, context: Context) {
+    fun getCode(email: String, context: Context): Boolean {
         if (email.isNullOrEmpty()) {
             ToastUtil.show(context, "邮箱不能为空")
-            return
+            return false
         }
         AccountRepo.sendCode(email, context)
+        return true
     }
 }
