@@ -44,6 +44,12 @@
     <string name="edt_code_hint_register">验证码</string>
     <string name="tv_send_code">发送验证码</string>
 
+    <!--导航文案-->
+    <string name="title_home">首页</string>
+    <string name="title_report">报告</string>
+    <string name="title_knowledge">知识</string>
+    <string name="title_mine">我的</string>
+
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>

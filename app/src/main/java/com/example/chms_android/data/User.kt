@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 
 @Entity(tableName = "user")
 data class User(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = false)
     val userId: Int? = null,
     val name: String,
     val email: String,

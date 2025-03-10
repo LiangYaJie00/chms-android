@@ -3,5 +3,10 @@
     <!--自定义标题栏-->
     <declare-styleable name="TitleBar">
         <attr name="titleText" format="string" />
+        <attr name="titleTextColor" format="color" />
+        <attr name="showBackArrow" format="boolean" />
+        <attr name="backArrowIcon" format="reference" />
+        <attr name="titleBarBackground" format="color" />
+        <attr name="mode" format="integer" /> <!--0表示白色背景标题栏，1表示蓝色背景标题栏-->
     </declare-styleable>
 </resources>

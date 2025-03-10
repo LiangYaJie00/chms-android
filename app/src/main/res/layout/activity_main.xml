@@ -1,44 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <com.example.chms_android.ui.components.TitleBar
+<!--    <com.example.chms_android.ui.components.TitleBar-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:titleText="@string/app_name" />-->
+
+<!--    <View-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_weight="1" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/tv_main"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/hello_world"-->
+<!--        android:textSize="@dimen/title_size_18" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/btn_main_toLogin"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginHorizontal="40dp"-->
+<!--        android:text="跳转到登录界面" />-->
+
+<!--    <View-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_weight="1" />-->
+
+<!--    <Button-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginHorizontal="40dp"-->
+<!--        android:text="Test" />-->
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_main_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:titleText="@string/app_name" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="?android:attr/windowBackground"
+        app:itemIconTint="@color/nav_bottom_bar_colors"
+        app:itemTextColor="@color/nav_bottom_bar_colors"
+        app:menu="@menu/bottom_nav_menu" />
 
-    <View
+    <fragment
+        android:id="@+id/fragment_main"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@id/nav_main_view"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/main_navigation" />
 
-    <TextView
-        android:id="@+id/tv_main"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world"
-        android:textSize="@dimen/title_size_18" />
-
-    <Button
-        android:id="@+id/btn_main_toLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="40dp"
-        android:text="跳转到登录界面" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="40dp"
-        android:text="Test" />
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

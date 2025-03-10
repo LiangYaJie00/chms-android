@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_titleBar"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -19,10 +20,10 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:text="标题"
+        android:letterSpacing="0.3"
         android:textSize="@dimen/title_size_18"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:textAlignment="center"/>
-
 
 </LinearLayout>

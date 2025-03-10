@@ -44,8 +44,12 @@ object AccountRepo {
                         // 保存用户信息到本地数据库，并在成功后执行后续操作
                         GlobalScope.launch(Dispatchers.IO) { // 使用 IO 线程
                             try {
-                                userDao.insertUser(userResponse.user)
-
+                                val user = userDao.getUserByEmail(userResponse.user.email)
+                                if (user != null) {
+                                    userDao.updateUser(userResponse.user)
+                                } else {
+                                    userDao.insertUser(userResponse.user)
+                                }
                                 // 使用主线程进行 UI 操作
                                 withContext(Dispatchers.Main) {
                                     // TODO 跳转到主页面
@@ -60,7 +64,7 @@ object AccountRepo {
                                 e.printStackTrace()
                                 withContext(Dispatchers.Main) {
                                     // 显示错误信息
-                                    ToastUtil.show(context, "Failed to save user: ${e.message}", Toast.LENGTH_SHORT)
+                                    ToastUtil.show(context, "Failed to save/update user: ${e.message}", Toast.LENGTH_SHORT)
                                 }
                             }
                         }

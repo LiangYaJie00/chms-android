@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".features.knowledge.KnowledgeFragment">
+
+    <com.example.chms_android.ui.components.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleText="健康知识"
+        app:mode="1"
+        app:showBackArrow="false" />
+
+    <WebView
+        android:id="@+id/wv_fk"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none" />
+
+</LinearLayout>

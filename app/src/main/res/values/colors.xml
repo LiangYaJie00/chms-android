@@ -22,4 +22,6 @@
     <color name="green">#19A54A</color>
     <color name="light_green">#E9FCEF</color>
 
+    <color name="actionbar_color">#0f7ef6</color>
+
 </resources>

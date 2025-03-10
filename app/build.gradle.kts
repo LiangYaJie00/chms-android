@@ -59,6 +59,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.activity)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -77,4 +79,8 @@ dependencies {
     kapt("androidx.room:room-compiler:2.5.2")
     // https://mvnrepository.com/artifact/androidx.room/room-ktx
     implementation("androidx.room:room-ktx:2.5.2")
+//    implementation("androidx.navigation:navigation-fragment:2.2.2")
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.5.0")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.5.0")
+
 }
