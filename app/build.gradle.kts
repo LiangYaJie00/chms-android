@@ -79,8 +79,12 @@ dependencies {
     kapt("androidx.room:room-compiler:2.5.2")
     // https://mvnrepository.com/artifact/androidx.room/room-ktx
     implementation("androidx.room:room-ktx:2.5.2")
-//    implementation("androidx.navigation:navigation-fragment:2.2.2")
+    // implementation("androidx.navigation:navigation-fragment:2.2.2")
     implementation ("androidx.navigation:navigation-fragment-ktx:2.5.0")
     implementation ("androidx.navigation:navigation-ui-ktx:2.5.0")
+
+    implementation("com.nambimobile.widgets:expandable-fab:1.0.2")
+    // https://mvnrepository.com/artifact/com.github.bumptech.glide/glide
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 
 }

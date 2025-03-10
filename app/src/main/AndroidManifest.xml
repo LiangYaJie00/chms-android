@@ -17,11 +17,14 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".features.home.activity.DeviceManagerActivity"
+            android:exported="false" />
+        <activity
             android:name=".login.activity.PwdForgetActivity"
             android:exported="false" />
         <activity
             android:name=".login.activity.LoginActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,7 +35,7 @@
             android:name=".MainActivity"
             android:exported="false"
             android:label="@string/app_name"
-            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"/>
+            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
     </application>
 
 </manifest>

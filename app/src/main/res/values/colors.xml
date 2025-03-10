@@ -24,4 +24,8 @@
 
     <color name="actionbar_color">#0f7ef6</color>
 
+    <color name="background">#fff2f3f5</color>
+
+    <color name="Indigo">#2b97ff</color>
+
 </resources>
