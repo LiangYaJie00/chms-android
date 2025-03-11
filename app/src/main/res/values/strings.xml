@@ -63,6 +63,10 @@
     <string name="watch">手表/环</string>
     <string name="bloodGlucoseMeter">血糖仪</string>
 
+    <!--统计/报告相关文案-->
+    <string name="daily">日报</string>
+
+
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
