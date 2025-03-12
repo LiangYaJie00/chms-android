@@ -3,7 +3,7 @@
     <!-- 状态为按下时的颜色 -->
     <item android:state_pressed="true" android:color="@color/grey1" />
     <!-- 状态为不可点击时的颜色 -->
-    <item android:state_enabled="false" android:color="@color/grey2" />
+    <item android:state_enabled="false" android:color="@color/grey3" />
     <!-- 默认状态的颜色 -->
     <item android:color="@color/black" />
 </selector>

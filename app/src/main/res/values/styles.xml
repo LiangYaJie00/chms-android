@@ -8,7 +8,7 @@
     </style>
     <style name="loginContent">
         <item name="android:textSize">@dimen/title_size_16</item>
-        <item name="android:textColor">@color/grey2</item>
+        <item name="android:textColor">@color/grey3</item>
         <item name="android:textStyle">normal</item>
         <item name="android:letterSpacing">0.2</item>
     </style>

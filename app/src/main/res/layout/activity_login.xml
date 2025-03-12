@@ -8,6 +8,12 @@
     android:orientation="vertical"
     tools:context=".login.activity.LoginActivity">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@mipmap/bg_login"
+        android:scaleType="centerCrop" />
+
     <Button
         android:id="@+id/btn_login"
         android:layout_width="0dp"

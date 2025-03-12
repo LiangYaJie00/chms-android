@@ -15,6 +15,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.chms_android.databinding.ActivityMainBinding
+import com.example.chms_android.repo.DoctorRepo
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -25,6 +26,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         // 初始化 View Binding
         binding = ActivityMainBinding.inflate(layoutInflater)
+
+        DoctorRepo.getAllNetDoctors(this)
 
 //        // 设置窗口标志，扩展内容到状态栏和导航栏
 //        window.decorView.systemUiVisibility = (

@@ -17,6 +17,7 @@ data class User(
     val gender: Int,
     val height: Int,
     val weight: Int,
+    val community: String,
     val isVerified: Boolean,
     val loginTime: LocalDateTime? = null
 )

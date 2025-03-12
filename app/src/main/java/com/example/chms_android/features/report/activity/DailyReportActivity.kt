@@ -38,7 +38,6 @@ class DailyReportActivity : AppCompatActivity() {
         val adapter = ReportAdapter(this, chartDataList)
         binding.recyclerViewDailyReport.adapter = adapter
         binding.recyclerViewDailyReport.setHasFixedSize(true)
-
     }
 
     // 初始化数据，尚未完成对具有两种数据的图表合并

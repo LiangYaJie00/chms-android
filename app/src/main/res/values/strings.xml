@@ -66,6 +66,13 @@
     <!--统计/报告相关文案-->
     <string name="daily">日报</string>
 
+    <!--医生模块相关文案-->
+    <string name="doctor_describe">医生编号为12345，姓名为张三。他是一名男性，出生于1980年01月01日。
+张医生的联系电话是123-456-7890，电子邮箱为zhangsan@example.com。
+他专攻于内科，在和谐社区工作，地址是和平路123号。
+该医生的信息创建于2020年05月01日，最近一次更新是2021年06月01日。</string>
+
+
 
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>

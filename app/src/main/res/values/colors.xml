@@ -8,8 +8,9 @@
     <color name="black">#FF000000</color>
 
     <color name="grey1">#292929</color>
-    <color name="grey2">#888888</color>
-    <color name="grey3">#EDEDED</color>
+    <color name="grey2">#28332F</color>
+    <color name="grey3">#888888</color>
+    <color name="grey4">#EDEDED</color>
 
     <color name="white">#FFFFFFFF</color>
 
@@ -27,5 +28,10 @@
     <color name="background">#fff2f3f5</color>
 
     <color name="Indigo">#2b97ff</color>
+
+    <color name="green01">#27C3B0</color>
+    <color name="text_color">#28332F</color>
+
+    <color name="login_status_bar">#F4EBEB</color>
 
 </resources>
