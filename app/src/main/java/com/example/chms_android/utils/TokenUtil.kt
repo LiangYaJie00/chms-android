@@ -24,4 +24,11 @@ object TokenUtil {
         Log.i("TokenUtil", "getToken: $token")
         return "CHMS $token"
     }
+
+    fun haveToken(context: Context): Boolean {
+        val token = getSharedPreferences(context).getString(KEY_TOKEN, null)
+        val hasToken = token != null
+        Log.i("TokenUtil", "haveToken: $hasToken")
+        return hasToken
+    }
 }

@@ -8,6 +8,7 @@ import com.example.chms_android.api.UserApi
 import com.example.chms_android.dao.UserDao
 import com.example.chms_android.data.User
 import com.example.chms_android.database.DatabaseProvider
+import com.example.chms_android.utils.AccountUtil
 import com.example.chms_android.utils.OkhttpUtil
 import com.example.chms_android.utils.ToastUtil
 import com.example.chms_android.vo.RespResult
@@ -18,6 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.greenrobot.eventbus.EventBus
 import java.io.IOException
 
 object UserRepo {
@@ -38,11 +40,12 @@ object UserRepo {
                         GlobalScope.launch(Dispatchers.IO) { // 使用 IO 线程
                             try {
                                 userDao.updateUser(user)
-
+                                AccountUtil(context).saveUser(user)
+                                EventBus.getDefault().post(user)
                                 // 使用主线程进行 UI 操作
                                 withContext(Dispatchers.Main) {
                                     // 弹出登录成功的提示框
-                                    ToastUtil.show(context, "UpdateUser successful: 更新成功!", Toast.LENGTH_SHORT)
+//                                    ToastUtil.show(context, "UpdateUser successful: 更新成功!", Toast.LENGTH_SHORT)
                                 }
                             } catch (e: Exception) {
                                 e.printStackTrace()

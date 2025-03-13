@@ -14,24 +14,29 @@ import com.example.chms_android.R
 import com.example.chms_android.data.Doctor
 import com.example.chms_android.data.User
 import com.example.chms_android.databinding.FragmentHomeBinding
+import com.example.chms_android.features.home.activity.CommunityActivity
 import com.example.chms_android.features.home.activity.DeviceManagerActivity
 import com.example.chms_android.features.home.activity.DoctorsActivity
 import com.example.chms_android.features.home.adapter.DoctorShowsAdapter
 import com.example.chms_android.features.home.vm.HomeFragmentVM
 import com.example.chms_android.repo.DoctorRepo
+import com.example.chms_android.utils.AccountUtil
 import com.example.chms_android.utils.ToastUtil
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: HomeFragmentVM
 
-    private var doctorList: List<Doctor> = ArrayList()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
         }
+
+        EventBus.getDefault().register(this)
     }
 
     override fun onCreateView(
@@ -41,6 +46,8 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this).get(HomeFragmentVM::class.java)
 
+        initView()
+
         setListener()
 
         initDoctorRecyclerView()
@@ -48,7 +55,30 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(user: User) {
+        // Handle the event
+        initView()
+    }
+
+    private fun initView() {
+        val user = AccountUtil(requireContext()).getUser()
+        binding.tvFhUserName.text = user?.name
+        if (user?.community == null) {
+            binding.tvFhWelcome.text = "欢迎，"
+            binding.tvFhCommunity.text = "请选择你的社区"
+        } else {
+            binding.tvFhWelcome.text = "欢迎来到" + user.community + ","
+            binding.tvFhCommunity.text = user?.community
+        }
+    }
+
     private fun setListener() {
+        binding.cdFhCommunityChose.setOnClickListener {
+            val intent = Intent(context, CommunityActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.cdManageDevices.setOnClickListener {
             val intent = Intent(context, DeviceManagerActivity::class.java)
             startActivity(intent)
@@ -79,6 +109,11 @@ class HomeFragment : Fragment() {
                 ToastUtil.show(requireContext(), "Error fetching doctors: ${error.message}", Toast.LENGTH_SHORT)
             }
         )
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.getDefault().unregister(this)
     }
 
     companion object {

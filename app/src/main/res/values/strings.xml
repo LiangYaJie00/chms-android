@@ -73,7 +73,6 @@
 该医生的信息创建于2020年05月01日，最近一次更新是2021年06月01日。</string>
 
 
-
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>

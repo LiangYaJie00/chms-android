@@ -15,6 +15,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.chms_android.databinding.ActivityMainBinding
+import com.example.chms_android.repo.CommunityRepo
 import com.example.chms_android.repo.DoctorRepo
 
 class MainActivity : AppCompatActivity() {
@@ -26,8 +27,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         // 初始化 View Binding
         binding = ActivityMainBinding.inflate(layoutInflater)
-
-        DoctorRepo.getAllNetDoctors(this)
 
 //        // 设置窗口标志，扩展内容到状态栏和导航栏
 //        window.decorView.systemUiVisibility = (
@@ -45,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 
         sp = getPreferences(Context.MODE_PRIVATE)
         val tvMain = sp.getString("tv_main", "Hello World!") ?: "Hello World!"
-        mainActivityVM = ViewModelProvider(this, MainActivityVMFactory(tvMain)).get(MainActivityVM::class.java)
+        mainActivityVM = ViewModelProvider(this, MainActivityVMFactory(tvMain, this)).get(MainActivityVM::class.java)
         Log.d("MainActivity", "activity onCreate")
 
         initListeners()

@@ -8,6 +8,7 @@ import com.example.chms_android.MainActivity
 import com.example.chms_android.api.AccountApi
 import com.example.chms_android.dao.UserDao
 import com.example.chms_android.database.DatabaseProvider
+import com.example.chms_android.utils.AccountUtil
 import com.example.chms_android.utils.OkhttpUtil
 import com.example.chms_android.utils.ToastUtil
 import com.example.chms_android.utils.TokenUtil
@@ -40,6 +41,8 @@ object AccountRepo {
                         val userResponse = result.data
                         // 保存token
                         TokenUtil.saveToken(userResponse.token, context)
+                        userResponse.user.userId?.let { AccountUtil(context).saveUserId(it.toLong()) }
+                        AccountUtil(context).saveUser(userResponse.user)
 
                         // 保存用户信息到本地数据库，并在成功后执行后续操作
                         GlobalScope.launch(Dispatchers.IO) { // 使用 IO 线程
@@ -101,6 +104,8 @@ object AccountRepo {
                         val userResponse = result.data
                         // 保存token
                         TokenUtil.saveToken(userResponse.token, context)
+                        userResponse.user.userId?.let { AccountUtil(context).saveUserId(it.toLong()) }
+                        AccountUtil(context).saveUser(userResponse.user)
 
                         // 保存用户信息到本地数据库，并在成功后执行后续操作
                         GlobalScope.launch(Dispatchers.IO) { // 使用 IO 线程
