@@ -33,11 +33,17 @@ class DailyReportActivity : AppCompatActivity() {
 
         initListData()
 
+        val status: Int? = intent.getIntExtra("status", 0)
+
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerViewDailyReport.layoutManager = layoutManager
-        val adapter = ReportAdapter(this, chartDataList)
+        val adapter = status?.let { ReportAdapter(this, chartDataList, it) }
         binding.recyclerViewDailyReport.adapter = adapter
         binding.recyclerViewDailyReport.setHasFixedSize(true)
+
+        if (status == 1) {
+            binding.titleBarAdr.setTitleText("月报")
+        }
     }
 
     // 初始化数据，尚未完成对具有两种数据的图表合并

@@ -18,13 +18,15 @@ import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.thread
 
 
 class ReportAdapter(
     val context: Context,
-    private var lineDataList: ArrayList<CustomLineData>
+    private var lineDataList: ArrayList<CustomLineData>,
+    private val status: Int
 ) : RecyclerView.Adapter<ReportAdapter.ViewHolder>() {
 
 
@@ -119,8 +121,25 @@ class ReportAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        // 设置当前时间
-        holder.selectDate.text = lineDataList[position].date
+
+        // 假设lineDataList[position].date 返回的是一个字符串类型的日期
+        val originalDateString = lineDataList[position].date
+
+        // 定义输入格式和输出格式
+        val inputFormat = SimpleDateFormat("yyyy-M-d", Locale.getDefault()) // 输入格式: 2025-3-13
+        val outputFormat = SimpleDateFormat("yyyy-M", Locale.getDefault())  // 输出格式: 2025-3
+
+        // 将字符串解析为Date对象
+        val date = inputFormat.parse(originalDateString)
+
+        // 使用输出格式将Date对象格式化为字符串
+        val formattedDate = outputFormat.format(date)
+        if (status == 1) {
+            holder.selectDate.text = formattedDate
+        } else {
+            // 设置当前时间
+            holder.selectDate.text = lineDataList[position].date
+        }
         oldDate = lineDataList[position].date
 
         // 记录下每一向的“当前”时间
@@ -165,8 +184,13 @@ class ReportAdapter(
         // 不显示与 x 垂直的网格线
         x.setDrawGridLines(false)
         x.xOffset = 1F
-        x.axisMinimum = 0F
-        x.axisMaximum = 24F
+        if (status == 1) {
+            x.axisMinimum = 0F
+            x.axisMaximum = 30F
+        } else {
+            x.axisMinimum = 0F
+            x.axisMaximum = 24F
+        }
         x.setAvoidFirstLastClipping(true)
 
         chart.description.text = ""

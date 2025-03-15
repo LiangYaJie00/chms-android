@@ -26,7 +26,16 @@ class ReportFragment : Fragment() {
         _binding = FragmentReportBinding.inflate(inflater, container, false)
 
         binding.cvDailyReport.setOnClickListener {
-            val intent = Intent(context, DailyReportActivity::class.java)
+            val intent = Intent(context, DailyReportActivity::class.java).apply {
+                putExtra("status", 0)
+            }
+            startActivity(intent)
+        }
+
+        binding.cvMonthReport.setOnClickListener {
+            val intent = Intent(context, DailyReportActivity::class.java).apply {
+                putExtra("status", 1)
+            }
             startActivity(intent)
         }
 

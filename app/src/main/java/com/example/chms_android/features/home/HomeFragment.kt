@@ -17,6 +17,7 @@ import com.example.chms_android.databinding.FragmentHomeBinding
 import com.example.chms_android.features.home.activity.CommunityActivity
 import com.example.chms_android.features.home.activity.DeviceManagerActivity
 import com.example.chms_android.features.home.activity.DoctorsActivity
+import com.example.chms_android.features.home.activity.HealthInfoSubmitActivity
 import com.example.chms_android.features.home.adapter.DoctorShowsAdapter
 import com.example.chms_android.features.home.vm.HomeFragmentVM
 import com.example.chms_android.repo.DoctorRepo
@@ -86,6 +87,11 @@ class HomeFragment : Fragment() {
 
         binding.tvFhShowAll.setOnClickListener {
             val intent = Intent(context, DoctorsActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.cdFhHealthInfo.setOnClickListener {
+            val intent = Intent(context, HealthInfoSubmitActivity::class.java)
             startActivity(intent)
         }
     }

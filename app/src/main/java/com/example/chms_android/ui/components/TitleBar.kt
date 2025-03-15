@@ -71,4 +71,8 @@ class TitleBar(context: Context, attrs: AttributeSet): LinearLayout(context, att
 
     }
 
+    fun setTitleText(text: String) {
+        binding.tvTitleBarTitle.text = text
+    }
+
 }

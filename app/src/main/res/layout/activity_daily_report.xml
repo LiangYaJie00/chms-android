@@ -9,6 +9,7 @@
     tools:context=".features.report.activity.DailyReportActivity">
 
     <com.example.chms_android.ui.components.TitleBar
+        android:id="@+id/titleBar_adr"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:titleText="@string/daily"

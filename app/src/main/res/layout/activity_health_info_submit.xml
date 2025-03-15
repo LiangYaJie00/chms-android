@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".features.home.activity.HealthInfoSubmitActivity">
+
+    <com.example.chms_android.ui.components.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleText="健康信息上报"
+        app:mode="1" />
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- 体重 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="体重 (公斤)" />
+
+            <EditText
+                android:id="@+id/editTextWeight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入体重"
+                android:inputType="numberDecimal" />
+
+            <!-- 身高 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="身高 (厘米)" />
+
+            <EditText
+                android:id="@+id/editTextHeight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入身高"
+                android:inputType="numberDecimal" />
+
+            <!-- 收缩压 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="收缩压" />
+
+            <EditText
+                android:id="@+id/editTextBloodPressureSystolic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入收缩压"
+                android:inputType="number" />
+
+            <!-- 舒张压 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="舒张压" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入舒张压"
+                android:inputType="number" />
+
+            <!-- 血糖 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="血糖" />
+
+            <EditText
+                android:id="@+id/editTextHealthId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入血糖"
+                android:inputType="number" />
+
+            <!-- 心率 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="心率" />
+
+            <EditText
+                android:id="@+id/editTextUserId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入心率"
+                android:inputType="number" />
+
+            <!-- 体温 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="体温" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入体温"
+                android:inputType="number" />
+
+            <!-- 提交按钮 -->
+            <Button
+                android:id="@+id/btn_ahis_submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/activity_vertical_margin"
+                android:background="@color/actionbar_color"
+                android:text="提交"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
