@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +17,7 @@ import com.example.chms_android.data.Doctor
 import com.example.chms_android.data.User
 import com.example.chms_android.databinding.FragmentHomeBinding
 import com.example.chms_android.features.home.activity.CommunityActivity
+import com.example.chms_android.features.home.activity.DailyHealthReportActivity
 import com.example.chms_android.features.home.activity.DeviceManagerActivity
 import com.example.chms_android.features.home.activity.DoctorsActivity
 import com.example.chms_android.features.home.activity.HealthInfoSubmitActivity
@@ -91,7 +94,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.cdFhHealthInfo.setOnClickListener {
-            val intent = Intent(context, HealthInfoSubmitActivity::class.java)
+            val intent = Intent(context, DailyHealthReportActivity::class.java)
             startActivity(intent)
         }
     }

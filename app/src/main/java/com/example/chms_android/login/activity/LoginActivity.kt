@@ -19,6 +19,7 @@ import com.example.chms_android.repo.CommunityRepo
 import com.example.chms_android.repo.DoctorRepo
 import com.example.chms_android.utils.AccountUtil
 import com.example.chms_android.utils.TokenUtil
+import com.example.chms_android.utils.WindowUtil
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -36,6 +37,7 @@ class LoginActivity : AppCompatActivity() {
 
         DoctorRepo.getAllNetDoctors(this)
         CommunityRepo.getAllNetCommunity(this)
+        WindowUtil(this).handleStatusBarHeight()
 
         checkLoginStatus()
 

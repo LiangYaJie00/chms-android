@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".features.home.activity.DailyHealthReportActivity">
+
+    <com.example.chms_android.ui.components.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleText="健康日报"
+        app:mode="1" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/normal_padding_16">
+
+            <!-- Report Date -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="报告日期："
+                android:textStyle="bold"/>
+            <EditText
+                android:id="@+id/adhr_reportDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="YYYY-MM-DD"
+                android:inputType="date"/>
+
+            <!-- Heart Rate -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="心率（次/分钟）："
+                android:textStyle="bold"/>
+            <EditText
+                android:id="@+id/adhr_heartRate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+            <!-- Blood Pressure -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="收缩压/舒张压："
+                android:textStyle="bold"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/adhr_bloodPressureSystolic"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="number"
+                    android:hint="收缩压"/>
+                
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="@dimen/normal_margin_8"
+                    android:background="@color/grey3" />
+                
+                <EditText
+                    android:id="@+id/adhr_bloodPressureDiastolic"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="number"
+                    android:hint="舒张压"/>
+            </LinearLayout>
+            
+            <!-- Body Temperature -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="体温（°C）："
+                android:textStyle="bold"/>
+            <EditText
+                android:id="@+id/adhr_bodyTemperature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"/>
+
+            <!-- Respiratory Rate -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="呼吸频率（次/分钟）："
+                android:textStyle="bold"/>
+            <EditText
+                android:id="@+id/adhr_respiratoryRate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+            <!-- Weight and BMI -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="体重（kg）："
+                android:textStyle="bold"/>
+            <EditText
+                android:id="@+id/adhr_weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"/>
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="BMI："-->
+<!--                android:textStyle="bold"/>-->
+<!--            <EditText-->
+<!--                android:id="@+id/adhr_bmi"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:inputType="numberDecimal"/>-->
+
+            <!-- Blood Sugar -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="血糖（mg/dL）："
+                android:textStyle="bold"/>
+            <EditText
+                android:id="@+id/adhr_bloodSugar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"/>
+
+            <!-- Steps and Exercise Duration -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="步数："
+                android:textStyle="bold"/>
+            <EditText
+                android:id="@+id/adhr_steps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="锻炼时长（分钟）："
+                android:textStyle="bold"/>
+            <EditText
+                android:id="@+id/adhr_exerciseDuration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+            <!-- Sleep Data -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="睡眠时长（小时）："
+                android:textStyle="bold"/>
+            <EditText
+                android:id="@+id/adhr_sleepDuration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="睡眠质量："
+                android:textStyle="bold"/>
+            <EditText
+                android:id="@+id/adhr_sleepQuality"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"/>
+
+            <!-- Calories and Water Intake -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="热量摄入（kcal）："
+                android:textStyle="bold"/>
+            <EditText
+                android:id="@+id/adhr_caloriesIntake"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="饮水量（升）："
+                android:textStyle="bold"/>
+            <EditText
+                android:id="@+id/adhr_waterIntake"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"/>
+
+            <!-- Emotional State and Stress Level -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="情绪状态："
+                android:textStyle="bold"/>
+            <EditText
+                android:id="@+id/adhr_emotionalState"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="压力水平："
+                android:textStyle="bold"/>
+            <EditText
+                android:id="@+id/adhr_stressLevel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"/>
+
+            <!-- Blood Oxygen Levels -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="动脉血氧水平（%）："
+                android:textStyle="bold"/>
+            <EditText
+                android:id="@+id/adhr_arterialBloodOxygenLevel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="静脉血氧水平（%）："
+                android:textStyle="bold"/>
+            <EditText
+                android:id="@+id/adhr_venousBloodOxygenLevel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"/>
+
+            <!-- Notes -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="备注："
+                android:textStyle="bold"/>
+            <EditText
+                android:id="@+id/adhr_notes"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:inputType="textMultiLine"
+                android:background="@drawable/bg_edit_area"
+                android:gravity="top|start"
+                android:hint="在此输入备注..."
+                android:minLines="5"
+                android:maxLines="10"
+                android:scrollbars="vertical"
+                android:imeOptions="actionDone"/>
+
+            <!-- 提交按钮 -->
+            <Button
+                android:id="@+id/btn_adhr_submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/activity_vertical_margin"
+                android:background="@color/actionbar_color"
+                android:text="提交"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

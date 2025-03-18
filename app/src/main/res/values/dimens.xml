@@ -22,6 +22,7 @@
     <dimen name="login_horizontal_padding">40dp</dimen>
 
     <!--通用外边距-->
+    <dimen name="normal_margin_5">5dp</dimen>
     <dimen name="normal_margin_8">8dp</dimen>
     <dimen name="normal_margin_10">10dp</dimen>
     <dimen name="normal_margin_16">16dp</dimen>

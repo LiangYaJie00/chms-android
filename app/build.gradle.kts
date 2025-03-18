@@ -92,4 +92,7 @@ dependencies {
 
     implementation("org.greenrobot:eventbus:3.3.1")
 
+    implementation("de.hdodenhof:circleimageview:2.1.0")
+
+
 }
