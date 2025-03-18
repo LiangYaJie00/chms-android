@@ -6,5 +6,5 @@ object Constants {
     const val DATABASE_NAME = "chms.db"
     const val DATABASE_VERSION = 1
 
-    const val IS_TESTING = false // 是否在测试环境
+    const val IS_TESTING = true // 是否在测试环境
 }

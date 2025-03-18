@@ -9,4 +9,18 @@
         <attr name="titleBarBackground" format="color" />
         <attr name="mode" format="integer" /> <!--0表示白色背景标题栏，1表示蓝色背景标题栏-->
     </declare-styleable>
+
+    <!--自定义条目组件-->
+    <declare-styleable name="RawContainer">
+        <attr name="startIcon" format="reference" />
+        <attr name="title" format="string" />
+        <attr name="endIcon" format="reference" />
+        <attr name="rawMode" format="integer" />
+        <!--
+            如果mode = 0，则此时的条目为四个直角；
+            如果mode = 1，则此时的条目为上面两个角为圆角，下面两个为直角；
+            如果mode = 2，则此时的条目为上面两个角为直角，下面两个为圆角；
+            如果mode = 3，则此时的条目为四个圆角；
+        -->
+    </declare-styleable>
 </resources>

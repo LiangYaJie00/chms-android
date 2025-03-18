@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.example.chms_android.R
 import com.example.chms_android.databinding.FragmentKnowledgeBinding
@@ -29,7 +31,6 @@ class KnowledgeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentKnowledgeBinding.inflate(inflater, container, false)
-
 
         binding.wvFk.settings.javaScriptEnabled = true
         binding.wvFk.webViewClient = object : WebViewClient() {

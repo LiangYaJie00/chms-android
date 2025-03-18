@@ -65,6 +65,7 @@
 
     <!--统计/报告相关文案-->
     <string name="daily">日报</string>
+    <string name="monthly">月报</string>
 
     <!--医生模块相关文案-->
     <string name="doctor_describe">医生编号为12345，姓名为张三。他是一名男性，出生于1980年01月01日。

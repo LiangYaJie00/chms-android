@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.example.chms_android.databinding.FragmentReportBinding
 import com.example.chms_android.features.report.activity.DailyReportActivity
 
@@ -26,7 +28,16 @@ class ReportFragment : Fragment() {
         _binding = FragmentReportBinding.inflate(inflater, container, false)
 
         binding.cvDailyReport.setOnClickListener {
-            val intent = Intent(context, DailyReportActivity::class.java)
+            val intent = Intent(context, DailyReportActivity::class.java).apply {
+                putExtra("status", 0)
+            }
+            startActivity(intent)
+        }
+
+        binding.cvMonthReport.setOnClickListener {
+            val intent = Intent(context, DailyReportActivity::class.java).apply {
+                putExtra("status", 1)
+            }
             startActivity(intent)
         }
 

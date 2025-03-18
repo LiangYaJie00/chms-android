@@ -34,4 +34,6 @@
 
     <color name="login_status_bar">#F4EBEB</color>
 
+    <color name="light_blue">#BADCFE</color>
+
 </resources>

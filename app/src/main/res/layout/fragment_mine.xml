@@ -1,14 +1,313 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".features.mine.MineFragment">
+    android:background="@color/background"
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.example.chms_android.ui.components.TitleBar
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        app:titleText="@string/title_mine"
+        app:showBackArrow="false"
+        app:mode="1" />
 
-</FrameLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:orientation="vertical">
+            <!--下面的这一个控件的添加解决了将statusBarColor颜色不适配的问题-->
+            <!--        <androidx.coordinatorlayout.widget.CoordinatorLayout-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="0dp"-->
+            <!--            android:fitsSystemWindows="true" />-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="40dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="3dp" >
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@mipmap/blue" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp">
+                        <ImageButton
+                            android:id="@+id/ib_mine_editUser"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="2dp"
+                            android:layout_alignParentRight="true"
+                            android:background="@color/transparent"
+                            android:src="@drawable/edit_line" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="35dp"
+                        android:layout_marginLeft="20dp">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/civ_mine_avatar"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:src="@mipmap/image_show" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginHorizontal="10dp"
+                            android:layout_marginVertical="5dp">
+                            <TextView
+                                android:id="@+id/tv_mine_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="UserName"
+                                android:textColor="@color/black"
+                                android:textStyle="bold"
+                                android:textSize="22sp" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginVertical="5dp">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="email: "
+                                    android:textSize="18sp" />
+                                <TextView
+                                    android:id="@+id/tv_mine_email"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="1792026541@qq.com"
+                                    android:textSize="15sp"/>
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/tv_mine_signature"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginVertical="5dp"
+                                android:text="个性签名"
+                                android:textSize="15sp" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <LinearLayout
+                    android:id="@+id/liner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/card_view"
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical">
+
+                    <!--                <LinearLayout-->
+                    <!--                    android:layout_width="match_parent"-->
+                    <!--                    android:layout_height="wrap_content">-->
+                    <!--                    <LinearLayout-->
+                    <!--                        android:layout_width="0dp"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_marginHorizontal="10dp"-->
+                    <!--                        android:layout_marginVertical="10dp"-->
+                    <!--                        android:layout_weight="1"-->
+                    <!--                        android:gravity="center"-->
+                    <!--                        android:orientation="vertical">-->
+
+                    <!--                        <ImageButton-->
+                    <!--                            android:layout_width="wrap_content"-->
+                    <!--                            android:layout_height="wrap_content"-->
+                    <!--                            android:layout_marginHorizontal="10dp"-->
+                    <!--                            android:background="@color/transparent"-->
+                    <!--                            android:src="@mipmap/collect_mark" />-->
+
+                    <!--                        <TextView-->
+                    <!--                            android:layout_width="wrap_content"-->
+                    <!--                            android:layout_height="wrap_content"-->
+                    <!--                            android:text="收藏"-->
+                    <!--                            android:textSize="17sp" />-->
+                    <!--                    </LinearLayout>-->
+
+                    <!--                    <LinearLayout-->
+                    <!--                        android:layout_width="0dp"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_marginHorizontal="10dp"-->
+                    <!--                        android:layout_marginVertical="10dp"-->
+                    <!--                        android:layout_weight="1"-->
+                    <!--                        android:gravity="center"-->
+                    <!--                        android:orientation="vertical">-->
+
+                    <!--                        <ImageButton-->
+                    <!--                            android:layout_width="wrap_content"-->
+                    <!--                            android:layout_height="wrap_content"-->
+                    <!--                            android:layout_marginHorizontal="10dp"-->
+                    <!--                            android:background="@color/transparent"-->
+                    <!--                            android:src="@mipmap/icon_message" />-->
+
+                    <!--                        <TextView-->
+                    <!--                            android:layout_width="wrap_content"-->
+                    <!--                            android:layout_height="wrap_content"-->
+                    <!--                            android:text="消息"-->
+                    <!--                            android:textSize="17sp" />-->
+                    <!--                    </LinearLayout>-->
+
+                    <!--                    <LinearLayout-->
+                    <!--                        android:layout_width="0dp"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_marginHorizontal="10dp"-->
+                    <!--                        android:layout_marginVertical="10dp"-->
+                    <!--                        android:layout_weight="1"-->
+                    <!--                        android:gravity="center"-->
+                    <!--                        android:orientation="vertical">-->
+
+                    <!--                        <ImageButton-->
+                    <!--                            android:layout_width="wrap_content"-->
+                    <!--                            android:layout_height="wrap_content"-->
+                    <!--                            android:layout_marginHorizontal="10dp"-->
+                    <!--                            android:background="@color/transparent"-->
+                    <!--                            android:src="@mipmap/icon_friend" />-->
+
+                    <!--                        <TextView-->
+                    <!--                            android:layout_width="wrap_content"-->
+                    <!--                            android:layout_height="wrap_content"-->
+                    <!--                            android:text="好友"-->
+                    <!--                            android:textSize="17sp" />-->
+                    <!--                    </LinearLayout>-->
+                    <!--                </LinearLayout>-->
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/light_blue" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="30dp"
+                    android:layout_below="@id/liner"
+                    android:layout_marginTop="50dp">
+
+                    <com.example.chms_android.ui.components.RawContainer
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                        app:startIcon="@mipmap/my_frag_setting_icon"
+                        app:title="设备管理"
+                        app:endIcon="@mipmap/right_arrow"
+                        app:rawMode="1" />
+                    <com.example.chms_android.ui.components.RawContainer
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                        app:startIcon="@mipmap/my_frag_setting_icon"
+                        app:title="设备管理"
+                        app:endIcon="@mipmap/right_arrow"
+                        app:rawMode="0" />
+                    <com.example.chms_android.ui.components.RawContainer
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                        app:startIcon="@mipmap/my_frag_setting_icon"
+                        app:title="设备管理"
+                        app:endIcon="@mipmap/right_arrow"
+                        app:rawMode="0" />
+                    <com.example.chms_android.ui.components.RawContainer
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                        app:startIcon="@mipmap/my_frag_setting_icon"
+                        app:title="设备管理"
+                        app:endIcon="@mipmap/right_arrow"
+                        app:rawMode="0" />
+                    <com.example.chms_android.ui.components.RawContainer
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                        app:startIcon="@mipmap/my_frag_setting_icon"
+                        app:title="设备管理"
+                        app:endIcon="@mipmap/right_arrow"
+                        app:rawMode="0" />
+                    <com.example.chms_android.ui.components.RawContainer
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                        app:startIcon="@mipmap/my_frag_setting_icon"
+                        app:title="设备管理"
+                        app:endIcon="@mipmap/right_arrow"
+                        app:rawMode="0" />
+                    <com.example.chms_android.ui.components.RawContainer
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                        app:startIcon="@mipmap/my_frag_setting_icon"
+                        app:title="设备管理"
+                        app:endIcon="@mipmap/right_arrow"
+                        app:rawMode="0" />
+                    <com.example.chms_android.ui.components.RawContainer
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                        app:startIcon="@mipmap/my_frag_setting_icon"
+                        app:title="设备管理"
+                        app:endIcon="@mipmap/right_arrow"
+                        app:rawMode="0" />
+                    <com.example.chms_android.ui.components.RawContainer
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                        app:startIcon="@mipmap/my_frag_setting_icon"
+                        app:title="设备管理"
+                        app:endIcon="@mipmap/right_arrow"
+                        app:rawMode="0" />
+                    <com.example.chms_android.ui.components.RawContainer
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                        app:startIcon="@mipmap/my_frag_setting_icon"
+                        app:title="设备管理"
+                        app:endIcon="@mipmap/right_arrow"
+                        app:rawMode="2" />
+
+                </LinearLayout>
+            </RelativeLayout>
+            <Button
+                android:id="@+id/btn_mine_logOut"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/button_green"
+                android:text="退出登录"
+                android:textStyle="bold"
+                android:textColor="@color/light_blue"
+                android:textSize="17sp"/>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

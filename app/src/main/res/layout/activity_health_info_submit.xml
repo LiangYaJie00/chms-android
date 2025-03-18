@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".features.home.activity.HealthInfoSubmitActivity">
+
+    <com.example.chms_android.ui.components.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleText="健康信息上报"
+        app:mode="1" />
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- 体重 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="体重 (公斤)" />
+
+            <EditText
+                android:id="@+id/edt_ahis_weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入体重"
+                android:inputType="numberDecimal" />
+
+            <!-- 身高 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="身高 (厘米)" />
+
+            <EditText
+                android:id="@+id/edt_ahis_height"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入身高"
+                android:inputType="numberDecimal" />
+
+            <!-- 收缩压 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="收缩压" />
+
+            <EditText
+                android:id="@+id/edt_ahis_systolic_pressure"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入收缩压"
+                android:inputType="number" />
+
+            <!-- 舒张压 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="舒张压" />
+
+            <EditText
+                android:id="@+id/edt_ahis_diastolic_pressure"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入舒张压"
+                android:inputType="number" />
+
+            <!-- 最近体检日期 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="最近体检日期" />
+
+            <EditText
+                android:id="@+id/edt_ahis_recent_checkup_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="最近体检日期"
+                android:inputType="date" />
+
+            <!-- 过敏史 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="过敏史" />
+
+            <EditText
+                android:id="@+id/edt_ahis_allergy_history"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="过敏史"
+                android:inputType="text" />
+
+            <!-- 既往病史 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="既往病史" />
+
+            <EditText
+                android:id="@+id/edt_ahis_medical_history"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="既往病史"
+                android:inputType="text" />
+
+            <!-- 家族病史 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="家族病史" />
+
+            <EditText
+                android:id="@+id/edt_ahis_family_history"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="家族病史"
+                android:inputType="text" />
+
+            <!-- 当前疾病 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="当前疾病" />
+
+            <EditText
+                android:id="@+id/edt_ahis_current_disease"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="当前疾病"
+                android:inputType="text" />
+
+            <!-- 用药情况 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="用药情况" />
+
+            <EditText
+                android:id="@+id/edt_ahis_medication_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="用药情况"
+                android:inputType="text" />
+
+            <!-- 疫苗接种记录 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="疫苗接种记录" />
+
+            <EditText
+                android:id="@+id/edt_ahis_vaccination_record"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="疫苗接种记录"
+                android:inputType="text" />
+
+            <!-- 生活习惯 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="生活习惯" />
+
+            <EditText
+                android:id="@+id/edt_ahis_lifestyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="生活习惯"
+                android:inputType="text" />
+
+            <!-- 锻炼频率 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="锻炼频率" />
+
+            <EditText
+                android:id="@+id/edt_ahis_exercise_frequency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="锻炼频率"
+                android:inputType="text" />
+
+            <!-- 饮食习惯 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="饮食习惯" />
+
+            <EditText
+                android:id="@+id/edt_ahis_dietary_habits"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="饮食习惯"
+                android:inputType="text" />
+
+            <!-- 提交按钮 -->
+            <Button
+                android:id="@+id/btn_ahis_submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/activity_vertical_margin"
+                android:background="@color/actionbar_color"
+                android:text="提交"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
