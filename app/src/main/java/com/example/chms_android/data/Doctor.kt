@@ -11,14 +11,14 @@ import java.util.Date
 data class Doctor(
     @PrimaryKey(autoGenerate = false)
     var doctorId: Int,
-    var name: String,
-    var gender: Int,
-    var dateOfBirth: Date,
-    var phoneNumber: String,
-    var email: String,
-    var specialization: String,
-    var communityName: String,
-    var address: String,
-    var createdAt: Date,
-    var updatedAt: Date
+    var name: String?,
+    var gender: Int?,
+    var dateOfBirth: Date?,
+    var phoneNumber: String?,
+    var email: String?,
+    var specialization: String?,
+    var communityName: String?,
+    var address: String?,
+    var createdAt: Date?,
+    var updatedAt: Date?
 ): Parcelable

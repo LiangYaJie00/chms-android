@@ -215,11 +215,12 @@
                     android:layout_marginTop="50dp">
 
                     <com.example.chms_android.ui.components.RawContainer
+                        android:id="@+id/rc_fm_reservation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                         app:startIcon="@mipmap/my_frag_setting_icon"
-                        app:title="设备管理"
+                        app:title="线上就诊预约"
                         app:endIcon="@mipmap/right_arrow"
                         app:rawMode="1" />
                     <com.example.chms_android.ui.components.RawContainer

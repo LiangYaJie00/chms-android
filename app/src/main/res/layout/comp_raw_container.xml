@@ -5,8 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="58dp"
         android:paddingHorizontal="@dimen/normal_padding_16"
-        android:gravity="center"
-        android:clickable="true">
+        android:gravity="center">
 
         <ImageView
             android:id="@+id/iv_start_icon"

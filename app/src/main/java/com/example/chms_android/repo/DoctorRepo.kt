@@ -1,6 +1,7 @@
 package com.example.chms_android.repo
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import com.example.chms_android.api.DoctorApi
 import com.example.chms_android.dao.DoctorDao
@@ -18,6 +19,7 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 
 object DoctorRepo {
+    private val TAG = "DoctorRepo"
     private val doctorDao: DoctorDao get() = DatabaseProvider.getDatabase().doctorDao()
 
     fun getAllNetDoctors(context: Context) {
@@ -40,21 +42,25 @@ object DoctorRepo {
                                 withContext(Dispatchers.Main) {
                                     // 弹出登录成功的提示框
                                     ToastUtil.show(context, "getAllNetDoctors successful: 更新成功!", Toast.LENGTH_SHORT)
+                                    Log.i(TAG, "getAllNetDoctors successful: 更新成功!")
                                 }
                             } catch (e: Exception) {
                                 e.printStackTrace()
                                 withContext(Dispatchers.Main) {
                                     // 显示错误信息
                                     ToastUtil.show(context, "Failed to getAllNetDoctors user: ${e.message}", Toast.LENGTH_SHORT)
+                                    Log.e(TAG, "Failed to getAllNetDoctors user: ${e.message}")
                                 }
                             }
                         }
                     } else {
                         ToastUtil.show(context, "getAllNetDoctors failed: ${result.message}", Toast.LENGTH_SHORT)
+                        Log.e(TAG, "getAllNetDoctors failed: ${result.message}")
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
                     ToastUtil.show(context, "Failed to parse response", Toast.LENGTH_SHORT)
+                    Log.e(TAG, "Failed to parse response")
                 }
             }
 
