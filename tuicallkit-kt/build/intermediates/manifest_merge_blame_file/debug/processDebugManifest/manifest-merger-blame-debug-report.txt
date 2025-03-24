@@ -1,0 +1,135 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.tencent.qcloud.tuikit.tuicallkit" >
+4
+5    <uses-sdk android:minSdkVersion="19" />
+6
+7    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+7-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:4:5-77
+7-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:4:22-74
+8    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA" />
+8-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:5:5-84
+8-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:5:22-81
+9    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+9-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:6:5-88
+9-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:6:22-85
+10    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
+10-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:7:5-94
+10-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:7:22-91
+11    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+11-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:8:5-78
+11-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:8:22-75
+12    <uses-permission android:name="android.permission.VIBRATE" />
+12-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:9:5-66
+12-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:9:22-63
+13    <uses-permission android:name="android.permission.WAKE_LOCK" />
+13-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:10:5-68
+13-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:10:22-65
+14    <uses-permission android:name="android.permission.INTERNET" />
+14-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:11:5-67
+14-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:11:22-64
+15    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+15-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:12:5-71
+15-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:12:22-68
+16    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+16-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:13:5-80
+16-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:13:22-77
+17    <uses-permission android:name="android.permission.CAMERA" />
+17-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:14:5-65
+17-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:14:22-62
+18
+19    <uses-feature android:name="android.hardware.camera" />
+19-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:16:5-60
+19-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:16:19-57
+20    <uses-feature android:name="android.hardware.camera.autofocus" />
+20-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:17:5-70
+20-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:17:19-67
+21
+22    <uses-permission
+22-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:19:5-21:38
+23        android:name="android.permission.BLUETOOTH"
+23-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:20:9-52
+24        android:maxSdkVersion="30" />
+24-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:21:9-35
+25    <uses-permission
+25-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:22:5-24:38
+26        android:name="android.permission.BLUETOOTH_ADMIN"
+26-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:23:9-58
+27        android:maxSdkVersion="30" />
+27-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:24:9-35
+28    <!-- Support Android S(31) Bluetooth -->
+29    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+29-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:26:5-76
+29-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:26:22-73
+30    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+30-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:28:5-85
+30-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:28:22-82
+31    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+31-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:29:5-77
+31-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:29:22-74
+32    <uses-permission android:name="android.permission.MANAGE_OWN_CALLS" />
+32-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:30:5-75
+32-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:30:22-72
+33
+34    <application>
+34-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:32:5-64:19
+35        <activity
+35-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:33:9-37:66
+36            android:name="com.tencent.qcloud.tuikit.tuicallkit.view.CallKitActivity"
+36-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:34:13-85
+37            android:configChanges="orientation|screenSize"
+37-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:35:13-59
+38            android:launchMode="singleTask"
+38-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:36:13-44
+39            android:theme="@style/Theme.AppCompat.NoActionBar" />
+39-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:37:13-63
+40
+41        <provider
+41-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:39:9-43:40
+42            android:name="com.tencent.qcloud.tuikit.tuicallkit.internal.ServiceInitializer"
+42-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:40:13-92
+43            android:authorities="${applicationId}.ServiceInitializer"
+43-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:41:13-70
+44            android:enabled="true"
+44-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:42:13-35
+45            android:exported="false" />
+45-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:43:13-37
+46
+47        <service
+47-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:45:9-48:40
+48            android:name="com.tencent.qcloud.tuikit.tuicallkit.view.component.floatview.FloatWindowService"
+48-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:46:13-108
+49            android:enabled="true"
+49-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:47:13-35
+50            android:exported="false" />
+50-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:48:13-37
+51
+52        <activity
+52-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:50:9-54:66
+53            android:name="com.tencent.qcloud.tuikit.tuicallkit.extensions.inviteuser.SelectGroupMemberActivity"
+53-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:51:13-76
+54            android:configChanges="orientation|screenSize"
+54-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:52:13-59
+55            android:launchMode="singleTask"
+55-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:53:13-44
+56            android:theme="@style/Theme.AppCompat.NoActionBar" />
+56-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:54:13-63
+57
+58        <receiver
+58-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:56:9-63:20
+59            android:name="com.tencent.qcloud.tuikit.tuicallkit.view.component.incomingview.IncomingCallReceiver"
+59-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:57:13-113
+60            android:enabled="true"
+60-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:58:13-35
+61            android:exported="false" >
+61-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:59:13-37
+62            <intent-filter>
+62-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:60:13-62:29
+63                <action android:name="reject_call_action" />
+63-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:61:17-61
+63-->/Users/oneline/repository/CHMS/chms-android/tuicallkit-kt/src/main/AndroidManifest.xml:61:25-58
+64            </intent-filter>
+65        </receiver>
+66    </application>
+67
+68</manifest>
