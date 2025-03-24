@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "CHMS-Android"
 include(":app")
+include(":tuicallkit-kt")

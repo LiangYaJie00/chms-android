@@ -16,6 +16,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.chms_android.databinding.ActivityMainBinding
+import com.example.chms_android.repo.DoctorRepo
+import com.example.chms_android.utils.TUIUtil
 import com.example.chms_android.utils.WindowUtil
 
 class MainActivity : AppCompatActivity() {
@@ -31,6 +33,10 @@ class MainActivity : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this, R.color.actionbar_color)
 
         setContentView(binding.root)
+
+        TUIUtil.initTUI(this)
+
+        DoctorRepo.getAllNetDoctors(this)
 
         initNavView()
 
@@ -76,6 +82,7 @@ class MainActivity : AppCompatActivity() {
         binding.navMainView.setupWithNavController(navController)
 
 //        adaptStatusBar()
+
     }
 
     private fun adaptStatusBar() {
