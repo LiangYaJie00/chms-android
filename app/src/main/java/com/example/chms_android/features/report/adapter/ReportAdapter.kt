@@ -142,7 +142,7 @@ class ReportAdapter(
         }
         oldDate = lineDataList[position].date
 
-        // 记录下每一向的“当前”时间
+        // 记录下每一项的“当前”时间
         dateList.add(lineDataList[position].date)
 
         val lineData = lineDataList[position]

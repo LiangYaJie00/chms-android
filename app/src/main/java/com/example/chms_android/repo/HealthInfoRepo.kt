@@ -1,6 +1,7 @@
 package com.example.chms_android.repo
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import com.example.chms_android.api.HealthInfoApi
 import com.example.chms_android.dao.HealthInfoDao
@@ -14,6 +15,7 @@ import com.google.gson.reflect.TypeToken
 import java.io.IOException
 
 object HealthInfoRepo {
+    private val TAG = "HealthInfoRepo"
     private val healthInfoDao: HealthInfoDao get() = DatabaseProvider.getDatabase().healthInfoDao()
 
     fun addHealthInfo(healthInfo: HealthInfo, context: Context) {
@@ -24,23 +26,24 @@ object HealthInfoRepo {
                     context,
                     object : TypeToken<RespResult<HealthInfo>>() {},
                     onSuccess = { healthInfo ->
-                        // 假设 you have a healthInfoDao 可供使用
+                        // 日报保存到本地
                         healthInfoDao.insertHealthInfo(healthInfo)
                     },
                     onError = { message ->
                         // 处理具体的错误消息
+                        ToastUtil.show(context, message, Toast.LENGTH_SHORT)
                     },
-                    successToastMessage = "addHealthInfo successful: 健康信息添加成功!",
-                    errorToastMessage = "addHealthInfo failed"
+                    successToastMessage = "健康日报上报成功!",
+                    errorToastMessage = "日报上报失败！"
                 )
             }
 
             override fun onFailure(e: IOException) {
                 e.printStackTrace()
+                Log.e(TAG, "Network error: ${e.message}")
                 // 弹出接口请求失败的提示框
-                ToastUtil.show(context, "Network error: ${e.message}", Toast.LENGTH_SHORT)
+                ToastUtil.show(context, "接口请求失败！", Toast.LENGTH_SHORT)
             }
-
         })
     }
 }

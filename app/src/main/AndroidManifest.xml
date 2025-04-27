@@ -4,7 +4,17 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <!-- 应用使用蓝牙的权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <!--启动设备发现或操作蓝牙设置的权限-->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <!--位置权限-->
+    <!--Android 10以上系统，需要ACCESS_FINE_LOCATION-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!--Android 9以及以下系统，需要ACCESS_FINE_LOCATION-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -18,6 +28,16 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup"
         tools:targetApi="31">
+
+        <activity
+            android:name=".features.report.activity.ReportShowActivity"
+            android:exported="false" />
+        <activity
+            android:name=".features.mine.activity.UserEditActivity"
+            android:exported="false" />
+        <activity
+            android:name=".features.mine.activity.ReservationManageActivity"
+            android:exported="false" />
         <activity
             android:name=".features.mine.activity.ReservationActivity"
             android:exported="false" />
@@ -62,6 +82,7 @@
             android:exported="false"
             android:label="@string/app_name"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
+
     </application>
 
 </manifest>

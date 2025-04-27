@@ -27,7 +27,7 @@ class TitleBar(context: Context, attrs: AttributeSet): LinearLayout(context, att
 
         if (mode == 0) {
             // 获取并应用背景颜色
-            val defaultBackgroundColor = ContextCompat.getColor(context, R.color.white)
+            val defaultBackgroundColor = ContextCompat.getColor(context, R.color.transparent)
             val titleBarBackgroundColor = attributes.getColor(R.styleable.TitleBar_titleBarBackground, defaultBackgroundColor)
             binding.root.setBackgroundColor(titleBarBackgroundColor)
 
