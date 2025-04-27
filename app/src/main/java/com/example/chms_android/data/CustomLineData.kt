@@ -11,7 +11,6 @@ import com.github.mikephil.charting.data.Entry
  * start 代表纵坐标的起始点
  * end 代表纵坐标的终点
  */
-
 class CustomLineData(
     val list: ArrayList<Entry>,
     val type: String,

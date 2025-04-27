@@ -10,6 +10,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.chms_android.databinding.FragmentReportBinding
 import com.example.chms_android.features.report.activity.DailyReportActivity
+import com.example.chms_android.features.report.activity.ReportSummaryActivity
 
 class ReportFragment : Fragment() {
     private var _binding: FragmentReportBinding? = null
@@ -42,7 +43,8 @@ class ReportFragment : Fragment() {
         }
 
         binding.cvWeeklyReport.setOnClickListener {
-
+            val intent = Intent(context, ReportSummaryActivity::class.java)
+            startActivity(intent)
         }
 
         return binding.root

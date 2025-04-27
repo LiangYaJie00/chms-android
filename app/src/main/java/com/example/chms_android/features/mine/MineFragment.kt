@@ -11,6 +11,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.example.chms_android.databinding.FragmentMineBinding
 import com.example.chms_android.features.mine.activity.ReservationActivity
+import com.example.chms_android.features.mine.activity.ReservationManageActivity
+import com.example.chms_android.features.mine.activity.UserEditActivity
+import com.example.chms_android.features.report.activity.ReportShowActivity
 import com.example.chms_android.login.activity.LoginActivity
 import com.example.chms_android.utils.AccountUtil
 import com.example.chms_android.utils.ImagePickerUtil
@@ -56,6 +59,11 @@ class MineFragment : Fragment(), ImagePickerUtil.ImagePickerCallback {
 
     // 监听器设置
     private fun setListener() {
+        // 个人资料编辑
+        binding.ibMineEditUser.setOnClickListener {
+            val intent = Intent(requireActivity(), UserEditActivity::class.java)
+            startActivity(intent)
+        }
         // 头像的点击事件
         binding.civMineAvatar.setOnClickListener {
             imagePickerUtil.checkPermissionAndPickImage()
@@ -63,6 +71,15 @@ class MineFragment : Fragment(), ImagePickerUtil.ImagePickerCallback {
         // 在线就诊
         binding.rcFmReservation.setOnClickListener {
             val intent = Intent(requireActivity(), ReservationActivity::class.java)
+            startActivity(intent)
+        }
+        // 预约管理
+        binding.rcFmReservationManage.setOnClickListener {
+            val intent = Intent(requireActivity(), ReservationManageActivity::class.java)
+            startActivity(intent)
+        }
+        binding.rcFmReportManage.setOnClickListener {
+            val intent = Intent(requireActivity(), ReportShowActivity::class.java)
             startActivity(intent)
         }
         // 退出登录

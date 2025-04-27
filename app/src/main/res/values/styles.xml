@@ -40,4 +40,13 @@
         <item name="android:lines">2</item>
         <item name="android:letterSpacing">0.2</item>
     </style>
+
+    <style name="NoActionBarTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- 设置全屏显示 -->
+        <item name="android:windowFullscreen">true</item>
+        <!-- 使状态栏透明 -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <!-- 如果需要透明导航栏，兼容某些机型 -->
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
 </resources>
