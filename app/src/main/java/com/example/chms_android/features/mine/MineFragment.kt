@@ -9,12 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.chms_android.databinding.FragmentMineBinding
 import com.example.chms_android.features.mine.activity.ReservationActivity
 import com.example.chms_android.features.mine.activity.ReservationManageActivity
 import com.example.chms_android.features.mine.activity.UserEditActivity
 import com.example.chms_android.features.report.activity.ReportShowActivity
 import com.example.chms_android.login.activity.LoginActivity
+import com.example.chms_android.ui.components.dialog.LoadingDialog
 import com.example.chms_android.utils.AccountUtil
 import com.example.chms_android.utils.ImagePickerUtil
 import com.example.chms_android.utils.ToastUtil
@@ -23,6 +26,9 @@ class MineFragment : Fragment(), ImagePickerUtil.ImagePickerCallback {
     private var _binding: FragmentMineBinding? = null
     private val binding get() = _binding!!
     private lateinit var imagePickerUtil: ImagePickerUtil
+    // 添加ViewModel和加载对话框
+    private lateinit var viewModel: MineViewModel
+    private lateinit var loadingDialog: LoadingDialog
 
     // Fragment 注册活动结果启动器
     private val pickImageLauncher = registerForActivityResult(
@@ -32,6 +38,7 @@ class MineFragment : Fragment(), ImagePickerUtil.ImagePickerCallback {
             val imageUri: Uri? = result.data?.data
             imageUri?.let {
                 onImagePicked(it)
+                ToastUtil.show(requireContext(), "头像已更新")
             }
         }
     }
@@ -43,6 +50,48 @@ class MineFragment : Fragment(), ImagePickerUtil.ImagePickerCallback {
 
         // 实例化工具类
         imagePickerUtil = ImagePickerUtil(requireActivity(), this, pickImageLauncher)
+        
+        // 初始化ViewModel
+        viewModel = ViewModelProvider(this).get(MineViewModel::class.java)
+    }
+    
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        
+        // 观察上传状态
+        viewModel.uploadStatus.observe(viewLifecycleOwner) { status ->
+            when (status) {
+                is MineViewModel.UploadStatus.Loading -> {
+                    // 显示加载中
+                    if (!::loadingDialog.isInitialized) {
+                        loadingDialog = LoadingDialog(requireContext())
+                    }
+                    loadingDialog.show()
+                }
+                is MineViewModel.UploadStatus.Success -> {
+                    // 隐藏加载中
+                    if (::loadingDialog.isInitialized && loadingDialog.isShowing) {
+                        loadingDialog.dismiss()
+                    }
+                    
+                    // 使用Glide加载远程图片
+                    Glide.with(requireContext())
+                        .load(status.imageUrl)
+                        .into(binding.civMineAvatar)
+                    
+                    ToastUtil.show(requireContext(), "头像上传成功")
+                }
+                is MineViewModel.UploadStatus.Error -> {
+                    // 隐藏加载中
+                    if (::loadingDialog.isInitialized && loadingDialog.isShowing) {
+                        loadingDialog.dismiss()
+                    }
+                    
+                    // 显示错误信息
+                    ToastUtil.show(requireContext(), "上传失败: ${status.message}")
+                }
+            }
+        }
     }
 
     override fun onCreateView(
@@ -104,7 +153,11 @@ class MineFragment : Fragment(), ImagePickerUtil.ImagePickerCallback {
 
     // 返回图片选择结果
     override fun onImagePicked(imageUri: Uri) {
+        // 先显示本地图片（立即反馈）
         binding.civMineAvatar.setImageURI(imageUri)
+        
+        // 上传图片到服务器
+        viewModel.uploadAvatar(requireContext(), imageUri)
     }
 
     // 处理权限被拒绝的情况

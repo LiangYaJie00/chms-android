@@ -140,4 +140,49 @@ object OkhttpUtil {
         return BASE_URL + uri
     }
 
+    // 执行文件上传请求
+    fun uploadFile(
+        uri: String,
+        filePart: MultipartBody.Part,
+        context: Context,
+        callback: NetworkCallback,
+        needsToken: Boolean = true
+    ) {
+        val requestBuilder = Request.Builder()
+            .url(getUrl(uri))
+        
+        // 根据需要添加token头
+        if (needsToken) {
+            requestBuilder.header("Authorization", "${TokenUtil.getToken(context)}")
+        }
+        
+        // 创建MultipartBody
+        val requestBody = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addPart(filePart)
+            .build()
+        
+        val request = requestBuilder
+            .post(requestBody)
+            .build()
+        
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                callback.onFailure(e)
+            }
+            
+            override fun onResponse(call: Call, response: Response) {
+                if (response.isSuccessful) {
+                    response.body?.string()?.let {
+                        callback.onSuccess(it)
+                    } ?: run {
+                        callback.onFailure(IOException("Empty Response Body"))
+                    }
+                } else {
+                    callback.onFailure(IOException("Unexpected code $response"))
+                }
+            }
+        })
+    }
+
 }
