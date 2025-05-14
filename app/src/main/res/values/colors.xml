@@ -47,4 +47,11 @@
     <color name="splash_background">#4A6FE1</color>
     <color name="offline_warning">#FFC107</color>
 
+    <!-- 图标颜色 -->
+    <color name="icon_primary">#4A6FE1</color>
+    <color name="icon_secondary">#757575</color>
+    <color name="icon_accent">#FF5722</color>
+    <color name="icon_green">#19A54A</color>
+    <color name="icon_blue">#2196F3</color>
+    <color name="icon_red">#F44336</color>
 </resources>

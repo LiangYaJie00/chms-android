@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.chms_android.R
 import com.example.chms_android.databinding.FragmentMineBinding
+import com.example.chms_android.features.health.activity.HealthInfoActivity
 import com.example.chms_android.features.mine.activity.ReservationActivity
 import com.example.chms_android.features.mine.activity.ReservationManageActivity
 import com.example.chms_android.features.mine.activity.UserEditActivity
@@ -127,6 +128,12 @@ class MineFragment : Fragment() {
         // 头像点击事件，跳转到个人资料编辑页面
         binding.civMineAvatar.setOnClickListener {
             val intent = Intent(requireActivity(), UserEditActivity::class.java)
+            startActivity(intent)
+        }
+
+        // 档案管理
+        binding.rcFmHealthRecord.setOnClickListener {
+            val intent = Intent(requireActivity(), HealthInfoActivity::class.java)
             startActivity(intent)
         }
         

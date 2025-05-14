@@ -6,16 +6,15 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-
     <!-- 应用使用蓝牙的权限 -->
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <!--启动设备发现或操作蓝牙设置的权限-->
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-    <!--位置权限-->
-    <!--Android 10以上系统，需要ACCESS_FINE_LOCATION-->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <!--Android 9以及以下系统，需要ACCESS_FINE_LOCATION-->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <!-- 启动设备发现或操作蓝牙设置的权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <!-- 位置权限 -->
+    <!-- Android 10以上系统，需要ACCESS_FINE_LOCATION -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- Android 9以及以下系统，需要ACCESS_FINE_LOCATION -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:name=".CHMSApplication"
@@ -30,7 +29,9 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup"
         tools:targetApi="31">
-
+        <activity
+            android:name=".features.health.activity.HealthInfoActivity"
+            android:exported="false" />
         <activity
             android:name=".features.report.activity.ReportShowActivity"
             android:exported="false" />
@@ -79,6 +80,7 @@
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -86,7 +88,6 @@
             android:name=".MainActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
-
     </application>
 
 </manifest>

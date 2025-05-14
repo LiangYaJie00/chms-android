@@ -18,8 +18,8 @@ object ResponseHandler {
         typeToken: TypeToken<RespResult<T>>, // 指定要解析的响应数据的具体类型
         onSuccess: (T) -> Unit, // 成功处理数据后的回调函数
         onError: (String) -> Unit, // 当响应代码不是 "200" 或其他信号错误情况时触发的回调函数
-        successToastMessage: String, // 成功执行 onSuccess 操作时显示的 Toast 消息内容
-        errorToastMessage: String // 当解析过程中出现错误或当服务器返回非 "200" 状态码时，显示的 Toast 消息内容
+        successToastMessage: String?, // 成功执行 onSuccess 操作时显示的 Toast 消息内容
+        errorToastMessage: String? // 当解析过程中出现错误或当服务器返回非 "200" 状态码时，显示的 Toast 消息内容
     ) {
         val TAG = "ResponseHandler"
         try {
@@ -33,7 +33,9 @@ object ResponseHandler {
                     try {
                         onSuccess(data)
                         withContext(Dispatchers.Main) {
-                            ToastUtil.show(context, successToastMessage, Toast.LENGTH_SHORT)
+                            successToastMessage?.let {
+                                ToastUtil.show(context, it, Toast.LENGTH_SHORT)
+                            }
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()

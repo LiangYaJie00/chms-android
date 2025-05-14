@@ -31,8 +31,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="24dp">
+            android:orientation="vertical">
 
             <!-- 用户信息卡片 -->
             <androidx.cardview.widget.CardView
@@ -173,22 +172,12 @@
                         android:textStyle="bold" />
 
                     <com.example.chms_android.ui.components.RawContainer
-                        android:id="@+id/rc_fm_reservation"
+                        android:id="@+id/rc_fm_health_record"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        app:startIcon="@drawable/ic_reservation"
-                        app:title="线上就诊预约"
-                        app:endIcon="@drawable/ic_arrow_right"
-                        app:rawMode="1" />
-
-                    <com.example.chms_android.ui.components.RawContainer
-                        android:id="@+id/rc_fm_reservation_manage"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        app:startIcon="@drawable/ic_manage"
-                        app:title="预约管理"
+                        app:startIcon="@drawable/ic_health_record"
+                        app:title="健康档案"
                         app:endIcon="@drawable/ic_arrow_right"
                         app:rawMode="0" />
 
@@ -196,8 +185,28 @@
                         android:id="@+id/rc_fm_report_manage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
                         app:startIcon="@drawable/ic_report"
                         app:title="健康报告"
+                        app:endIcon="@drawable/ic_arrow_right"
+                        app:rawMode="0" />
+
+                    <com.example.chms_android.ui.components.RawContainer
+                        android:id="@+id/rc_fm_reservation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        app:startIcon="@drawable/ic_reservation"
+                        app:title="线上就诊预约"
+                        app:endIcon="@drawable/ic_arrow_right"
+                        app:rawMode="0" />
+
+                    <com.example.chms_android.ui.components.RawContainer
+                        android:id="@+id/rc_fm_reservation_manage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:startIcon="@drawable/ic_manage"
+                        app:title="预约管理"
                         app:endIcon="@drawable/ic_arrow_right"
                         app:rawMode="0" />
                 </LinearLayout>
@@ -309,6 +318,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="@dimen/normal_margin_20"
                 android:text="退出登录"
                 android:textSize="16sp"
                 android:textStyle="bold"

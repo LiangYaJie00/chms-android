@@ -139,6 +139,7 @@
             
             <!-- 版本信息 -->
             <TextView
+                android:id="@+id/tv_version"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="v1.0.0"

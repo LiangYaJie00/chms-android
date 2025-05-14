@@ -19,8 +19,14 @@ import com.example.chms_android.repo.DoctorRepo
 import com.example.chms_android.utils.AccountUtil
 import com.example.chms_android.utils.TokenUtil
 import com.example.chms_android.utils.WindowUtil
+import android.util.Log
+import android.os.Build
+import android.widget.TextView
+import com.example.chms_android.R
+import com.example.chms_android.utils.AppUtil
 
 class LoginActivity : AppCompatActivity() {
+    private val TAG = "LoginActivity"
     private lateinit var binding: ActivityLoginBinding
     private lateinit var viewModel: LoginActivityVM
 
@@ -48,6 +54,9 @@ class LoginActivity : AppCompatActivity() {
             isAppearanceLightStatusBars = false // 状态栏图标为白色
             isAppearanceLightNavigationBars = false // 导航栏图标为白色
         }
+
+        // 设置版本号
+        updateVersionInfo()
 
         DoctorRepo.getAllNetDoctors(this)
         CommunityRepo.getAllNetCommunity(this)
@@ -82,6 +91,26 @@ class LoginActivity : AppCompatActivity() {
         binding.btnRegister.setOnClickListener {
             val registerBottomDialog = RegisterBottomDialog()
             registerBottomDialog.show(supportFragmentManager, "RegisterBottomDialog")
+        }
+    }
+
+    /**
+     * 更新版本信息
+     */
+    private fun updateVersionInfo() {
+        try {
+            // 使用AppUtil工具类获取版本信息
+            val versionInfo = AppUtil.getSimpleVersion(this)
+            
+            // 设置版本信息到TextView
+            binding.cardButtons.findViewById<TextView>(R.id.tv_version)?.apply {
+                text = versionInfo
+            }
+            
+            // 记录版本信息
+            Log.d(TAG, "App version: $versionInfo")
+        } catch (e: Exception) {
+            Log.e(TAG, "Error setting app version", e)
         }
     }
 

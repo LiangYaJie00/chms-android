@@ -35,7 +35,7 @@ object NetworkUtil {
     }
     
     // 处理网络错误
-    fun handleNetworkError(context: Context, e: IOException): String {
+    fun handleNetworkError(tag: String, context: Context, e: IOException): String {
         // 创建错误信息的结构化数据
         val errorData = mapOf(
             "error_type" to e.javaClass.simpleName,
@@ -49,7 +49,7 @@ object NetworkUtil {
         // 转换为JSON
         val gson = Gson()
         val errorJson = gson.toJson(errorData)
-        Log.e(TAG, "Network error JSON: $errorJson")
+        Log.e("${TAG}-${tag}", "Network error JSON: $errorJson")
         
         // 根据错误类型生成用户友好的错误消息
         val userMessage = when (e) {

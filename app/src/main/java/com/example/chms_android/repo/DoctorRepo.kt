@@ -70,7 +70,7 @@ object DoctorRepo {
                 e.printStackTrace()
                 
                 // 使用网络工具类处理错误
-                NetworkUtil.handleNetworkError(context, e)
+                NetworkUtil.handleNetworkError(TAG, context, e)
                 
                 // 如果是开发环境，可以考虑使用本地缓存数据
                 if (Constants.IS_TESTING) {
