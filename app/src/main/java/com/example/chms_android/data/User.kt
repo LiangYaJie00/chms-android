@@ -8,16 +8,16 @@ import java.time.LocalDateTime
 data class User(
     @PrimaryKey(autoGenerate = false)
     val userId: Int? = null,
-    val name: String,
+    var name: String,
     val email: String,
     val password: String? = null,
-    val phone: Long,
-    var avatar: String,
+    var phone: Long? = null,
+    var avatar: String? = null,
     val role: Role,
-    val age: Int,
-    val gender: Int,
-    val height: Int,
-    val weight: Int,
+    var age: Int? = null,
+    var gender: Int? = null,
+    var height: Int? = null,
+    var weight: Int? = null,
     var community: String? = null,
     val isVerified: Boolean,
     val loginTime: LocalDateTime? = null

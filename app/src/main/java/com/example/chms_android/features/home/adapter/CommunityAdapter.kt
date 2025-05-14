@@ -80,8 +80,9 @@ class CommunityAdapter(
         var user = AccountUtil(context).getUser()
         user?.community = newCommunityName
         if (user != null) {
-            UserRepo.updateUser(user, context)
-            Toast.makeText(context, "社区已更新为: $newCommunityName", Toast.LENGTH_SHORT).show()
+            UserRepo.updateUser(user, context, onSuccess = { updatedUser ->
+                Toast.makeText(context, "社区已更新为: $newCommunityName", Toast.LENGTH_SHORT).show()
+            })
         }
     }
 

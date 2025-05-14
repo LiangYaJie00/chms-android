@@ -7,6 +7,7 @@
         <attr name="showBackArrow" format="boolean" />
         <attr name="backArrowIcon" format="reference" />
         <attr name="titleBarBackground" format="color" />
+        <attr name="titleBarBackgroundDrawable" format="reference" /> <!--可以设置任意背景drawable-->
         <attr name="mode" format="integer" /> <!--0表示白色背景标题栏，1表示蓝色背景标题栏-->
     </declare-styleable>
 
@@ -22,5 +23,13 @@
             如果mode = 2，则此时的条目为上面两个角为直角，下面两个为圆角；
             如果mode = 3，则此时的条目为四个圆角；
         -->
+    </declare-styleable>
+
+    <!-- LabeledEditField 自定义属性 -->
+    <declare-styleable name="LabeledEditField">
+        <attr name="labelText" format="string" />
+        <attr name="hintText" format="string" />
+        <attr name="isLocked" format="boolean" />
+        <attr name="lockMessage" format="string" />
     </declare-styleable>
 </resources>

@@ -19,25 +19,39 @@ import com.example.chms_android.databinding.ActivityMainBinding
 import com.example.chms_android.repo.DoctorRepo
 import com.example.chms_android.utils.TUIUtil
 import com.example.chms_android.utils.WindowUtil
+import com.example.chms_android.utils.NetworkUtil
+import android.app.AlertDialog
+import android.widget.Button
+import com.example.chms_android.common.Constants
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var mainActivityVM: MainActivityVM
     lateinit var sp: SharedPreferences
+    
+    // 添加一个标志，表示是否处于离线模式
+    var isOfflineMode = false
+        private set
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // 初始化 View Binding
         binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        
         // 设置状态栏颜色
         window.statusBarColor = ContextCompat.getColor(this, R.color.actionbar_color)
-
-        setContentView(binding.root)
-
+        
+        // 检查是否处于离线模式
+        isOfflineMode = intent.getBooleanExtra("OFFLINE_MODE", false)
+        
         TUIUtil.initTUI(this)
-
-        DoctorRepo.getAllNetDoctors(this)
-
+        
         initNavView()
 
         sp = getPreferences(Context.MODE_PRIVATE)
@@ -48,9 +62,49 @@ class MainActivity : AppCompatActivity() {
         initListeners()
 
         observeViewModel()
-
     }
 
+    // 提供一个公共方法，让Fragment可以检查是否处于离线模式
+    fun isInOfflineMode(): Boolean {
+        return isOfflineMode
+    }
+    
+    // 提供一个公共方法，用于检查服务器连接
+    fun checkServerAndReconnect(callback: (Boolean) -> Unit) {
+        // 显示加载中提示
+        Toast.makeText(this, "正在尝试重新连接服务器...", Toast.LENGTH_SHORT).show()
+        
+        // 在后台线程中检查服务器连接
+        Thread {
+            val isServerReachable = NetworkUtil.checkServerReachable(Constants.TEST_URL)
+            
+            runOnUiThread {
+                if (isServerReachable) {
+                    // 服务器可达
+                    isOfflineMode = false
+                    Toast.makeText(this, "已恢复网络连接", Toast.LENGTH_SHORT).show()
+                    
+                    // 重新加载需要网络的数据
+                    loadNetworkData()
+                    
+                    // 通知回调
+                    callback(true)
+                } else {
+                    // 服务器仍然不可达
+                    Toast.makeText(this, "服务器仍然不可用，继续使用离线模式", Toast.LENGTH_LONG).show()
+                    
+                    // 通知回调
+                    callback(false)
+                }
+            }
+        }.start()
+    }
+
+    private fun loadNetworkData() {
+        // 加载需要网络连接的数据
+        DoctorRepo.getAllNetDoctors(this)
+        // 其他网络数据加载...
+    }
 
     override fun onPause() {
         super.onPause()
@@ -67,7 +121,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initNavView() {
-        supportActionBar!!.hide()
+        // 安全地隐藏 ActionBar
+        supportActionBar?.hide()
 
         val navController = findNavController(R.id.fragment_main)
         val appBarConfiguration = AppBarConfiguration(

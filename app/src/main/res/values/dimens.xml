@@ -22,6 +22,9 @@
     <dimen name="login_horizontal_padding">40dp</dimen>
 
     <!--通用外边距-->
+    <dimen name="normal_margin_2">2dp</dimen>
+    <dimen name="normal_margin_3">3dp</dimen>
+    <dimen name="normal_margin_4">4dp</dimen>
     <dimen name="normal_margin_5">5dp</dimen>
     <dimen name="normal_margin_8">8dp</dimen>
     <dimen name="normal_margin_10">10dp</dimen>
@@ -32,7 +35,14 @@
     <!--通用内边距-->
     <dimen name="normal_padding_8">8dp</dimen>
     <dimen name="normal_padding_10">10dp</dimen>
+    <dimen name="normal_padding_12">12dp</dimen>
+    <dimen name="normal_padding_14">14dp</dimen>
     <dimen name="normal_padding_16">16dp</dimen>
     <dimen name="normal_padding_18">18dp</dimen>
     <dimen name="normal_padding_20">20dp</dimen>
+
+    <!-- 启动页面logo尺寸 -->
+    <dimen name="splash_logo_width">140dp</dimen>
+    <dimen name="splash_logo_height">145dp</dimen>
+    <dimen name="splash_logo_corner_radius">16dp</dimen>
 </resources>

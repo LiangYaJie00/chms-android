@@ -2,6 +2,7 @@ package com.example.chms_android.repo
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.widget.Toast
 import com.example.chms_android.MainActivity
 import com.example.chms_android.api.UserApi
@@ -10,6 +11,7 @@ import com.example.chms_android.data.User
 import com.example.chms_android.database.DatabaseProvider
 import com.example.chms_android.utils.AccountUtil
 import com.example.chms_android.utils.OkhttpUtil
+import com.example.chms_android.utils.ResponseHandler
 import com.example.chms_android.utils.ToastUtil
 import com.example.chms_android.vo.RespResult
 import com.example.chms_android.vo.UserResponse
@@ -23,54 +25,58 @@ import org.greenrobot.eventbus.EventBus
 import java.io.IOException
 
 object UserRepo {
+    private val TAG = "UserRepo"
     private val userDao: UserDao get() = DatabaseProvider.getDatabase().userDao()
 
-    fun updateUser(user: User, context: Context) {
+    fun updateUser(
+        user: User, 
+        context: Context,
+        onSuccess: ((User) -> Unit)? = null,
+        onFailure: ((String) -> Unit)? = null
+    ) {
         UserApi.updateUser(user, context, object: OkhttpUtil.NetworkCallback {
             override fun onSuccess(response: String) {
-                try {
-                    // Gson 解析返回的数据
-                    val gson = Gson()
-                    val resultType = object : TypeToken<RespResult<User>>() {}.type
-                    val result: RespResult<User> = gson.fromJson(response, resultType)
-
-                    if (result.code == "200") {
-                        val user = result.data
-                        // 更新用户信息到本地数据库，并在成功后执行后续操作
-                        GlobalScope.launch(Dispatchers.IO) { // 使用 IO 线程
+                ResponseHandler.processApiResponse(
+                    response = response,
+                    context = context,
+                    typeToken = object : TypeToken<RespResult<User>>() {},
+                    onSuccess = { updatedUser ->
+                        // 更新用户信息到本地数据库
+                        GlobalScope.launch(Dispatchers.IO) {
                             try {
-                                userDao.updateUser(user)
-                                AccountUtil(context).saveUser(user)
-                                EventBus.getDefault().post(user)
-                                // 使用主线程进行 UI 操作
+                                userDao.updateUser(updatedUser)
+                                AccountUtil(context).saveUser(updatedUser)
+                                EventBus.getDefault().post(updatedUser)
+                                
+                                // 在主线程调用成功回调
                                 withContext(Dispatchers.Main) {
-                                    // 弹出登录成功的提示框
-//                                    ToastUtil.show(context, "UpdateUser successful: 更新成功!", Toast.LENGTH_SHORT)
+                                    onSuccess?.invoke(updatedUser)
                                 }
                             } catch (e: Exception) {
                                 e.printStackTrace()
                                 withContext(Dispatchers.Main) {
-                                    // 显示错误信息
-                                    ToastUtil.show(context, "Failed to update user: ${e.message}", Toast.LENGTH_SHORT)
+                                    val errorMsg = "Failed to save user data: ${e.message}"
+                                    Log.e(TAG, "Error updating user in database: $errorMsg", e)
+                                    onFailure?.invoke(errorMsg)
                                 }
                             }
                         }
-                    } else {
-                        ToastUtil.show(context, "UpdateUse failed: ${result.message}", Toast.LENGTH_SHORT)
-                    }
-
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    ToastUtil.show(context, "Failed to parse response", Toast.LENGTH_SHORT)
-                }
+                    },
+                    onError = { errorMsg ->
+                        onFailure?.invoke(errorMsg)
+                    },
+                    successToastMessage = "用户信息更新成功",
+                    errorToastMessage = "更新失败"
+                )
             }
 
             override fun onFailure(e: IOException) {
                 e.printStackTrace()
                 // 弹出接口请求失败的提示框
-                ToastUtil.show(context, "Network error: ${e.message}", Toast.LENGTH_SHORT)
+                val errorMsg = "网络错误: ${e.message}"
+                ToastUtil.show(context, errorMsg, Toast.LENGTH_SHORT)
+                onFailure?.invoke(errorMsg)
             }
-
         })
     }
 

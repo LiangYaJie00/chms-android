@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="@dimen/normal_margin_5">
+    
+    <TextView
+        android:id="@+id/tv_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/normal_margin_4"
+        android:layout_alignParentTop="true"
+        android:textSize="@dimen/title_size_14"
+        tools:text="标签"
+        android:textColor="@color/black"/>
+    
+    <EditText
+        android:id="@+id/et_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_label"
+        android:layout_marginTop="4dp"
+        android:textSize="@dimen/title_size_14"
+        tools:hint="输入内容" />
+
+    <ImageView
+        android:id="@+id/iv_lock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/normal_margin_5"
+        android:src="@drawable/lock_24px"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true" />
+    
+</RelativeLayout>

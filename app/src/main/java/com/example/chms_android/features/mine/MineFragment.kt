@@ -1,145 +1,221 @@
 package com.example.chms_android.features.mine
 
-import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
+import android.widget.Button
+import android.widget.LinearLayout
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.example.chms_android.R
 import com.example.chms_android.databinding.FragmentMineBinding
 import com.example.chms_android.features.mine.activity.ReservationActivity
 import com.example.chms_android.features.mine.activity.ReservationManageActivity
 import com.example.chms_android.features.mine.activity.UserEditActivity
 import com.example.chms_android.features.report.activity.ReportShowActivity
 import com.example.chms_android.login.activity.LoginActivity
-import com.example.chms_android.ui.components.dialog.LoadingDialog
-import com.example.chms_android.utils.AccountUtil
-import com.example.chms_android.utils.ImagePickerUtil
-import com.example.chms_android.utils.ToastUtil
 
-class MineFragment : Fragment(), ImagePickerUtil.ImagePickerCallback {
+class MineFragment : Fragment() {
     private var _binding: FragmentMineBinding? = null
     private val binding get() = _binding!!
-    private lateinit var imagePickerUtil: ImagePickerUtil
-    // 添加ViewModel和加载对话框
+    
+    // 添加ViewModel
     private lateinit var viewModel: MineViewModel
-    private lateinit var loadingDialog: LoadingDialog
-
-    // Fragment 注册活动结果启动器
-    private val pickImageLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == Activity.RESULT_OK && result.data != null) {
-            val imageUri: Uri? = result.data?.data
-            imageUri?.let {
-                onImagePicked(it)
-                ToastUtil.show(requireContext(), "头像已更新")
-            }
-        }
-    }
+    private var offlineBanner: View? = null
+    private var isBannerVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-        }
-
-        // 实例化工具类
-        imagePickerUtil = ImagePickerUtil(requireActivity(), this, pickImageLauncher)
         
         // 初始化ViewModel
         viewModel = ViewModelProvider(this).get(MineViewModel::class.java)
     }
     
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onDestroy() {
+        super.onDestroy()
         
-        // 观察上传状态
-        viewModel.uploadStatus.observe(viewLifecycleOwner) { status ->
-            when (status) {
-                is MineViewModel.UploadStatus.Loading -> {
-                    // 显示加载中
-                    if (!::loadingDialog.isInitialized) {
-                        loadingDialog = LoadingDialog(requireContext())
-                    }
-                    loadingDialog.show()
-                }
-                is MineViewModel.UploadStatus.Success -> {
-                    // 隐藏加载中
-                    if (::loadingDialog.isInitialized && loadingDialog.isShowing) {
-                        loadingDialog.dismiss()
-                    }
-                    
-                    // 使用Glide加载远程图片
-                    Glide.with(requireContext())
-                        .load(status.imageUrl)
-                        .into(binding.civMineAvatar)
-                    
-                    ToastUtil.show(requireContext(), "头像上传成功")
-                }
-                is MineViewModel.UploadStatus.Error -> {
-                    // 隐藏加载中
-                    if (::loadingDialog.isInitialized && loadingDialog.isShowing) {
-                        loadingDialog.dismiss()
-                    }
-                    
-                    // 显示错误信息
-                    ToastUtil.show(requireContext(), "上传失败: ${status.message}")
-                }
-            }
-        }
+        // 清除binding引用，避免内存泄漏
+        _binding = null
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentMineBinding.inflate(inflater, container, false)
 
-        setListener()
+        // 设置观察者
+        setupObservers()
+        
+        // 设置监听器
+        setupListeners()
 
         return binding.root
     }
+    
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        
+        // 在视图完全创建后检查离线模式
+        viewModel.checkOfflineMode(requireContext())
+    }
+    
+    override fun onResume() {
+        super.onResume()
+        // 每次页面可见时刷新用户信息
+        viewModel.loadUserInfo(requireContext())
+        
+        // 在Fragment恢复时也检查离线模式
+        viewModel.checkOfflineMode(requireContext())
+    }
+    
+    // 设置观察者
+    private fun setupObservers() {
+        // 观察用户数据变化
+        viewModel.user.observe(viewLifecycleOwner) { user ->
+            if (user != null) {
+                // 更新头像
+                if (!user.avatar.isNullOrEmpty()) {
+                    Glide.with(requireContext())
+                        .load(user.avatar)
+                        .placeholder(R.drawable.default_avatar)
+                        .error(R.drawable.default_avatar)
+                        .into(binding.civMineAvatar)
+                } else {
+                    binding.civMineAvatar.setImageResource(R.drawable.default_avatar)
+                }
+                
+                // 更新用户名和邮箱
+                binding.tvMineName.text = user.name
+                binding.tvMineEmail.text = user.email
+                binding.tvMineCommunity.text = user.community ?: "未选择社区"
+            }
+        }
+        
+        // 观察离线模式状态
+        viewModel.isOfflineMode.observe(viewLifecycleOwner) { isOffline ->
+            Log.d("MineFragment", "Offline mode changed: $isOffline, isBannerVisible=$isBannerVisible")
+            if (isOffline && !isBannerVisible) {
+                showOfflineBanner()
+            } else if (!isOffline && isBannerVisible) {
+                removeOfflineBanner()
+            }
+        }
+        
+        // 观察重试连接结果
+        viewModel.connectionRetryResult.observe(viewLifecycleOwner) { isConnected ->
+            if (isConnected) {
+                removeOfflineBanner()
+            }
+        }
+    }
 
     // 监听器设置
-    private fun setListener() {
+    private fun setupListeners() {
         // 个人资料编辑
         binding.ibMineEditUser.setOnClickListener {
             val intent = Intent(requireActivity(), UserEditActivity::class.java)
             startActivity(intent)
         }
-        // 头像的点击事件
+        
+        // 头像点击事件，跳转到个人资料编辑页面
         binding.civMineAvatar.setOnClickListener {
-            imagePickerUtil.checkPermissionAndPickImage()
+            val intent = Intent(requireActivity(), UserEditActivity::class.java)
+            startActivity(intent)
         }
+        
         // 在线就诊
         binding.rcFmReservation.setOnClickListener {
             val intent = Intent(requireActivity(), ReservationActivity::class.java)
             startActivity(intent)
         }
+        
         // 预约管理
         binding.rcFmReservationManage.setOnClickListener {
             val intent = Intent(requireActivity(), ReservationManageActivity::class.java)
             startActivity(intent)
         }
+        
         binding.rcFmReportManage.setOnClickListener {
             val intent = Intent(requireActivity(), ReportShowActivity::class.java)
             startActivity(intent)
         }
+        
         // 退出登录
-        binding.btnMineLogOut.setOnClickListener {
-            AccountUtil(requireContext()).clearUser()
-            AccountUtil(requireContext()).clearUserId()
-
+        binding.btnMineLogout.setOnClickListener {
+            viewModel.logout(requireContext())
+            
             val intent = Intent(context, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             context?.startActivity(intent)
         }
+    }
+    
+    private fun showOfflineBanner() {
+        try {
+            Log.d("MineFragment", "Showing offline banner")
+            
+            // 创建离线模式横幅
+            offlineBanner = layoutInflater.inflate(R.layout.offline_mode_banner, null)
+            
+            // 获取容器 - MineFragment使用CoordinatorLayout
+            val scrollView = binding.root.findViewById<NestedScrollView>(R.id.nestedScrollView_mine)
+            val linearLayout = scrollView?.getChildAt(0) as? LinearLayout
+            
+            if (linearLayout != null) {
+                // 在LinearLayout中，添加到索引0的位置（最顶部）
+                linearLayout.addView(offlineBanner, 0)
+                
+                // 设置重试按钮点击事件
+                offlineBanner?.findViewById<Button>(R.id.btn_retry_connection)?.setOnClickListener {
+                    viewModel.retryConnection(requireContext())
+                }
+                
+                // 标记横幅已显示
+                isBannerVisible = true
+            } else {
+                Log.e("MineFragment", "LinearLayout not found in NestedScrollView")
+            }
+        } catch (e: Exception) {
+            Log.e("MineFragment", "Error showing offline banner: ${e.message}")
+            e.printStackTrace()
+        }
+    }
+
+    private fun removeOfflineBanner() {
+        try {
+            Log.d("MineFragment", "Removing offline banner")
+            
+            if (offlineBanner != null) {
+                val scrollView = binding.root.findViewById<NestedScrollView>(R.id.nestedScrollView_mine)
+                val linearLayout = scrollView?.getChildAt(0) as? LinearLayout
+                
+                if (linearLayout != null) {
+                    linearLayout.removeView(offlineBanner)
+                    offlineBanner = null
+                    
+                    // 标记横幅已移除
+                    isBannerVisible = false
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("MineFragment", "Error removing offline banner: ${e.message}")
+            e.printStackTrace()
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // 在视图销毁时重置状态
+        offlineBanner = null
+        isBannerVisible = false
+        _binding = null
     }
 
     companion object {
@@ -149,28 +225,5 @@ class MineFragment : Fragment(), ImagePickerUtil.ImagePickerCallback {
                 arguments = Bundle().apply {
                 }
             }
-    }
-
-    // 返回图片选择结果
-    override fun onImagePicked(imageUri: Uri) {
-        // 先显示本地图片（立即反馈）
-        binding.civMineAvatar.setImageURI(imageUri)
-        
-        // 上传图片到服务器
-        viewModel.uploadAvatar(requireContext(), imageUri)
-    }
-
-    // 处理权限被拒绝的情况
-    override fun onPermissionDenied() {
-        ToastUtil.show( requireActivity(),"存储权限请求失败")
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        imagePickerUtil.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 }

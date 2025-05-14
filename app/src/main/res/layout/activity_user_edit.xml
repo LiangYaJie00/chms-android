@@ -5,9 +5,220 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/bg01"
+    android:background="@drawable/gradient_blue_background"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context=".features.mine.activity.UserEditActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient_blue_background">
+        
+        <com.example.chms_android.ui.components.TitleBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:titleText="@string/user_edit_title"
+            app:titleBarBackgroundDrawable="@drawable/gradient_blue_background"
+            app:titleTextColor="@color/white"
+            app:backArrowIcon="@drawable/baseline_arrow_back_white_24"
+            app:mode="1" />
+
+        <TextView
+            android:id="@+id/tv_save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg_white_rounded_button_selector"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp"
+            android:text="保存"
+            android:textColor="@color/actionbar_color"
+            android:textSize="14sp"
+            android:clickable="true"
+            android:focusable="true" />
+        
+    </RelativeLayout>
+    
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical"
+        android:background="@drawable/bg_top_round_20">
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/normal_margin_16"
+            android:paddingHorizontal="@dimen/normal_padding_10"
+            android:paddingVertical="@dimen/normal_padding_12"
+            android:background="@drawable/bg_white_blue_stroke_rounded">
+            
+            <ImageView
+                android:id="@+id/iv_user_avatar"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_avatar_rect"
+                android:background="@drawable/bg_rounded_image"
+                android:clipToOutline="true"
+                android:contentDescription="@string/user_avatar" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="@dimen/normal_margin_16"
+                android:layout_toEndOf="@id/iv_user_avatar"
+                android:layout_centerVertical="true">
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="用户名"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/title_size_18" />
+
+                <TextView
+                    android:id="@+id/tv_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="邮箱"
+                    android:textSize="@dimen/title_size_14" />
+                
+                <TextView
+                    android:id="@+id/tv_community"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="未选择社区"
+                    android:textSize="@dimen/title_size_14" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_user_avatar_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/photo_camera_24px"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true" />
+            
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/normal_padding_16"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <!--社区选择-->
+                <LinearLayout
+                    android:id="@+id/ll_community"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="@dimen/normal_padding_18"
+                    android:paddingVertical="@dimen/normal_padding_12"
+                    android:background="@drawable/bg_light_blue_rounded">
+
+                    <TextView
+                        android:id="@+id/tv_community_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="未选择社区"
+                        android:textSize="@dimen/title_size_18"
+                        android:textStyle="bold"
+                        android:textColor="@color/black" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_right_black" />
+
+                </LinearLayout>
+
+                <com.example.chms_android.ui.components.LabeledEditField
+                    android:id="@+id/field_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/normal_margin_16"
+                    app:labelText="@string/user_edit_name"
+                    app:hintText="用户名称"
+                    app:isLocked="false" />
+
+                <com.example.chms_android.ui.components.LabeledEditField
+                    android:id="@+id/field_age"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:labelText="@string/user_edit_age"
+                    app:hintText="年龄"
+                    app:isLocked="false" />
+
+                <com.example.chms_android.ui.components.LabeledEditField
+                    android:id="@+id/field_gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:labelText="@string/user_edit_gender"
+                    app:hintText="性别"
+                    app:isLocked="false" />
+
+                <com.example.chms_android.ui.components.LabeledEditField
+                    android:id="@+id/field_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:labelText="@string/user_edit_email"
+                    app:hintText="user@email.com"
+                    app:isLocked="true"
+                    app:lockMessage="邮箱信息不可修改，如需修改请联系管理员" />
+
+                <com.example.chms_android.ui.components.LabeledEditField
+                    android:id="@+id/field_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:labelText="@string/user_edit_phone"
+                    app:hintText="12345678900"
+                    app:isLocked="false" />
+
+                <com.example.chms_android.ui.components.LabeledEditField
+                    android:id="@+id/field_weight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:labelText="@string/user_edit_weight"
+                    app:hintText="60"
+                    app:isLocked="false" />
+
+                <com.example.chms_android.ui.components.LabeledEditField
+                    android:id="@+id/field_height"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:labelText="@string/user_edit_height"
+                    app:hintText="170"
+                    app:isLocked="false" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
 
 </LinearLayout>

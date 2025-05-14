@@ -2,6 +2,7 @@ package com.example.chms_android.ui.components
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
@@ -24,8 +25,25 @@ class TitleBar(context: Context, attrs: AttributeSet): LinearLayout(context, att
         val attributes = context.obtainStyledAttributes(attrs, R.styleable.TitleBar)
 
         val mode = attributes.getInteger(R.styleable.TitleBar_mode, 0)
+        
+        // 获取背景drawable
+        val backgroundDrawable = attributes.getDrawable(R.styleable.TitleBar_titleBarBackgroundDrawable)
+        
+        if (backgroundDrawable != null) {
+            // 如果设置了背景drawable，优先使用它
+            binding.root.background = backgroundDrawable
 
-        if (mode == 0) {
+            // 获取并应用标题的颜色
+            val defaultColor = ContextCompat.getColor(context, R.color.black)
+            val titleTextColor = attributes.getColor(R.styleable.TitleBar_titleTextColor, defaultColor)
+            binding.tvTitleBarTitle.setTextColor(titleTextColor)
+
+            // 设置backArrow按钮的图标
+            val backArrowIconResId = attributes.getResourceId(R.styleable.TitleBar_backArrowIcon, R.drawable.baseline_arrow_back_white_24)
+            if (backArrowIconResId != -1) {
+                binding.ibTitleBarBack.setImageResource(backArrowIconResId)
+            }
+        } else if (mode == 0) {
             // 获取并应用背景颜色
             val defaultBackgroundColor = ContextCompat.getColor(context, R.color.transparent)
             val titleBarBackgroundColor = attributes.getColor(R.styleable.TitleBar_titleBarBackground, defaultBackgroundColor)
@@ -68,11 +86,23 @@ class TitleBar(context: Context, attrs: AttributeSet): LinearLayout(context, att
 
         // 释放 TypedArray 对象，以供后续重用
         attributes.recycle()
-
     }
 
     fun setTitleText(text: String) {
         binding.tvTitleBarTitle.text = text
     }
 
+    /**
+     * 设置自定义背景
+     */
+    fun setCustomBackground(drawable: Drawable) {
+        binding.root.background = drawable
+    }
+    
+    /**
+     * 设置自定义背景资源
+     */
+    fun setCustomBackgroundResource(resId: Int) {
+        binding.root.setBackgroundResource(resId)
+    }
 }

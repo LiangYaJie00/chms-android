@@ -23,16 +23,16 @@ object DatabaseProvider {
         return INSTANCE ?: throw IllegalStateException("Database must be initialized")
     }
 
-//    fun getDatabase(context: Context): AppDatabase {
-//        return INSTANCE ?: synchronized(this) {
-//            val instance = Room.databaseBuilder(
-//                context.applicationContext,
-//                AppDatabase::class.java,
-//                Constants.DATABASE_NAME
-//            ).build()
-//            INSTANCE = instance
-//            instance
-//        }
-//    }
-
+    // 添加一个安全的获取数据库方法，如果数据库未初始化，则初始化它
+    fun getDatabase(context: Context): AppDatabase {
+        return INSTANCE ?: synchronized(this) {
+            val instance = Room.databaseBuilder(
+                context.applicationContext,
+                AppDatabase::class.java,
+                Constants.DATABASE_NAME
+            ).build()
+            INSTANCE = instance
+            instance
+        }
+    }
 }

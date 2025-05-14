@@ -1,316 +1,320 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
-    android:orientation="vertical">
+    android:background="@color/background">
 
-    <com.example.chms_android.ui.components.TitleBar
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar_mine"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:titleText="@string/title_mine"
-        app:showBackArrow="false"
-        app:mode="1" />
+        android:background="@color/transparent"
+        app:elevation="0dp">
 
-    <ScrollView
+        <com.example.chms_android.ui.components.TitleBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:titleText="@string/title_mine"
+            app:showBackArrow="false"
+            app:mode="1" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView_mine"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/transparent"
-            android:orientation="vertical">
-            <!--下面的这一个控件的添加解决了将statusBarColor颜色不适配的问题-->
-            <!--        <androidx.coordinatorlayout.widget.CoordinatorLayout-->
-            <!--            android:layout_width="match_parent"-->
-            <!--            android:layout_height="0dp"-->
-            <!--            android:fitsSystemWindows="true" />-->
-            <RelativeLayout
+            android:orientation="vertical"
+            android:paddingBottom="24dp">
+
+            <!-- 用户信息卡片 -->
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_view"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="180dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="40dp"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="3dp" >
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
+                    <!-- 背景图 -->
                     <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@mipmap/blue" />
+                        android:layout_height="50dp">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp">
-                        <ImageButton
-                            android:id="@+id/ib_mine_editUser"
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/profile_header_bg" />
+
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:padding="2dp"
-                            android:layout_alignParentRight="true"
-                            android:background="@color/transparent"
-                            android:src="@drawable/edit_line" />
-                    </RelativeLayout>
+                            android:layout_marginLeft="@dimen/normal_margin_16"
+                            android:text="用户信息"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:layout_gravity="start|center_vertical" />
 
+                        <ImageButton
+                            android:id="@+id/ib_mine_editUser"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="end|top"
+                            android:layout_marginHorizontal="12dp"
+                            android:layout_marginVertical="5dp"
+                            android:background="@drawable/circle_button_bg"
+                            android:padding="8dp"
+                            android:src="@drawable/edit_line"
+                            app:tint="@color/white" />
+                    </FrameLayout>
+
+                    <!-- 用户信息 -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginTop="35dp"
-                        android:layout_marginLeft="20dp">
+                        android:padding="16dp">
+
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/civ_mine_avatar"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:layout_centerHorizontal="true"
-                            android:src="@mipmap/image_show" />
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/default_avatar"
+                            app:civ_border_color="@color/white"
+                            app:civ_border_width="3dp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_marginHorizontal="10dp"
-                            android:layout_marginVertical="5dp">
+                            android:layout_marginStart="16dp"
+                            android:orientation="vertical">
+
                             <TextView
                                 android:id="@+id/tv_mine_name"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="UserName"
-                                android:textColor="@color/black"
-                                android:textStyle="bold"
-                                android:textSize="22sp" />
+                                android:text="用户名"
+                                android:textColor="@color/text_primary"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginVertical="5dp">
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="email: "
-                                    android:textSize="18sp" />
+                                android:layout_marginTop="8dp"
+                                android:gravity="center_vertical">
+
+                                <ImageView
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:src="@drawable/ic_email"
+                                    app:tint="@color/text_secondary" />
+
                                 <TextView
                                     android:id="@+id/tv_mine_email"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="1792026541@qq.com"
-                                    android:textSize="15sp"/>
+                                    android:layout_marginStart="8dp"
+                                    android:text="user@example.com"
+                                    android:textColor="@color/text_secondary"
+                                    android:textSize="14sp" />
                             </LinearLayout>
 
                             <TextView
-                                android:id="@+id/tv_mine_signature"
+                                android:id="@+id/tv_mine_community"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginVertical="5dp"
-                                android:text="个性签名"
-                                android:textSize="15sp" />
-
+                                android:layout_marginTop="8dp"
+                                android:text="社区名称"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="14sp" />
                         </LinearLayout>
                     </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <LinearLayout
-                    android:id="@+id/liner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/card_view"
-                    android:layout_marginTop="20dp"
-                    android:orientation="vertical">
-
-                    <!--                <LinearLayout-->
-                    <!--                    android:layout_width="match_parent"-->
-                    <!--                    android:layout_height="wrap_content">-->
-                    <!--                    <LinearLayout-->
-                    <!--                        android:layout_width="0dp"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        android:layout_marginHorizontal="10dp"-->
-                    <!--                        android:layout_marginVertical="10dp"-->
-                    <!--                        android:layout_weight="1"-->
-                    <!--                        android:gravity="center"-->
-                    <!--                        android:orientation="vertical">-->
-
-                    <!--                        <ImageButton-->
-                    <!--                            android:layout_width="wrap_content"-->
-                    <!--                            android:layout_height="wrap_content"-->
-                    <!--                            android:layout_marginHorizontal="10dp"-->
-                    <!--                            android:background="@color/transparent"-->
-                    <!--                            android:src="@mipmap/collect_mark" />-->
-
-                    <!--                        <TextView-->
-                    <!--                            android:layout_width="wrap_content"-->
-                    <!--                            android:layout_height="wrap_content"-->
-                    <!--                            android:text="收藏"-->
-                    <!--                            android:textSize="17sp" />-->
-                    <!--                    </LinearLayout>-->
-
-                    <!--                    <LinearLayout-->
-                    <!--                        android:layout_width="0dp"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        android:layout_marginHorizontal="10dp"-->
-                    <!--                        android:layout_marginVertical="10dp"-->
-                    <!--                        android:layout_weight="1"-->
-                    <!--                        android:gravity="center"-->
-                    <!--                        android:orientation="vertical">-->
-
-                    <!--                        <ImageButton-->
-                    <!--                            android:layout_width="wrap_content"-->
-                    <!--                            android:layout_height="wrap_content"-->
-                    <!--                            android:layout_marginHorizontal="10dp"-->
-                    <!--                            android:background="@color/transparent"-->
-                    <!--                            android:src="@mipmap/icon_message" />-->
-
-                    <!--                        <TextView-->
-                    <!--                            android:layout_width="wrap_content"-->
-                    <!--                            android:layout_height="wrap_content"-->
-                    <!--                            android:text="消息"-->
-                    <!--                            android:textSize="17sp" />-->
-                    <!--                    </LinearLayout>-->
-
-                    <!--                    <LinearLayout-->
-                    <!--                        android:layout_width="0dp"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        android:layout_marginHorizontal="10dp"-->
-                    <!--                        android:layout_marginVertical="10dp"-->
-                    <!--                        android:layout_weight="1"-->
-                    <!--                        android:gravity="center"-->
-                    <!--                        android:orientation="vertical">-->
-
-                    <!--                        <ImageButton-->
-                    <!--                            android:layout_width="wrap_content"-->
-                    <!--                            android:layout_height="wrap_content"-->
-                    <!--                            android:layout_marginHorizontal="10dp"-->
-                    <!--                            android:background="@color/transparent"-->
-                    <!--                            android:src="@mipmap/icon_friend" />-->
-
-                    <!--                        <TextView-->
-                    <!--                            android:layout_width="wrap_content"-->
-                    <!--                            android:layout_height="wrap_content"-->
-                    <!--                            android:text="好友"-->
-                    <!--                            android:textSize="17sp" />-->
-                    <!--                    </LinearLayout>-->
-                    <!--                </LinearLayout>-->
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:background="@color/light_blue" />
-
                 </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- 健康服务卡片 -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/transparent"
                     android:orientation="vertical"
-                    android:layout_marginBottom="30dp"
-                    android:layout_below="@id/liner"
-                    android:layout_marginTop="50dp">
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:text="健康服务"
+                        android:textColor="@color/text_primary"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                     <com.example.chms_android.ui.components.RawContainer
                         android:id="@+id/rc_fm_reservation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-                        app:startIcon="@mipmap/my_frag_setting_icon"
+                        android:layout_marginBottom="8dp"
+                        app:startIcon="@drawable/ic_reservation"
                         app:title="线上就诊预约"
-                        app:endIcon="@mipmap/right_arrow"
+                        app:endIcon="@drawable/ic_arrow_right"
                         app:rawMode="1" />
+
                     <com.example.chms_android.ui.components.RawContainer
                         android:id="@+id/rc_fm_reservation_manage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-                        app:startIcon="@mipmap/my_frag_setting_icon"
+                        android:layout_marginBottom="8dp"
+                        app:startIcon="@drawable/ic_manage"
                         app:title="预约管理"
-                        app:endIcon="@mipmap/right_arrow"
+                        app:endIcon="@drawable/ic_arrow_right"
                         app:rawMode="0" />
+
                     <com.example.chms_android.ui.components.RawContainer
                         android:id="@+id/rc_fm_report_manage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-                        app:startIcon="@mipmap/my_frag_setting_icon"
+                        app:startIcon="@drawable/ic_report"
                         app:title="健康报告"
-                        app:endIcon="@mipmap/right_arrow"
+                        app:endIcon="@drawable/ic_arrow_right"
                         app:rawMode="0" />
-                    <com.example.chms_android.ui.components.RawContainer
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-                        app:startIcon="@mipmap/my_frag_setting_icon"
-                        app:title="设备管理"
-                        app:endIcon="@mipmap/right_arrow"
-                        app:rawMode="0" />
-                    <com.example.chms_android.ui.components.RawContainer
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-                        app:startIcon="@mipmap/my_frag_setting_icon"
-                        app:title="设备管理"
-                        app:endIcon="@mipmap/right_arrow"
-                        app:rawMode="0" />
-                    <com.example.chms_android.ui.components.RawContainer
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-                        app:startIcon="@mipmap/my_frag_setting_icon"
-                        app:title="设备管理"
-                        app:endIcon="@mipmap/right_arrow"
-                        app:rawMode="0" />
-                    <com.example.chms_android.ui.components.RawContainer
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-                        app:startIcon="@mipmap/my_frag_setting_icon"
-                        app:title="设备管理"
-                        app:endIcon="@mipmap/right_arrow"
-                        app:rawMode="0" />
-                    <com.example.chms_android.ui.components.RawContainer
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-                        app:startIcon="@mipmap/my_frag_setting_icon"
-                        app:title="设备管理"
-                        app:endIcon="@mipmap/right_arrow"
-                        app:rawMode="0" />
-                    <com.example.chms_android.ui.components.RawContainer
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-                        app:startIcon="@mipmap/my_frag_setting_icon"
-                        app:title="设备管理"
-                        app:endIcon="@mipmap/right_arrow"
-                        app:rawMode="0" />
-                    <com.example.chms_android.ui.components.RawContainer
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-                        app:startIcon="@mipmap/my_frag_setting_icon"
-                        app:title="设备管理"
-                        app:endIcon="@mipmap/right_arrow"
-                        app:rawMode="2" />
-
                 </LinearLayout>
-            </RelativeLayout>
-            <Button
-                android:id="@+id/btn_mine_logOut"
+            </androidx.cardview.widget.CardView>
+
+            <!-- 设备管理卡片 -->
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/button_green"
-                android:text="退出登录"
-                android:textStyle="bold"
-                android:textColor="@color/light_blue"
-                android:textSize="17sp"/>
-        </LinearLayout>
-    </ScrollView>
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
 
-</LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:text="设备与安全"
+                        android:textColor="@color/text_primary"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <com.example.chms_android.ui.components.RawContainer
+                        android:id="@+id/rc_fm_device_manage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        app:startIcon="@drawable/ic_device"
+                        app:title="设备管理"
+                        app:endIcon="@drawable/ic_arrow_right"
+                        app:rawMode="0" />
+
+                    <com.example.chms_android.ui.components.RawContainer
+                        android:id="@+id/rc_fm_privacy"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        app:startIcon="@drawable/ic_privacy"
+                        app:title="隐私设置"
+                        app:endIcon="@drawable/ic_arrow_right"
+                        app:rawMode="0" />
+
+                    <com.example.chms_android.ui.components.RawContainer
+                        android:id="@+id/rc_fm_account_security"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:startIcon="@drawable/ic_security"
+                        app:title="账号安全"
+                        app:endIcon="@drawable/ic_arrow_right"
+                        app:rawMode="0" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- 系统设置卡片 -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:text="系统设置"
+                        android:textColor="@color/text_primary"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <com.example.chms_android.ui.components.RawContainer
+                        android:id="@+id/rc_fm_about"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        app:startIcon="@drawable/ic_about"
+                        app:title="关于我们"
+                        app:endIcon="@drawable/ic_arrow_right"
+                        app:rawMode="0" />
+
+                    <com.example.chms_android.ui.components.RawContainer
+                        android:id="@+id/rc_fm_feedback"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:startIcon="@drawable/ic_feedback"
+                        app:title="意见反馈"
+                        app:endIcon="@drawable/ic_arrow_right"
+                        app:rawMode="0" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- 退出登录按钮 -->
+            <Button
+                android:id="@+id/btn_mine_logout"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginHorizontal="16dp"
+                android:text="退出登录"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:background="@drawable/logout_button_bg" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -27,8 +27,8 @@
 
         <ImageView
             android:id="@+id/iv_end_icon"
-            android:layout_width="7dp"
-            android:layout_height="12dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:src="@mipmap/right"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFC107"
+    android:padding="8dp"
+    android:orientation="horizontal"
+    android:gravity="center_vertical">
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@android:drawable/ic_dialog_alert"
+        android:contentDescription="离线模式警告图标" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="8dp"
+        android:text="您正在使用离线模式，部分功能可能不可用"
+        android:textColor="#000000" />
+
+    <Button
+        android:id="@+id/btn_retry_connection"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_marginHorizontal="@dimen/normal_margin_8"
+        android:text="重试"
+        android:textSize="12sp"
+        android:background="@drawable/offline_retry_button"
+        android:textColor="#FFFFFF" />
+</LinearLayout>

@@ -1,5 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.CHMSAndroid" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.CHMSAndroid" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/gradient_blue_background</item>
+        <!-- 其他主题属性 -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <!-- 设置状态栏颜色 -->
+        <item name="android:statusBarColor">@color/actionbar_color</item>
+        <!-- 设置导航栏颜色 -->
+        <item name="android:navigationBarColor">@color/actionbar_color</item>
+    </style>
+
+    <style name="Theme.CHMS" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- 启动页背景色 - 适用于所有Android版本 -->
+        <item name="android:windowBackground">@drawable/gradient_blue_background</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+
+        <!-- 其他主题属性 -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+    </style>
 </resources>

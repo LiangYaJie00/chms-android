@@ -2,15 +2,13 @@ package com.example.chms_android.login.activity
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.chms_android.MainActivity
-import com.example.chms_android.R
 import com.example.chms_android.database.DatabaseProvider
 import com.example.chms_android.databinding.ActivityLoginBinding
 import com.example.chms_android.login.dialog.LoginBottomDialog
@@ -38,7 +36,18 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        window.statusBarColor = ContextCompat.getColor(this, R.color.login_status_bar)
+        // 设置状态栏和导航栏透明
+        window.statusBarColor = Color.TRANSPARENT
+        window.navigationBarColor = Color.TRANSPARENT
+
+        // 让内容延伸到系统栏区域
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        // 设置状态栏图标为白色（适合深色背景）
+        WindowCompat.getInsetsController(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false // 状态栏图标为白色
+            isAppearanceLightNavigationBars = false // 导航栏图标为白色
+        }
 
         DoctorRepo.getAllNetDoctors(this)
         CommunityRepo.getAllNetCommunity(this)
@@ -46,12 +55,8 @@ class LoginActivity : AppCompatActivity() {
 
         checkLoginStatus()
 
-        // 调整视图的padding以适应系统窗口插图
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        // 不再需要调整padding，因为我们希望内容延伸到系统栏区域
+        // 但我们可能需要为某些特定视图添加内边距，以避免被状态栏遮挡
 
         viewModel = ViewModelProvider(this).get(LoginActivityVM::class.java)
 

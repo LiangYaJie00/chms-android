@@ -49,4 +49,32 @@
         <!-- 如果需要透明导航栏，兼容某些机型 -->
         <item name="android:windowTranslucentNavigation">true</item>
     </style>
+
+    <!-- 登录页面主按钮样式 -->
+    <style name="LoginPrimaryButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:letterSpacing">0.1</item>
+        <item name="cornerRadius">12dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="backgroundTint">@color/actionbar_color</item>
+        <item name="rippleColor">#80FFFFFF</item>
+        <item name="elevation">4dp</item>
+    </style>
+
+    <!-- 登录页面次要按钮样式 -->
+    <style name="LoginSecondaryButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/actionbar_color</item>
+        <item name="android:letterSpacing">0.1</item>
+        <item name="cornerRadius">12dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="strokeColor">@color/actionbar_color</item>
+        <item name="strokeWidth">2dp</item>
+        <item name="rippleColor">#80CCCCCC</item>
+    </style>
 </resources>

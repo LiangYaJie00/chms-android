@@ -4,9 +4,11 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import com.example.chms_android.api.DoctorApi
+import com.example.chms_android.common.Constants
 import com.example.chms_android.dao.DoctorDao
 import com.example.chms_android.data.Doctor
 import com.example.chms_android.database.DatabaseProvider
+import com.example.chms_android.utils.NetworkUtil
 import com.example.chms_android.utils.OkhttpUtil
 import com.example.chms_android.utils.ToastUtil
 import com.example.chms_android.vo.RespResult
@@ -66,8 +68,15 @@ object DoctorRepo {
 
             override fun onFailure(e: IOException) {
                 e.printStackTrace()
-                // 弹出接口请求失败的提示框
-                ToastUtil.show(context, "Network error: ${e.message}", Toast.LENGTH_SHORT)
+                
+                // 使用网络工具类处理错误
+                NetworkUtil.handleNetworkError(context, e)
+                
+                // 如果是开发环境，可以考虑使用本地缓存数据
+                if (Constants.IS_TESTING) {
+                    Log.i(TAG, "Using cached data in testing mode")
+                    // 这里可以添加使用本地缓存数据的逻辑
+                }
             }
         })
     }
