@@ -77,4 +77,19 @@
         <item name="strokeWidth">2dp</item>
         <item name="rippleColor">#80CCCCCC</item>
     </style>
+
+    <!-- 日期选择器对话框样式 -->
+    <style name="DatePickerDialogTheme" parent="ThemeOverlay.MaterialComponents.Dialog">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/DatePickerButtonStyle</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/DatePickerButtonStyle</item>
+    </style>
+
+    <style name="DatePickerButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/primary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
 </resources>

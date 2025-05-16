@@ -18,7 +18,7 @@ import com.example.chms_android.R
 import com.example.chms_android.data.User
 import com.example.chms_android.databinding.FragmentHomeBinding
 import com.example.chms_android.features.home.activity.CommunityActivity
-import com.example.chms_android.features.home.activity.DailyHealthReportActivity
+import com.example.chms_android.features.health.activity.DailyHealthReportActivity
 import com.example.chms_android.features.home.activity.DeviceManagerActivity
 import com.example.chms_android.features.home.activity.DoctorsActivity
 import com.example.chms_android.features.home.adapter.DoctorShowsAdapter
@@ -150,7 +150,10 @@ class HomeFragment : Fragment() {
         }
 
         binding.cdFhHealthInfo.setOnClickListener {
-            val intent = Intent(context, DailyHealthReportActivity::class.java)
+            val intent = Intent(context, DailyHealthReportActivity::class.java).apply {
+                // 设置为从上报入口进入
+                putExtra("entryMode", 0)
+            }
             startActivity(intent)
         }
     }

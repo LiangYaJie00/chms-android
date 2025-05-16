@@ -140,8 +140,6 @@ object HealthInfoRepo {
                 Log.e(TAG, "Network error: ${e.message}")
                 // 使用网络工具类处理错误
                 NetworkUtil.handleNetworkError(TAG, context, e)
-                // 调用错误回调
-                onError?.invoke("网络请求失败: ${e.message}")
                 // 尝试从本地数据库获取
                 try {
                     val userId = AccountUtil(context).getUserId().toInt()
@@ -150,6 +148,8 @@ object HealthInfoRepo {
                         Log.i(TAG, "Using cached health info data")
                         onSuccess?.invoke(localHealthInfo)
                     } else {
+                        // 调用错误回调
+                        onError?.invoke("网络请求失败: ${e.message}")
                         // 本地也没有数据
                         ToastUtil.show(context, "无法获取健康信息，请检查网络连接", Toast.LENGTH_SHORT)
                     }

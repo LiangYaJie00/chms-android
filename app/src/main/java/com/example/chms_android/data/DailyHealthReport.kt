@@ -26,7 +26,7 @@ data class DailyHealthReport(
     val bloodSugar: BigDecimal? = null, // 用户的血糖水平，通常以 mg/dL 为单位
     val steps: Int? = null, // 用户每天行走的步数
     val exerciseDuration: Int? = null, // 用户进行锻炼的时间，通常以分钟为单位
-    val sleepDuration: Int? = null, // 用户的睡眠时长，通常以小时为单位
+    val sleepDuration: Int? = null, // 用户的睡眠时长，通常以分钟为单位
     val sleepQuality: String? = null, // 睡眠质量，可以是描述性的术语或等级
     val caloriesIntake: Int? = null, // 用户每天摄入的总热量
     val waterIntake: Int? = null, // 用户摄入的水量，通常以升或盎司为单位
