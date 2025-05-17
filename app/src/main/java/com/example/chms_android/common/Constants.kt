@@ -2,7 +2,7 @@ package com.example.chms_android.common
 
 object Constants {
 //    const val IP = "10.0.2.2"
-//    const val IP = "172.21.69.149"
+//    const val IP = "172.21.67.104"
     const val IP = "192.168.80.91"
 
     const val BASE_URL = "http://${this.IP}:8080/chms"

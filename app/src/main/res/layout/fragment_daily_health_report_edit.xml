@@ -9,14 +9,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="vertical">
 
         <!-- 基本信息卡片 -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_margin="@dimen/normal_margin_16"
             app:cardCornerRadius="8dp"
             app:cardElevation="4dp">
 
@@ -50,7 +49,8 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginHorizontal="@dimen/normal_margin_16"
+            android:layout_marginBottom="@dimen/normal_margin_16"
             app:cardCornerRadius="8dp"
             app:cardElevation="4dp">
 
@@ -193,7 +193,8 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginHorizontal="@dimen/normal_margin_16"
+            android:layout_marginBottom="@dimen/normal_margin_16"
             app:cardCornerRadius="8dp"
             app:cardElevation="4dp">
 
@@ -252,7 +253,8 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginHorizontal="@dimen/normal_margin_16"
+            android:layout_marginBottom="@dimen/normal_margin_16"
             app:cardCornerRadius="8dp"
             app:cardElevation="4dp">
 
@@ -417,7 +419,8 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginHorizontal="@dimen/normal_margin_16"
+            android:layout_marginBottom="@dimen/normal_margin_16"
             app:cardCornerRadius="8dp"
             app:cardElevation="4dp">
 
@@ -482,7 +485,8 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginHorizontal="@dimen/normal_margin_16"
+            android:layout_marginBottom="@dimen/normal_margin_16"
             app:cardCornerRadius="8dp"
             app:cardElevation="4dp">
 
@@ -505,10 +509,16 @@
                     android:id="@+id/edt_notes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_edit_area"
+                    android:gravity="top|start"
                     android:hint="请输入备注信息"
-                    android:inputType="textMultiLine"
-                    android:minLines="3"
-                    android:gravity="top"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:imeOptions="actionDone"
+                    android:lines="4"
+                    android:maxLines="6"
+                    android:minLines="4"
+                    android:padding="12dp"
+                    android:textColor="@color/text_primary"
                     android:textSize="16sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -518,6 +528,8 @@
             android:id="@+id/btn_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/normal_margin_16"
+            android:layout_marginBottom="@dimen/normal_margin_16"
             android:background="@drawable/btn_background_login"
             android:text="保存"
             android:textColor="@color/white"

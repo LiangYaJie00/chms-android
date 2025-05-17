@@ -23,6 +23,8 @@ import android.widget.AutoCompleteTextView
 import android.widget.Spinner
 import android.util.Log
 import android.widget.EditText
+import android.graphics.Rect
+import android.view.ViewTreeObserver
 
 class DailyHealthReportEditFragment : Fragment() {
     
@@ -73,7 +75,7 @@ class DailyHealthReportEditFragment : Fragment() {
             return textView
         }
     }
-    
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
@@ -233,7 +235,6 @@ class DailyHealthReportEditFragment : Fragment() {
                         if (loadingDialog.isShowing) {
                             loadingDialog.dismiss()
                         }
-                        ToastUtil.show(requireContext(), "健康日报保存成功")
                     }
                     is DailyHealthReportViewModel.SaveStatus.Error -> {
                         if (loadingDialog.isShowing) {

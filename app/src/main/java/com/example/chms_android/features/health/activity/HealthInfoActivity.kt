@@ -10,6 +10,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.chms_android.R
 import com.example.chms_android.databinding.ActivityHealthInfoBinding
 import com.example.chms_android.features.health.adapter.HealthInfoPagerAdapter
+import com.example.chms_android.utils.AndroidBug5497Workaround
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -23,6 +24,8 @@ class HealthInfoActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityHealthInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        // 应用键盘遮挡修复
+        AndroidBug5497Workaround.assistActivity(this)
         window.statusBarColor = ContextCompat.getColor(this, R.color.actionbar_color)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

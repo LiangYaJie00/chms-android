@@ -22,14 +22,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:orientation="vertical">
 
             <!-- 基本信息卡片 -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_margin="@dimen/normal_margin_16"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp">
 
@@ -78,7 +77,8 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginHorizontal="@dimen/normal_margin_16"
+                android:layout_marginBottom="@dimen/normal_margin_16"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp">
 
@@ -107,7 +107,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="心率："
+                            android:text="心率 (次/分钟)："
                             android:textColor="@color/text_primary"
                             android:textSize="16sp" />
 
@@ -130,7 +130,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="血压："
+                            android:text="血压 (mmHg)："
                             android:textColor="@color/text_primary"
                             android:textSize="16sp" />
 
@@ -153,7 +153,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="体温："
+                            android:text="体温 (°C)："
                             android:textColor="@color/text_primary"
                             android:textSize="16sp" />
 
@@ -176,7 +176,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="呼吸频率："
+                            android:text="呼吸频率 (次/分钟)："
                             android:textColor="@color/text_primary"
                             android:textSize="16sp" />
 
@@ -199,7 +199,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="体重："
+                            android:text="体重 (kg)："
                             android:textColor="@color/text_primary"
                             android:textSize="16sp" />
 
@@ -222,7 +222,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="血糖："
+                            android:text="血糖 (mmol/L)："
                             android:textColor="@color/text_primary"
                             android:textSize="16sp" />
 
@@ -245,7 +245,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="动脉血氧："
+                            android:text="动脉血氧 (%)："
                             android:textColor="@color/text_primary"
                             android:textSize="16sp" />
 
@@ -267,7 +267,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="静脉血氧："
+                            android:text="静脉血氧 (%)："
                             android:textColor="@color/text_primary"
                             android:textSize="16sp" />
 
@@ -286,7 +286,8 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginHorizontal="@dimen/normal_margin_16"
+                android:layout_marginBottom="@dimen/normal_margin_16"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp">
 
@@ -338,7 +339,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="运动时长："
+                            android:text="运动时长 (分钟)："
                             android:textColor="@color/text_primary"
                             android:textSize="16sp" />
 
@@ -407,7 +408,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="卡路里摄入："
+                            android:text="卡路里摄入 (kcal)："
                             android:textColor="@color/text_primary"
                             android:textSize="16sp" />
 
@@ -429,7 +430,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="饮水量："
+                            android:text="饮水量 (ml)："
                             android:textColor="@color/text_primary"
                             android:textSize="16sp" />
 
@@ -448,7 +449,8 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginHorizontal="@dimen/normal_margin_16"
+                android:layout_marginBottom="@dimen/normal_margin_16"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp">
 
@@ -518,6 +520,8 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/normal_margin_16"
+                android:layout_marginBottom="@dimen/normal_margin_16"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp">
 

@@ -1,5 +1,7 @@
 package com.example.chms_android.features.health.activity
 
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
@@ -15,6 +17,7 @@ import com.example.chms_android.features.health.adapter.DailyHealthReportPagerAd
 import com.example.chms_android.features.health.viewmodel.DailyHealthReportViewModel
 import com.example.chms_android.ui.components.dialog.LoadingDialog
 import com.example.chms_android.utils.AccountUtil
+import com.example.chms_android.utils.AndroidBug5497Workaround
 import com.example.chms_android.utils.ToastUtil
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -64,6 +67,9 @@ class DailyHealthReportActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityDailyHealthReportBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // 应用键盘遮挡修复
+        AndroidBug5497Workaround.assistActivity(this)
 
         // 设置状态栏颜色
         window.statusBarColor = ContextCompat.getColor(this, R.color.actionbar_color)
@@ -163,11 +169,8 @@ class DailyHealthReportActivity : AppCompatActivity() {
         // 显示加载对话框
         loadingDialog.show()
 
-        // 如果是从报告条目进入，直接加载指定的报告
-        if (entryMode == 1 && reportId > 0) {
-            viewModel.loadDailyHealthReport(this, reportId)
-            return
-        }
+        // 加载指定的报告
+        viewModel.loadDailyHealthReport(this, reportId)
 
         // 获取当前用户ID
         val userId = AccountUtil(this).getUserId().toInt()
@@ -206,11 +209,6 @@ class DailyHealthReportActivity : AppCompatActivity() {
             else -> {
                 setupViewOnlyMode()
             }
-        }
-        
-        // 在这里加载健康日报数据，而不是在Fragment中
-        if (reportId > 0) {
-            viewModel.loadDailyHealthReport(this, reportId)
         }
     }
 

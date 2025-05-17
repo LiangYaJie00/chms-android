@@ -182,12 +182,32 @@
                         app:rawMode="0" />
 
                     <com.example.chms_android.ui.components.RawContainer
-                        android:id="@+id/rc_fm_report_manage"
+                        android:id="@+id/rc_fm_daily_report"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         app:startIcon="@drawable/ic_report"
-                        app:title="健康报告"
+                        app:title="健康日报"
+                        app:endIcon="@drawable/ic_arrow_right"
+                        app:rawMode="0" />
+
+                    <com.example.chms_android.ui.components.RawContainer
+                        android:id="@+id/rc_fm_data_statistics"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        app:startIcon="@drawable/ic_data_statistics"
+                        app:title="数据统计"
+                        app:endIcon="@drawable/ic_arrow_right"
+                        app:rawMode="0" />
+
+                    <com.example.chms_android.ui.components.RawContainer
+                        android:id="@+id/rc_fm_report_manage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        app:startIcon="@drawable/ic_analysis_report"
+                        app:title="分析报告"
                         app:endIcon="@drawable/ic_arrow_right"
                         app:rawMode="0" />
 

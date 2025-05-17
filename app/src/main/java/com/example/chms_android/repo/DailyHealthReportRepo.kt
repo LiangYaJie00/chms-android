@@ -276,6 +276,21 @@ object DailyHealthReportRepo {
     }
 
     /**
+     * 从本地数据库获取用户的所有健康日报
+     * 
+     * @param userId 用户ID
+     * @return 健康日报列表，如果出错则返回空列表
+     */
+    fun getLocalDailyHealthReportsByUserId(userId: Int): List<DailyHealthReport> {
+        return try {
+            dailyHealthReportDao.getDailyHealthReportsByUserId(userId)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error getting local reports by userId: ${e.message}")
+            emptyList()
+        }
+    }
+
+    /**
      * 检查用户当日是否已有健康报告
      * 
      * @param userId 用户ID

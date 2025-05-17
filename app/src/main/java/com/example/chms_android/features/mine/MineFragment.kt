@@ -15,9 +15,11 @@ import com.bumptech.glide.Glide
 import com.example.chms_android.R
 import com.example.chms_android.databinding.FragmentMineBinding
 import com.example.chms_android.features.health.activity.HealthInfoActivity
+import com.example.chms_android.features.health.activity.HealthReportHistoryActivity
 import com.example.chms_android.features.mine.activity.ReservationActivity
 import com.example.chms_android.features.mine.activity.ReservationManageActivity
 import com.example.chms_android.features.mine.activity.UserEditActivity
+import com.example.chms_android.features.report.activity.DailyReportActivity
 import com.example.chms_android.features.report.activity.ReportShowActivity
 import com.example.chms_android.login.activity.LoginActivity
 
@@ -131,26 +133,40 @@ class MineFragment : Fragment() {
             startActivity(intent)
         }
 
-        // 档案管理
+        // 健康档案
         binding.rcFmHealthRecord.setOnClickListener {
             val intent = Intent(requireActivity(), HealthInfoActivity::class.java)
             startActivity(intent)
         }
-        
+
+        // 健康日报
+        binding.rcFmDailyReport.setOnClickListener {
+            val intent = Intent(requireActivity(), HealthReportHistoryActivity::class.java)
+            startActivity(intent)
+        }
+
+        // 数据统计
+        binding.rcFmDataStatistics.setOnClickListener {
+            val intent = Intent(requireActivity(), DailyReportActivity::class.java)
+            intent.putExtra("status", 0) // 0表示日报，1表示月报
+            startActivity(intent)
+        }
+
+        // 分析报告
+        binding.rcFmReportManage.setOnClickListener {
+            val intent = Intent(requireActivity(), ReportShowActivity::class.java)
+            startActivity(intent)
+        }
+
         // 在线就诊
         binding.rcFmReservation.setOnClickListener {
             val intent = Intent(requireActivity(), ReservationActivity::class.java)
             startActivity(intent)
         }
-        
+
         // 预约管理
         binding.rcFmReservationManage.setOnClickListener {
             val intent = Intent(requireActivity(), ReservationManageActivity::class.java)
-            startActivity(intent)
-        }
-        
-        binding.rcFmReportManage.setOnClickListener {
-            val intent = Intent(requireActivity(), ReportShowActivity::class.java)
             startActivity(intent)
         }
         
