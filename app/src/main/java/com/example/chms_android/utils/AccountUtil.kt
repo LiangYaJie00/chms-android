@@ -1,7 +1,10 @@
 package com.example.chms_android.utils
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import com.example.chms_android.data.User
+import com.example.chms_android.login.activity.LoginActivity
 import com.google.gson.Gson
 
 class AccountUtil(context: Context) {
@@ -68,5 +71,24 @@ class AccountUtil(context: Context) {
     fun clearUser() {
         spUtil.put(USER_DATA_KEY, "")
         clearUserId()
+    }
+
+    /**
+     * 退出登录，清除用户信息和ID，并跳转到登录页面
+     */
+    fun logout(context: Context) {
+        // 清除用户数据
+        clearUser()
+        clearUserId()
+        
+        // 跳转到登录页面
+        val intent = Intent(context, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        context.startActivity(intent)
+        
+        // 如果当前上下文是Activity，则结束它
+        if (context is Activity) {
+            context.finish()
+        }
     }
 }

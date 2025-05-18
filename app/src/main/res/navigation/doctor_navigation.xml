@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/doctor_navigation"
+    app:startDestination="@+id/nav_doctor_home">
+
+    <fragment
+        android:id="@+id/nav_doctor_home"
+        android:name="com.example.chms_android.features_doctor.fragment.DoctorHomeFragment"
+        android:label="医生首页"
+        tools:layout="@layout/fragment_doctor_home"/>
+
+    <fragment
+        android:id="@+id/nav_doctor_patients"
+        android:name="com.example.chms_android.features_doctor.fragment.DoctorPatientsFragment"
+        android:label="患者管理"
+        tools:layout="@layout/fragment_doctor_patients"/>
+
+    <fragment
+        android:id="@+id/nav_doctor_appointments"
+        android:name="com.example.chms_android.features_doctor.fragment.DoctorAppointmentsFragment"
+        android:label="预约管理"
+        tools:layout="@layout/fragment_doctor_appointments"/>
+
+    <fragment
+        android:id="@+id/nav_doctor_profile"
+        android:name="com.example.chms_android.features_doctor.fragment.DoctorProfileFragment"
+        android:label="个人中心"
+        tools:layout="@layout/fragment_doctor_profile"/>
+
+</navigation>

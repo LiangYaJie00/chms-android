@@ -7,7 +7,9 @@ import android.widget.Toast
 import com.example.chms_android.MainActivity
 import com.example.chms_android.api.AccountApi
 import com.example.chms_android.dao.UserDao
+import com.example.chms_android.data.Role
 import com.example.chms_android.database.DatabaseProvider
+import com.example.chms_android.features_doctor.DoctorMainActivity
 import com.example.chms_android.utils.AccountUtil
 import com.example.chms_android.utils.OkhttpUtil
 import com.example.chms_android.utils.ToastUtil
@@ -55,8 +57,11 @@ object AccountRepo {
                                 }
                                 // 使用主线程进行 UI 操作
                                 withContext(Dispatchers.Main) {
-                                    // TODO 跳转到主页面
-                                    val intent = Intent(context, MainActivity::class.java)
+                                    // 根据用户角色跳转到不同的主页面
+                                    val intent = when (userResponse.user.role) {
+                                        Role.doctor -> Intent(context, DoctorMainActivity::class.java)
+                                        else -> Intent(context, MainActivity::class.java) // 默认为consumer角色
+                                    }
                                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                     context.startActivity(intent)
                                     // 弹出登录成功的提示框
@@ -114,8 +119,11 @@ object AccountRepo {
 
                                 // 使用主线程进行 UI 操作
                                 withContext(Dispatchers.Main) {
-                                    // TODO 跳转到主页面
-                                    val intent = Intent(context, MainActivity::class.java)
+                                    // 根据用户角色跳转到不同的主页面
+                                    val intent = when (userResponse.user.role) {
+                                        Role.doctor -> Intent(context, DoctorMainActivity::class.java)
+                                        else -> Intent(context, MainActivity::class.java) // 默认为consumer角色
+                                    }
                                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                     context.startActivity(intent)
                                     // 弹出登录成功的提示框

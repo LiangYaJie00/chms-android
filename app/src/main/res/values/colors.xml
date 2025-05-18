@@ -54,4 +54,10 @@
     <color name="icon_green">#19A54A</color>
     <color name="icon_blue">#2196F3</color>
     <color name="icon_red">#F44336</color>
+
+    <!-- 添加缺失的颜色 -->
+    <color name="divider">#E0E0E0</color>
+    <color name="red">#F44336</color>
+    <color name="blue">#2196F3</color>
+    <color name="gray">#9E9E9E</color>
 </resources>

@@ -12,8 +12,10 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.example.chms_android.common.Constants
+import com.example.chms_android.data.Role
 import com.example.chms_android.database.DatabaseProvider
 import com.example.chms_android.databinding.ActivitySplashBinding
+import com.example.chms_android.features_doctor.DoctorMainActivity
 import com.example.chms_android.login.activity.LoginActivity
 import com.example.chms_android.utils.AccountUtil
 import com.example.chms_android.utils.NetworkUtil
@@ -130,8 +132,13 @@ class SplashActivity : AppCompatActivity() {
     private fun proceedToNextScreen(isOfflineMode: Boolean = false) {
         // 检查用户登录状态
         if (AccountUtil(this).isUserLoggedIn() && TokenUtil.haveToken(this)) {
-            // 用户已登录，进入主界面
-            val intent = Intent(this, MainActivity::class.java)
+            // 获取用户角色
+            val user = AccountUtil(this).getUser()
+            val intent = when (user?.role) {
+                Role.doctor -> Intent(this, DoctorMainActivity::class.java)
+                else -> Intent(this, MainActivity::class.java) // 默认为consumer角色
+            }
+            
             if (isOfflineMode) {
                 intent.putExtra("OFFLINE_MODE", true)
             }

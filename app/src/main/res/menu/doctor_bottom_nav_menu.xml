@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_doctor_home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="首页" />
+
+    <item
+        android:id="@+id/nav_doctor_patients"
+        android:icon="@drawable/ic_people_black_24dp"
+        android:title="患者" />
+
+    <item
+        android:id="@+id/nav_doctor_appointments"
+        android:icon="@drawable/ic_calendar_black_24dp"
+        android:title="预约" />
+
+    <item
+        android:id="@+id/nav_doctor_profile"
+        android:icon="@drawable/ic_person_black_24dp"
+        android:title="我的" />
+</menu>

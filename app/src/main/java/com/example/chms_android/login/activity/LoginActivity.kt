@@ -20,9 +20,10 @@ import com.example.chms_android.utils.AccountUtil
 import com.example.chms_android.utils.TokenUtil
 import com.example.chms_android.utils.WindowUtil
 import android.util.Log
-import android.os.Build
 import android.widget.TextView
 import com.example.chms_android.R
+import com.example.chms_android.data.Role
+import com.example.chms_android.features_doctor.DoctorMainActivity
 import com.example.chms_android.utils.AppUtil
 
 class LoginActivity : AppCompatActivity() {
@@ -74,7 +75,12 @@ class LoginActivity : AppCompatActivity() {
 
     private fun checkLoginStatus() {
         if (AccountUtil(this).isUserLoggedIn() && TokenUtil.haveToken(this)) {
-            val intent = Intent(this, MainActivity::class.java)
+            // 获取用户角色
+            val user = AccountUtil(this).getUser()
+            val intent = when (user?.role) {
+                Role.doctor -> Intent(this, DoctorMainActivity::class.java)
+                else -> Intent(this, MainActivity::class.java) // 默认为consumer角色
+            }
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }

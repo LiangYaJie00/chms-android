@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_doctor_badge"
+    android:text="医生"
+    android:textColor="@color/white"
+    android:textSize="12sp"
+    android:gravity="center"
+    android:paddingHorizontal="8dp"
+    android:paddingVertical="2dp" />

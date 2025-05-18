@@ -103,14 +103,30 @@
                             android:layout_marginStart="16dp"
                             android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/tv_mine_name"
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="用户名"
-                                android:textColor="@color/text_primary"
-                                android:textSize="20sp"
-                                android:textStyle="bold" />
+                                android:gravity="center_vertical">
+                                <TextView
+                                    android:id="@+id/tv_mine_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="用户名"
+                                    android:textColor="@color/text_primary"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="42dp"
+                                    android:layout_height="20dp"
+                                    android:layout_marginLeft="@dimen/normal_margin_8"
+                                    android:background="@drawable/bg_doctor_badge"
+                                    android:text="居民"
+                                    android:textColor="@color/white"
+                                    android:textSize="12sp"
+                                    android:textAlignment="center"
+                                    android:gravity="center" />
+                            </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -121,14 +137,13 @@
                                 <ImageView
                                     android:layout_width="18dp"
                                     android:layout_height="18dp"
-                                    android:src="@drawable/ic_email"
-                                    app:tint="@color/text_secondary" />
+                                    android:src="@drawable/ic_email_blue" />
 
                                 <TextView
                                     android:id="@+id/tv_mine_email"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="8dp"
+                                    android:layout_marginStart="4dp"
                                     android:text="user@example.com"
                                     android:textColor="@color/text_secondary"
                                     android:textSize="14sp" />
