@@ -20,7 +20,7 @@ import com.example.chms_android.features.mine.activity.ReservationActivity
 import com.example.chms_android.features.mine.activity.ReservationManageActivity
 import com.example.chms_android.features.mine.activity.UserEditActivity
 import com.example.chms_android.features.report.activity.DailyReportActivity
-import com.example.chms_android.features.report.activity.ReportShowActivity
+import com.example.chms_android.features.analysis.activity.ReportAnalysisShowActivity
 import com.example.chms_android.login.activity.LoginActivity
 
 class MineFragment : Fragment() {
@@ -154,7 +154,7 @@ class MineFragment : Fragment() {
 
         // 分析报告
         binding.rcFmReportManage.setOnClickListener {
-            val intent = Intent(requireActivity(), ReportShowActivity::class.java)
+            val intent = Intent(requireActivity(), ReportAnalysisShowActivity::class.java)
             startActivity(intent)
         }
 

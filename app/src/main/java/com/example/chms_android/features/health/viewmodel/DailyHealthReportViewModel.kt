@@ -10,7 +10,9 @@ import com.example.chms_android.utils.AccountUtil
 import java.sql.Timestamp
 import java.util.Date
 import android.util.Log
+import com.example.chms_android.data.ReportAnalysis
 import com.example.chms_android.database.DatabaseProvider
+import com.example.chms_android.repo.ReportAnalysisRepo
 
 class DailyHealthReportViewModel : ViewModel() {
     
@@ -33,6 +35,13 @@ class DailyHealthReportViewModel : ViewModel() {
     // 是否已经有了本日的日报
     private val _hasTodayReport = MutableLiveData<Boolean>()
     val hasTodayReport: LiveData<Boolean> = _hasTodayReport
+
+    // 添加分析报告相关状态
+    private val _hasAnalysisReport = MutableLiveData<Boolean>(false)
+    val hasAnalysisReport: LiveData<Boolean> = _hasAnalysisReport
+
+    private val _analysisStatus = MutableLiveData<AnalysisStatus>()
+    val analysisStatus: LiveData<AnalysisStatus> = _analysisStatus
     
     // 设置报告提交状态
     fun setReportSubmitted(submitted: Boolean) {
@@ -154,6 +163,53 @@ class DailyHealthReportViewModel : ViewModel() {
         )
     }
 
+    // 检查是否已有分析报告
+    fun checkReportAnalysisExists(reportId: Int, context: Context) {
+        // 首先检查报告本身的isAnalysed字段
+        val report = dailyHealthReport.value
+        if (report != null && report.isAnalysed) {
+            _hasAnalysisReport.postValue(true)
+            return
+        }
+
+        // 如果报告字段显示未分析，再检查本地数据库中是否有分析结果
+        val localAnalysis = ReportAnalysisRepo.getLocalReportAnalysisByReportId(reportId.toLong())
+        _hasAnalysisReport.postValue(localAnalysis != null)
+    }
+
+    // 分析健康报告
+    fun analyzeHealthReport(report: DailyHealthReport, context: Context) {
+        _analysisStatus.value = AnalysisStatus.Loading
+
+        ReportAnalysisRepo.analyzeDailyHealthReport(
+            report,
+            context,
+            onStart = {
+                _analysisStatus.postValue(AnalysisStatus.Loading)
+            },
+            onSuccess = { analysis ->
+                _analysisStatus.postValue(AnalysisStatus.Success(analysis))
+                _hasAnalysisReport.postValue(true)
+
+                // 从后端获取最新的报告（包含更新后的isAnalysed字段）
+                DailyHealthReportRepo.getDailyHealthReportById(
+                    report.reportId,
+                    context,
+                    onSuccess = { updatedReport ->
+                        // 更新ViewModel中的报告数据
+                        _dailyHealthReport.postValue(updatedReport)
+                    },
+                    onError = { message ->
+                        Log.e("DailyHealthReportVM", "Failed to get updated report: $message")
+                    }
+                )
+            },
+            onError = { message ->
+                _analysisStatus.postValue(AnalysisStatus.Error(message))
+            }
+        )
+    }
+
     // 加载状态
     sealed class LoadStatus {
         object Loading : LoadStatus()
@@ -166,5 +222,12 @@ class DailyHealthReportViewModel : ViewModel() {
         object Loading : SaveStatus()
         object Success : SaveStatus()
         data class Error(val message: String) : SaveStatus()
+    }
+
+    // 分析状态
+    sealed class AnalysisStatus {
+        object Loading : AnalysisStatus()
+        data class Success(val analysis: ReportAnalysis) : AnalysisStatus()
+        data class Error(val message: String) : AnalysisStatus()
     }
 }

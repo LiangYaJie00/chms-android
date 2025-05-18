@@ -34,7 +34,7 @@
             android:name=".features.health.activity.HealthInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".features.report.activity.ReportShowActivity"
+            android:name=".features.analysis.activity.ReportAnalysisShowActivity"
             android:exported="false" />
         <activity
             android:name=".features.mine.activity.UserEditActivity"
@@ -46,7 +46,7 @@
             android:name=".features.mine.activity.ReservationActivity"
             android:exported="false" />
         <activity
-            android:name=".features.report.activity.ReportSummaryActivity"
+            android:name=".features.analysis.activity.ReportAnalysisActivity"
             android:exported="false" />
         <activity
             android:name=".features.health.activity.DailyHealthReportActivity"

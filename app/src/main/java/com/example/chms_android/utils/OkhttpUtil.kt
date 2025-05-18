@@ -38,7 +38,7 @@ object OkhttpUtil {
     private val client: OkHttpClient by lazy {
         OkHttpClient.Builder()
             .cookieJar(CustomCookieJar())
-            .connectTimeout(10, TimeUnit.SECONDS) // 连接超时时间
+            .connectTimeout(15, TimeUnit.SECONDS) // 连接超时时间
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
             .retryOnConnectionFailure(true) // 启用连接失败重试
@@ -52,17 +52,17 @@ object OkhttpUtil {
                 var retryCount = 0
                 var response: Response? = null
                 var exception: IOException? = null
-                
+
                 while (retryCount < 3 && (response == null || !response.isSuccessful)) {
                     try {
                         if (retryCount > 0) {
                             // 重试前等待一段时间
                             Thread.sleep((1000 * retryCount).toLong())
                         }
-                        
+
                         // 关闭之前的响应
                         response?.close()
-                        
+
                         response = chain.proceed(chain.request())
                         exception = null
                     } catch (e: IOException) {
@@ -71,19 +71,19 @@ object OkhttpUtil {
                     } finally {
                         retryCount++
                     }
-                    
+
                     // 如果成功获取响应，跳出循环
                     if (response != null && response.isSuccessful) {
                         break
                     }
                 }
-                
+
                 // 如果所有重试都失败，抛出最后一个异常
-                exception?.let { 
+                exception?.let {
                     Log.e(TAG, "All retry attempts failed", it)
-                    throw it 
+                    throw it
                 }
-                
+
                 // 返回响应
                 response!!
             }
@@ -229,30 +229,30 @@ object OkhttpUtil {
     ) {
         val requestBuilder = Request.Builder()
             .url(getUrl(uri))
-        
+
         // 根据需要添加token头
         if (needsToken) {
             requestBuilder.header("Authorization", "${TokenUtil.getToken(context)}")
         }
-        
+
         // 创建MultipartBody
         val requestBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
             .addPart(filePart)
             .build()
-        
+
         val request = requestBuilder
             .post(requestBody)
             .build()
-        
+
         Log.d(TAG, "Upload Request: ${request.url}, file: ${filePart.headers}")
-        
+
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 Log.e(TAG, "Upload Request failed for ${call.request().url}", e)
                 callback.onFailure(e)
             }
-            
+
             override fun onResponse(call: Call, response: Response) {
                 try {
                     if (response.isSuccessful) {

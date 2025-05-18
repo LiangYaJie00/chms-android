@@ -37,9 +37,11 @@ data class DailyHealthReport(
     val notes: String? = null, // 与报告相关的附加备注或观察
     val createdAt: Timestamp? = null, // 报告创建的时间戳
     val updatedAt: Timestamp? = null, // 报告最后更新的时间戳
+    val isAnalysed: Boolean = false, // 是否已经进行过AI分析
 ): Parcelable {
     @Ignore
     constructor() : this(
-        reportId = 0
+        reportId = 0,
+        isAnalysed = false
     )
 }

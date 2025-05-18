@@ -116,9 +116,26 @@ class DailyHealthReportActivity : AppCompatActivity() {
         viewModel.hasTodayReport.observe(this) { exists ->
             if (exists) {
                 // 如果已有报告，获取当天的报告
-                val userId = AccountUtil(this).getUserId().toInt()
-                val todayDateStr = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-                viewModel.fetchTodayReport(userId, todayDateStr, this)
+//                val userId = AccountUtil(this).getUserId().toInt()
+//                val todayDateStr = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+//                viewModel.fetchTodayReport(userId, todayDateStr, this)
+//                viewModel.loadDailyHealthReport(this, reportId)
+
+                // 只有在以下情况才获取当天报告：
+                // 1. 从上报入口进入(entryMode=0)，或
+                // 2. 明确指定要查看当天报告(isTodayReport=true)，或
+                // 3. 没有指定reportId(reportId=0)
+                if (entryMode == 0 || isTodayReport || reportId == 0) {
+                    val userId = AccountUtil(this).getUserId().toInt()
+                    val todayDateStr = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+                    viewModel.fetchTodayReport(userId, todayDateStr, this)
+                } else {
+                    // 如果是查看特定日期的报告，继续使用已加载的报告
+                    if (loadingDialog.isShowing) {
+                        loadingDialog.dismiss()
+                    }
+                    updateUIWithLatestReport()
+                }
             } else {
                 // 如果没有报告，创建一个新的空报告
                 if (loadingDialog.isShowing) {

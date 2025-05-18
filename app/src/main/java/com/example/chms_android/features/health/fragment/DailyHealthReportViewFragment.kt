@@ -1,13 +1,19 @@
 package com.example.chms_android.features.health.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.chms_android.data.ReportAnalysis
 import com.example.chms_android.databinding.FragmentDailyHealthReportViewBinding
 import com.example.chms_android.features.health.viewmodel.DailyHealthReportViewModel
+import com.example.chms_android.features.analysis.activity.ReportAnalysisActivity
+import com.example.chms_android.ui.components.dialog.LoadingDialog
+import com.example.chms_android.utils.ToastUtil
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -17,7 +23,9 @@ class DailyHealthReportViewFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var viewModel: DailyHealthReportViewModel
     private var reportId: Int = 0
-    
+    // 添加加载弹窗
+    private lateinit var loadingDialog: LoadingDialog
+
     companion object {
         fun newInstance(reportId: Int): DailyHealthReportViewFragment {
             val fragment = DailyHealthReportViewFragment()
@@ -33,6 +41,9 @@ class DailyHealthReportViewFragment : Fragment() {
         arguments?.let {
             reportId = it.getInt("reportId", 0)
         }
+        // 初始化加载弹窗
+        loadingDialog = LoadingDialog(requireContext())
+        loadingDialog.setMessage("正在进行AI分析，请耐心等待...")
     }
     
     override fun onCreateView(
@@ -48,9 +59,65 @@ class DailyHealthReportViewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         
         viewModel = ViewModelProvider(requireActivity()).get(DailyHealthReportViewModel::class.java)
-        
+
         // 设置观察者，当数据变化时更新UI
         setupObservers()
+        
+        // 设置AI分析按钮点击事件
+        setupAiAnalysisButton()
+    }
+
+    private fun setupAiAnalysisButton() {
+        // 检查是否已有分析报告
+        checkExistingAnalysis()
+        
+        binding.btnAiAnalysis.setOnClickListener {
+            val currentReportId = viewModel.dailyHealthReport.value?.reportId ?: 0
+            if (currentReportId > 0) {
+                if (viewModel.hasAnalysisReport.value == true) {
+                    // 如果已有分析报告，直接跳转到分析报告页面
+                    navigateToReportSummary(currentReportId)
+                } else {
+                    // 请求AI分析
+                    requestAiAnalysis(currentReportId)
+                }
+            } else {
+                ToastUtil.show(requireContext(), "无法分析，报告ID无效")
+            }
+        }
+    }
+
+    private fun checkExistingAnalysis() {
+        val reportId = viewModel.dailyHealthReport.value?.reportId ?: 0
+        if (reportId > 0) {
+            // 检查是否已有分析报告
+            viewModel.checkReportAnalysisExists(reportId, requireContext())
+        }
+    }
+
+    private fun requestAiAnalysis(reportId: Int) {
+        val report = viewModel.dailyHealthReport.value
+        if (report != null) {
+            // 显示加载弹窗
+            loadingDialog.show()
+            
+            viewModel.analyzeHealthReport(report, requireContext())
+        }
+    }
+
+    private fun navigateToReportSummary(reportId: Int) {
+        val intent = Intent(requireContext(), ReportAnalysisActivity::class.java).apply {
+            putExtra("reportId", reportId.toLong())
+        }
+        startActivity(intent)
+    }
+
+    // 如果有分析报告对象，可以直接传递
+    private fun navigateToReportSummaryWithAnalysis(analysis: ReportAnalysis) {
+        val intent = Intent(requireContext(), ReportAnalysisActivity::class.java).apply {
+            putExtra("reportAnalysis", analysis)
+        }
+        startActivity(intent)
     }
     
     private fun setupObservers() {
@@ -95,6 +162,7 @@ class DailyHealthReportViewFragment : Fragment() {
                 binding.tvArterialBloodOxygenLevel.text = it.arterialBloodOxygenLevel?.toString() ?: "未记录"
                 binding.tvVenousBloodOxygenLevel.text = it.venousBloodOxygenLevel?.toString() ?: "未记录"
                 binding.tvNotes.text = it.notes ?: "未记录"
+                setupAiAnalysisButton()
             }
         }
         
@@ -115,10 +183,73 @@ class DailyHealthReportViewFragment : Fragment() {
                 }
             }
         }
+
+        // 添加分析状态观察
+        viewModel.hasAnalysisReport.observe(viewLifecycleOwner) { hasReport ->
+            updateAnalysisButtonText(hasReport)
+        }
+
+        viewModel.analysisStatus.observe(viewLifecycleOwner) { status ->
+            when (status) {
+                is DailyHealthReportViewModel.AnalysisStatus.Loading -> {
+                    // 显示加载中
+                    binding.btnAiAnalysis.isEnabled = false
+                    binding.btnAiAnalysis.text = "分析中..."
+                    // 确保加载弹窗显示
+                    if (!loadingDialog.isShowing) {
+                        loadingDialog.show()
+                    }
+                }
+                is DailyHealthReportViewModel.AnalysisStatus.Success -> {
+                    // 隐藏加载弹窗
+                    if (loadingDialog.isShowing) {
+                        loadingDialog.dismiss()
+                    }
+                    
+                    // 分析完成，更新按钮状态
+                    binding.btnAiAnalysis.isEnabled = true
+                    updateAnalysisButtonText(true)
+                    
+                    // 显示确认对话框
+                    showAnalysisCompleteDialog(status.analysis.reportId.toInt())
+                }
+                is DailyHealthReportViewModel.AnalysisStatus.Error -> {
+                    // 隐藏加载弹窗
+                    if (loadingDialog.isShowing) {
+                        loadingDialog.dismiss()
+                    }
+                    
+                    // 显示错误
+                    binding.btnAiAnalysis.isEnabled = true
+                    updateAnalysisButtonText(false)
+                    ToastUtil.show(requireContext(), "分析失败: ${status.message}")
+                }
+                else -> {}
+            }
+        }
+    }
+
+    private fun updateAnalysisButtonText(hasReport: Boolean) {
+        binding.btnAiAnalysis.text = if (hasReport) "查看分析报告" else "AI健康分析"
+    }
+
+    private fun showAnalysisCompleteDialog(reportId: Int) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("分析完成")
+            .setMessage("AI健康分析已完成，是否查看详细报告？")
+            .setPositiveButton("查看") { _, _ ->
+                navigateToReportSummary(reportId)
+            }
+            .setNegativeButton("稍后查看", null)
+            .show()
     }
     
     override fun onDestroyView() {
         super.onDestroyView()
+        // 确保弹窗关闭，避免内存泄漏
+        if (loadingDialog.isShowing) {
+            loadingDialog.dismiss()
+        }
         _binding = null
     }
 }

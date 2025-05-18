@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/background"
-    tools:context=".features.report.activity.ReportSummaryActivity">
+    tools:context=".features.analysis.activity.ReportAnalysisActivity">
 
     <com.example.chms_android.ui.components.TitleBar
         android:layout_width="match_parent"
@@ -32,6 +32,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
                 <TextView
+                    android:id="@+id/tv_report_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="@dimen/normal_padding_16"
@@ -42,9 +43,12 @@
                     android:textAlignment="center" />
 
                 <TextView
+                    android:id="@+id/tv_report_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/normal_margin_20"
+                    android:layout_marginBottom="@dimen/normal_margin_16"
+                    android:textSize="@dimen/title_size_16"
                     android:textColor="@color/black"
                     android:text="@string/report" />
             </LinearLayout>

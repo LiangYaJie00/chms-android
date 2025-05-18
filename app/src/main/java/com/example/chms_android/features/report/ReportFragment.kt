@@ -10,13 +10,12 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.chms_android.MainActivity
 import com.example.chms_android.R
 import com.example.chms_android.databinding.FragmentReportBinding
 import com.example.chms_android.features.report.activity.DailyReportActivity
-import com.example.chms_android.features.report.activity.ReportSummaryActivity
+import com.example.chms_android.features.analysis.activity.ReportAnalysisActivity
+import com.example.chms_android.features.analysis.activity.ReportAnalysisShowActivity
 
 class ReportFragment : Fragment() {
     private var _binding: FragmentReportBinding? = null
@@ -55,7 +54,7 @@ class ReportFragment : Fragment() {
         }
 
         binding.cvWeeklyReport.setOnClickListener {
-            val intent = Intent(context, ReportSummaryActivity::class.java)
+            val intent = Intent(context, ReportAnalysisShowActivity::class.java)
             startActivity(intent)
         }
 

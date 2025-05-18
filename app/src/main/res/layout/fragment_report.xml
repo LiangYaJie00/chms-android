@@ -103,7 +103,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
             android:gravity="center"
-            android:text="总结报告"
+            android:text="分析报告"
             android:textColor="@color/black"
             android:textSize="25sp" />
 
