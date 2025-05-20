@@ -35,6 +35,3 @@
 # 保留JCore
 -dontwarn cn.jiguang.verity.**
 -keep class cn.jiguang.verity.** { *; }
-
-# 保留JOperation
--keep class * extends cn.jiguang.analytics.android.api.Event { *; }
