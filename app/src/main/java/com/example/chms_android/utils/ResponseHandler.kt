@@ -99,19 +99,21 @@ object ResponseHandler {
         errorToastMessage: String? = null // 当解析过程中出现错误或当服务器返回非 "200" 状态码时，显示的 Toast 消息内容，默认为null
     ) {
         val TAG = "ResponseHandler"
-        try {
-            // 使用自定义的Gson实例，添加日期和时间戳反序列化器
-            val gson = GsonBuilder()
-                .registerTypeAdapter(Date::class.java, DateDeserializer())
-                .registerTypeAdapter(Timestamp::class.java, TimestampDeserializer())
-                .create()
+        
+        // 确保在后台线程中执行JSON解析
+        GlobalScope.launch(Dispatchers.IO) {
+            try {
+                // 使用自定义的Gson实例，添加日期和时间戳反序列化器
+                val gson = GsonBuilder()
+                    .registerTypeAdapter(Date::class.java, DateDeserializer())
+                    .registerTypeAdapter(Timestamp::class.java, TimestampDeserializer())
+                    .create()
                 
-            val resultType = typeToken.type
-            val result: RespResult<T> = gson.fromJson(response, resultType)
+                val resultType = typeToken.type
+                val result: RespResult<T> = gson.fromJson(response, resultType)
 
-            if (result.code == "200") {
-                val data = result.data
-                GlobalScope.launch(Dispatchers.IO) {
+                if (result.code == "200") {
+                    val data = result.data
                     try {
                         // 将数据处理移到主线程中执行
                         withContext(Dispatchers.Main) {
@@ -128,24 +130,24 @@ object ResponseHandler {
                             Log.e(TAG, "Error in onSuccess callback: $errorMsg", e)
                         }
                     }
+                } else {
+                    // 确保错误回调在主线程中执行
+                    withContext(Dispatchers.Main) {
+                        val errorMsg = if (errorToastMessage != null) "$errorToastMessage: ${result.message}" else result.message
+                        onError(result.message)
+                        ToastUtil.show(context, errorMsg, Toast.LENGTH_SHORT)
+                        Log.e(TAG, "API returned non-200 code: ${result.code}, message: ${result.message}")
+                    }
                 }
-            } else {
-                // 确保错误回调在主线程中执行
-                GlobalScope.launch(Dispatchers.Main) {
-                    val errorMsg = if (errorToastMessage != null) "$errorToastMessage: ${result.message}" else result.message
-                    onError(result.message)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                // 确保异常处理在主线程中执行
+                withContext(Dispatchers.Main) {
+                    val errorMsg = if (errorToastMessage != null) "$errorToastMessage: ${e.message}" else "Failed to parse response: ${e.message}"
                     ToastUtil.show(context, errorMsg, Toast.LENGTH_SHORT)
-                    Log.e(TAG, "API returned non-200 code: ${result.code}, message: ${result.message}")
+                    Log.e(TAG, errorMsg, e)
+                    onError(errorMsg)
                 }
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            // 确保异常处理在主线程中执行
-            GlobalScope.launch(Dispatchers.Main) {
-                val errorMsg = if (errorToastMessage != null) "$errorToastMessage: ${e.message}" else "Failed to parse response: ${e.message}"
-                ToastUtil.show(context, errorMsg, Toast.LENGTH_SHORT)
-                Log.e(TAG, errorMsg, e)
-                onError(errorMsg)
             }
         }
     }
