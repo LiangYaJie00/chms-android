@@ -20,3 +20,21 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 -keep class com.tencent.** { *; }
+
+# JPush混淆规则
+-dontoptimize
+-dontpreverify
+
+-dontwarn cn.jpush.**
+-keep class cn.jpush.** { *; }
+-keep class * extends cn.jpush.android.service.JPushMessageReceiver { *; }
+
+-dontwarn cn.jiguang.**
+-keep class cn.jiguang.** { *; }
+
+# 保留JCore
+-dontwarn cn.jiguang.verity.**
+-keep class cn.jiguang.verity.** { *; }
+
+# 保留JOperation
+-keep class * extends cn.jiguang.analytics.android.api.Event { *; }

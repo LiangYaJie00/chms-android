@@ -18,6 +18,7 @@ import com.example.chms_android.databinding.ActivitySplashBinding
 import com.example.chms_android.features_doctor.DoctorMainActivity
 import com.example.chms_android.login.activity.LoginActivity
 import com.example.chms_android.utils.AccountUtil
+import com.example.chms_android.utils.JPushHelper
 import com.example.chms_android.utils.NetworkUtil
 import com.example.chms_android.utils.TokenUtil
 import kotlinx.coroutines.CoroutineScope
@@ -134,6 +135,16 @@ class SplashActivity : AppCompatActivity() {
         if (AccountUtil(this).isUserLoggedIn() && TokenUtil.haveToken(this)) {
             // 获取用户角色
             val user = AccountUtil(this).getUser()
+            
+            // 更新推送信息
+            user?.userId?.let {
+                JPushHelper.setupUserPushProfile(
+                    this,
+                    it.toString(),
+                    user.role.toString()
+                )
+            }
+            
             val intent = when (user?.role) {
                 Role.doctor -> Intent(this, DoctorMainActivity::class.java)
                 else -> Intent(this, MainActivity::class.java) // 默认为consumer角色

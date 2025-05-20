@@ -1,10 +1,15 @@
 plugins {
+    // 确保华为插件在其他插件之前应用
+    // id("com.huawei.agconnect")  // 暂时注释掉华为插件
+    
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("kotlin-android")
     id("kotlin-kapt")
     id("kotlin-parcelize")
+    // FCM插件
+    // id("com.google.gms.google-services")  // 暂时注释掉FCM插件
 }
 
 android {
@@ -19,6 +24,30 @@ android {
         versionName = "1.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // 确保添加ndk配置
+        ndk {
+            abiFilters.add("armeabi")
+            abiFilters.add("armeabi-v7a")
+            abiFilters.add("arm64-v8a")
+            // 可选: abiFilters.add("x86"), abiFilters.add("x86_64")
+        }
+        
+        // 更新厂商通道配置
+        manifestPlaceholders["JPUSH_PKGNAME"] = "com.example.chms_android"
+        manifestPlaceholders["JPUSH_APPKEY"] = "5cfe2141f6fd5c9ab46a0928" // 您的AppKey
+        manifestPlaceholders["JPUSH_CHANNEL"] = "developer-default"
+
+        // 添加厂商通道配置
+        manifestPlaceholders["XIAOMI_APPID"] = "填写小米的APPID" // 需要申请
+        manifestPlaceholders["XIAOMI_APPKEY"] = "填写小米的APPKEY" // 需要申请
+        manifestPlaceholders["OPPO_APPKEY"] = "填写OPPO的APPKEY" // 需要申请
+        manifestPlaceholders["OPPO_APPID"] = "填写OPPO的APPID" // 需要申请
+        manifestPlaceholders["OPPO_APPSECRET"] = "填写OPPO的APPSECRET" // 需要申请
+        manifestPlaceholders["VIVO_APPKEY"] = "填写VIVO的APPKEY" // 需要申请
+        manifestPlaceholders["VIVO_APPID"] = "填写VIVO的APPID" // 需要申请
+        manifestPlaceholders["MEIZU_APPKEY"] = "填写魅族的APPKEY" // 需要申请
+        manifestPlaceholders["MEIZU_APPID"] = "填写魅族的APPID" // 需要申请
     }
 
     buildTypes {
@@ -109,4 +138,20 @@ dependencies {
     implementation("de.hdodenhof:circleimageview:2.1.0")
 
     api(project(":tuicallkit-kt"))
+
+    implementation("cn.jiguang.sdk:jpush:5.6.0") // 必选，此处以JPush 5.6.0 版本为例
+
+    // 华为HMS Core Push Kit - 暂时注释掉
+    // implementation("com.huawei.hms:push:6.12.0.300")
+    // implementation("cn.jiguang.sdk.plugin:huawei:5.5.3")
+
+    // FCM通道 - 暂时注释掉
+    // implementation("com.google.firebase:firebase-messaging:23.2.0")
+    // implementation("cn.jiguang.sdk.plugin:fcm:5.5.3")
+
+    // 保留其他厂商通道
+    implementation("cn.jiguang.sdk.plugin:xiaomi:5.5.3")
+    implementation("cn.jiguang.sdk.plugin:oppo:5.5.3")
+    implementation("cn.jiguang.sdk.plugin:vivo:5.5.3.a")
+    implementation("cn.jiguang.sdk.plugin:meizu:5.5.3")
 }

@@ -14,6 +14,7 @@ import com.example.chms_android.R
 import com.example.chms_android.databinding.ActivityDoctorMainBinding
 import com.example.chms_android.features_doctor.vm.DoctorMainActivityVM
 import com.example.chms_android.utils.AccountUtil
+import com.example.chms_android.utils.NotificationPermissionUtil
 
 /**
  * 医生主界面Activity
@@ -49,6 +50,26 @@ class DoctorMainActivity : AppCompatActivity() {
         
         // 观察ViewModel数据变化
         observeViewModel()
+        
+        // 检查并请求通知权限
+        checkNotificationPermission()
+    }
+    
+    /**
+     * 检查并请求通知权限
+     */
+    private fun checkNotificationPermission() {
+        NotificationPermissionUtil.requestPermissionInActivity(
+            activity = this,
+            onGranted = {
+                Log.d("DoctorMainActivity", "通知权限已授予")
+                // 可以在这里执行需要通知权限的操作，如初始化推送服务
+            },
+            onDenied = {
+                Log.d("DoctorMainActivity", "用户拒绝了通知权限")
+                // 可以在这里处理用户拒绝权限的情况
+            }
+        )
     }
     
     /**

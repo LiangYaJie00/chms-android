@@ -31,4 +31,14 @@ object TokenUtil {
         Log.i("TokenUtil", "haveToken: $hasToken")
         return hasToken
     }
+    
+    /**
+     * 清除保存的token
+     */
+    fun clearToken(context: Context) {
+        getSharedPreferences(context).edit()
+            .remove(KEY_TOKEN)
+            .apply()
+        Log.i("TokenUtil", "clearToken: token已清除")
+    }
 }

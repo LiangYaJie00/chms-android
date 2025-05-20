@@ -1,5 +1,6 @@
 package com.example.chms_android
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -21,13 +22,24 @@ import com.example.chms_android.utils.TUIUtil
 import com.example.chms_android.utils.WindowUtil
 import com.example.chms_android.utils.NetworkUtil
 import android.app.AlertDialog
+import android.content.ComponentName
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
+import android.provider.Settings
 import android.widget.Button
 import com.example.chms_android.common.Constants
+import com.example.chms_android.features.analysis.activity.ReportAnalysisActivity
+import com.example.chms_android.features.home.activity.DoctorDetailActivity
+import com.example.chms_android.utils.JPushHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import com.google.android.material.snackbar.Snackbar
+import org.json.JSONObject
+import org.json.JSONException
+import com.example.chms_android.utils.NotificationPermissionUtil
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -52,6 +64,9 @@ class MainActivity : AppCompatActivity() {
         
         TUIUtil.initTUI(this)
         
+        // 检查通知权限
+        checkNotificationPermission()
+        
         initNavView()
 
         sp = getPreferences(Context.MODE_PRIVATE)
@@ -62,6 +77,9 @@ class MainActivity : AppCompatActivity() {
         initListeners()
 
         observeViewModel()
+
+        // 处理从通知启动的情况
+        handleNotificationIntent(intent)
     }
 
     // 提供一个公共方法，让Fragment可以检查是否处于离线模式
@@ -222,5 +240,125 @@ class MainActivity : AppCompatActivity() {
 
         // 将新的布局参数应用到视图
         view.layoutParams = params
+    }
+
+    private fun handleNotificationIntent(intent: Intent) {
+        val extras = intent.getStringExtra("NOTIFICATION_EXTRAS")
+        if (extras != null) {
+            try {
+                val extrasJson = JSONObject(extras)
+                // 根据通知内容执行相应操作
+                val type = extrasJson.optString("type")
+                
+                Log.d("MainActivity", "收到通知: type=$type")
+                
+                // 根据通知类型执行不同操作
+                when (type) {
+                    "healthReport" -> {
+                        // 处理健康报告通知
+                        val reportId = extrasJson.optString("reportId", "0").toInt()
+                        // 导航到健康报告分析页面
+                        val intent = Intent(this, ReportAnalysisActivity::class.java).apply {
+                            putExtra("reportId", reportId.toLong())
+                        }
+                        startActivity(intent)
+                    }
+                    "advice" -> {
+                        // 处理医生建议通知
+                        val adviceId = extrasJson.optString("adviceId", "0").toInt()
+                        // 导航到医生建议详情页面
+                        val intent = Intent(this, DoctorDetailActivity::class.java).apply {
+                            putExtra("adviceId", adviceId)
+                        }
+                        startActivity(intent)
+                    }
+                    "health_report" -> {
+                        // 导航到健康报告页面
+//                        navController.navigate(R.id.nav_report)
+                    }
+                    "doctor_message" -> {
+                        // 导航到医生消息页面
+//                        navController.navigate(R.id.nav_message)
+                    }
+                    // 其他类型...
+                }
+                
+                // 清除角标
+                JPushHelper.clearBadge(this)
+            } catch (e: JSONException) {
+                Log.e("MainActivity", "解析通知额外信息失败", e)
+            }
+        }
+    }
+
+    @SuppressLint("MissingSuperCall")
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)  // 确保调用父类方法
+        handleNotificationIntent(intent)
+    }
+
+    private fun checkPushPermissions() {
+        val manufacturer = Build.MANUFACTURER.toLowerCase()
+        
+        if (manufacturer.contains("huawei") || manufacturer.contains("honor") || 
+            manufacturer.contains("xiaomi") || manufacturer.contains("oppo") || 
+            manufacturer.contains("vivo") || manufacturer.contains("meizu")) {
+            
+            AlertDialog.Builder(this)
+                .setTitle("推送权限设置")
+                .setMessage("为了确保您能及时收到消息通知，请允许应用自启动和后台运行。\n\n" +
+                        "请前往设置中开启相关权限。")
+                .setPositiveButton("去设置") { _, _ ->
+                    try {
+                        val intent = Intent()
+                        when {
+                            manufacturer.contains("huawei") || manufacturer.contains("honor") -> {
+                                intent.component = ComponentName("com.huawei.systemmanager",
+                                    "com.huawei.systemmanager.optimize.process.ProtectActivity")
+                            }
+                            manufacturer.contains("xiaomi") -> {
+                                intent.component = ComponentName("com.miui.securitycenter", 
+                                    "com.miui.permcenter.autostart.AutoStartManagementActivity")
+                            }
+                            manufacturer.contains("oppo") -> {
+                                intent.component = ComponentName("com.coloros.safecenter", 
+                                    "com.coloros.safecenter.permission.startup.StartupAppListActivity")
+                            }
+                            manufacturer.contains("vivo") -> {
+                                intent.component = ComponentName("com.vivo.permissionmanager", 
+                                    "com.vivo.permissionmanager.activity.BgStartUpManagerActivity")
+                            }
+                            else -> {
+                                intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                                intent.data = Uri.fromParts("package", packageName, null)
+                            }
+                        }
+                        startActivity(intent)
+                    } catch (e: Exception) {
+                        Log.e("MainActivity", "Failed to open settings", e)
+                        // 如果特定页面打开失败，打开应用详情页
+                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                        intent.data = Uri.fromParts("package", packageName, null)
+                        startActivity(intent)
+                    }
+                }
+                .setNegativeButton("稍后再说", null)
+                .show()
+        }
+    }
+
+    // 检查通知权限
+    private fun checkNotificationPermission() {
+        NotificationPermissionUtil.requestPermissionInActivity(
+            activity = this,
+            onGranted = {
+                Log.d("MainActivity", "通知权限已授予")
+                // 可以在这里执行需要通知权限的操作
+            },
+            onDenied = {
+                Log.d("MainActivity", "用户拒绝了通知权限")
+                // 可以在这里处理用户拒绝权限的情况
+            }
+        )
     }
 }

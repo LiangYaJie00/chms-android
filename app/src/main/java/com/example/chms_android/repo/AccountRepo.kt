@@ -10,7 +10,9 @@ import com.example.chms_android.dao.UserDao
 import com.example.chms_android.data.Role
 import com.example.chms_android.database.DatabaseProvider
 import com.example.chms_android.features_doctor.DoctorMainActivity
+import com.example.chms_android.login.activity.LoginActivity
 import com.example.chms_android.utils.AccountUtil
+import com.example.chms_android.utils.JPushHelper
 import com.example.chms_android.utils.OkhttpUtil
 import com.example.chms_android.utils.ToastUtil
 import com.example.chms_android.utils.TokenUtil
@@ -45,7 +47,16 @@ object AccountRepo {
                         TokenUtil.saveToken(userResponse.token, context)
                         userResponse.user.userId?.let { AccountUtil(context).saveUserId(it.toLong()) }
                         AccountUtil(context).saveUser(userResponse.user)
-
+                        
+                        // 设置JPush用户信息
+                        userResponse.user.userId?.let { 
+                            JPushHelper.setupUserPushProfile(
+                                context, 
+                                it.toString(), 
+                                userResponse.user.role.toString()
+                            )
+                        }
+                        
                         // 保存用户信息到本地数据库，并在成功后执行后续操作
                         GlobalScope.launch(Dispatchers.IO) { // 使用 IO 线程
                             try {
@@ -111,7 +122,16 @@ object AccountRepo {
                         TokenUtil.saveToken(userResponse.token, context)
                         userResponse.user.userId?.let { AccountUtil(context).saveUserId(it.toLong()) }
                         AccountUtil(context).saveUser(userResponse.user)
-
+                        
+                        // 设置JPush用户信息
+                        userResponse.user.userId?.let { 
+                            JPushHelper.setupUserPushProfile(
+                                context, 
+                                it.toString(), 
+                                userResponse.user.role.toString()
+                            )
+                        }
+                        
                         // 保存用户信息到本地数据库，并在成功后执行后续操作
                         GlobalScope.launch(Dispatchers.IO) { // 使用 IO 线程
                             try {

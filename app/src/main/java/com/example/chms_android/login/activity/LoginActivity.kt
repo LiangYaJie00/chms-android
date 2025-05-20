@@ -25,6 +25,7 @@ import com.example.chms_android.R
 import com.example.chms_android.data.Role
 import com.example.chms_android.features_doctor.DoctorMainActivity
 import com.example.chms_android.utils.AppUtil
+import com.example.chms_android.utils.JPushHelper
 
 class LoginActivity : AppCompatActivity() {
     private val TAG = "LoginActivity"
@@ -118,6 +119,16 @@ class LoginActivity : AppCompatActivity() {
         } catch (e: Exception) {
             Log.e(TAG, "Error setting app version", e)
         }
+    }
+
+    fun onLoginSuccess(userId: String, userRole: String) {
+        // 设置JPush别名为用户ID
+        JPushHelper.setAlias(this, userId)
+        
+        // 根据用户角色设置标签
+        val tags = HashSet<String>()
+        tags.add("user_role_$userRole") // 例如 "user_role_patient" 或 "user_role_doctor"
+        JPushHelper.setTags(this, tags)
     }
 
 }

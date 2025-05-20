@@ -80,6 +80,16 @@ class AccountUtil(context: Context) {
         // 清除用户数据
         clearUser()
         clearUserId()
+
+        // 清除token
+        TokenUtil.clearToken(context)
+
+        // 清除JPush别名和标签
+        JPushHelper.deleteAlias(context)
+        JPushHelper.cleanTags(context)
+
+        // 清除角标
+        JPushHelper.clearBadge(context)
         
         // 跳转到登录页面
         val intent = Intent(context, LoginActivity::class.java)
