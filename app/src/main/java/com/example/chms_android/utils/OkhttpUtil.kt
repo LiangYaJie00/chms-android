@@ -124,6 +124,8 @@ object OkhttpUtil {
                 try {
                     if (response.isSuccessful) {
                         response.body?.string()?.let { responseBody ->
+                            // 记录响应体内容，帮助调试
+                            Log.d(TAG, "GET Response Body: $responseBody")
                             Log.d(TAG, "GET Request successful: ${call.request().url}")
                             callback.onSuccess(responseBody)
                         } ?: run {
@@ -176,13 +178,14 @@ object OkhttpUtil {
             .url(getUrl(uri))
             .post(requestBody)
 
-        // 根据需要添加 token 头
+        // 根据需要添加token头
         if (needsToken) {
             requestBuilder.header("Authorization", "${TokenUtil.getToken(context)}")
         }
 
         val request = requestBuilder.build()
-        Log.d(TAG, "POST Request: ${request.url}, useJson: $useJson")
+        Log.d(TAG, "POST Request: ${request.url}")
+        Log.d(TAG, "POST Request Body: $jsonBody")
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {

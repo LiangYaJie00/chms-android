@@ -16,6 +16,7 @@ import com.example.chms_android.data.User
 import com.example.chms_android.databinding.FragmentDoctorProfileBinding
 import com.example.chms_android.features_doctor.vm.DoctorProfileViewModel
 import com.example.chms_android.features.mine.activity.UserEditActivity
+import com.example.chms_android.features_doctor.activity.DoctorProfileEditActivity
 import com.example.chms_android.ui.components.BadgeDrawable
 import com.example.chms_android.utils.AccountUtil
 import com.example.chms_android.utils.ToastUtil
@@ -86,6 +87,14 @@ class DoctorProfileFragment : Fragment() {
         // 头像点击事件，跳转到个人资料编辑页面
         binding.ivDoctorAvatar.setOnClickListener {
             val intent = Intent(requireActivity(), UserEditActivity::class.java)
+            startActivity(intent)
+        }
+
+        // 编辑医生履历
+        binding.llEditDoctorProfile.setOnClickListener {
+            val user = accountUtil.getUser()
+            val intent = Intent(requireActivity(), DoctorProfileEditActivity::class.java)
+            intent.putExtra("USER_ID", user?.userId ?: -1)
             startActivity(intent)
         }
 

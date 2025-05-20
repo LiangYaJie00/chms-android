@@ -10,7 +10,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="24dp">
 
         <com.example.chms_android.ui.components.TitleBar
             android:id="@+id/titleBar"
@@ -24,7 +25,8 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="4dp">
 
@@ -36,18 +38,13 @@
                 <!-- 背景图 -->
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/profile_header_bg" />
+                    android:layout_height="60dp"
+                    android:background="@drawable/profile_header_bg">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/normal_margin_16"
+                        android:layout_marginStart="16dp"
                         android:text="用户信息"
                         android:textColor="@color/white"
                         android:textSize="18sp"
@@ -58,9 +55,8 @@
                         android:id="@+id/btn_edit_profile"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:layout_gravity="end|top"
-                        android:layout_marginHorizontal="12dp"
-                        android:layout_marginVertical="5dp"
+                        android:layout_gravity="end|center_vertical"
+                        android:layout_marginEnd="16dp"
                         android:background="@drawable/circle_button_bg"
                         android:padding="8dp"
                         android:src="@drawable/edit_line"
@@ -70,7 +66,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/normal_margin_16"
+                    android:layout_margin="16dp"
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
 
@@ -105,26 +101,24 @@
                             <TextView
                                 android:layout_width="42dp"
                                 android:layout_height="20dp"
-                                android:layout_marginLeft="@dimen/normal_margin_8"
+                                android:layout_marginStart="8dp"
                                 android:background="@drawable/bg_doctor_badge"
                                 android:text="医生"
                                 android:textColor="@color/white"
                                 android:textSize="12sp"
-                                android:textAlignment="center"
                                 android:gravity="center" />
                         </LinearLayout>
-
-
 
                         <TextView
                             android:id="@+id/tv_doctor_email"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:drawableStart="@drawable/ic_email_blue"
-                            android:drawablePadding="@dimen/normal_margin_5"
+                            android:drawablePadding="5dp"
                             android:text="doctor@example.com"
-                            android:textSize="16sp"
-                            android:layout_marginTop="4dp" />
+                            android:textSize="14sp"
+                            android:textColor="@color/text_secondary"
+                            android:layout_marginTop="8dp" />
 
                         <TextView
                             android:id="@+id/tv_doctor_community"
@@ -132,29 +126,21 @@
                             android:layout_height="wrap_content"
                             android:text="健康社区"
                             android:textSize="14sp"
+                            android:textColor="@color/text_secondary"
                             android:layout_marginTop="4dp" />
                     </LinearLayout>
-
-<!--                    <Button-->
-<!--                        android:id="@+id/btn_edit_profile"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="编辑"-->
-<!--                        android:textColor="@color/white"-->
-<!--                        android:textSize="14sp"-->
-<!--                        android:backgroundTint="@color/primary" />-->
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/divider"
-                    android:layout_marginHorizontal="@dimen/normal_margin_16" />
+                    android:layout_marginHorizontal="16dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/normal_margin_16"
+                    android:layout_margin="16dp"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -169,7 +155,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0"
-                            android:textSize="20sp"
+                            android:textSize="22sp"
                             android:textStyle="bold"
                             android:textColor="@color/primary" />
 
@@ -177,8 +163,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="管理患者"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:textColor="@color/text_secondary"
+                            android:layout_marginTop="4dp" />
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/divider" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -192,7 +185,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0"
-                            android:textSize="20sp"
+                            android:textSize="22sp"
                             android:textStyle="bold"
                             android:textColor="@color/primary" />
 
@@ -200,8 +193,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="本月预约"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:textColor="@color/text_secondary"
+                            android:layout_marginTop="4dp" />
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/divider" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -215,7 +215,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0"
-                            android:textSize="20sp"
+                            android:textSize="22sp"
                             android:textStyle="bold"
                             android:textColor="@color/primary" />
 
@@ -223,46 +223,113 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="审核报告"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:textColor="@color/text_secondary"
+                            android:layout_marginTop="4dp" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- 设置选项 -->
+        <!-- 医生履历卡片 -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_doctor_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:id="@+id/ll_edit_doctor_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_doctor"
+                    android:padding="6dp"
+                    app:tint="@color/primary" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="医生履历"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="管理您的专业资质和工作经历"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp"
+                        android:layout_marginTop="2dp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_arrow_right" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- 设置项卡片 -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="4dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:orientation="vertical">
 
+                <!-- 标题栏 -->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="设置"
+                    android:textColor="@color/text_primary"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:textColor="@color/text_primary"
-                    android:layout_marginBottom="16dp" />
+                    android:padding="16dp" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider" />
+
+                <!-- 账号设置 -->
                 <LinearLayout
                     android:id="@+id/ll_account_settings"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:padding="12dp"
+                    android:background="?attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
-                    android:background="?attr/selectableItemBackground">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
 
                     <ImageView
                         android:layout_width="24dp"
@@ -275,6 +342,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="账号设置"
+                        android:textColor="@color/text_primary"
                         android:textSize="16sp"
                         android:layout_marginStart="16dp" />
 
@@ -284,13 +352,20 @@
                         android:src="@drawable/ic_arrow_right" />
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider"
+                    android:layout_marginStart="56dp" />
+
+                <!-- 消息通知 -->
                 <LinearLayout
                     android:id="@+id/ll_notification_settings"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:padding="12dp"
+                    android:padding="16dp"
                     android:clickable="true"
                     android:focusable="true"
                     android:background="?attr/selectableItemBackground">
@@ -306,6 +381,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="消息通知"
+                        android:textColor="@color/text_primary"
                         android:textSize="16sp"
                         android:layout_marginStart="16dp" />
 
@@ -315,13 +391,20 @@
                         android:src="@drawable/ic_arrow_right" />
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider"
+                    android:layout_marginStart="56dp" />
+
+                <!-- 隐私设置 -->
                 <LinearLayout
                     android:id="@+id/ll_privacy_settings"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:padding="12dp"
+                    android:padding="16dp"
                     android:clickable="true"
                     android:focusable="true"
                     android:background="?attr/selectableItemBackground">
@@ -337,6 +420,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="隐私设置"
+                        android:textColor="@color/text_primary"
                         android:textSize="16sp"
                         android:layout_marginStart="16dp" />
 
@@ -346,13 +430,20 @@
                         android:src="@drawable/ic_arrow_right" />
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider"
+                    android:layout_marginStart="56dp" />
+
+                <!-- 关于应用 -->
                 <LinearLayout
                     android:id="@+id/ll_about_app"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:padding="12dp"
+                    android:padding="16dp"
                     android:clickable="true"
                     android:focusable="true"
                     android:background="?attr/selectableItemBackground">
@@ -368,6 +459,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="关于应用"
+                        android:textColor="@color/text_primary"
                         android:textSize="16sp"
                         android:layout_marginStart="16dp" />
 
@@ -385,7 +477,7 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginBottom="@dimen/normal_margin_20"
+            android:layout_marginTop="24dp"
             android:text="退出登录"
             android:textSize="16sp"
             android:textStyle="bold"

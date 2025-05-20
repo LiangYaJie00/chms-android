@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tvAddPublicationDialogTitle"
+        style="@style/DialogTitle"
+        android:text="添加出版物" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="8dp">
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="出版物标题*"
+            android:textSize="14sp"
+            android:textColor="#757575"
+            android:layout_marginStart="4dp"
+            android:layout_marginBottom="4dp"/>
+            
+        <EditText
+            android:id="@+id/etPublicationTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:padding="12dp"
+            android:background="@drawable/bg_edit_text"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="8dp">
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="期刊名称"
+            android:textSize="14sp"
+            android:textColor="#757575"
+            android:layout_marginStart="4dp"
+            android:layout_marginBottom="4dp"/>
+            
+        <EditText
+            android:id="@+id/etJournal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:padding="12dp"
+            android:background="@drawable/bg_edit_text"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="8dp">
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发表日期"
+            android:textSize="14sp"
+            android:textColor="#757575"
+            android:layout_marginStart="4dp"
+            android:layout_marginBottom="4dp"/>
+            
+        <EditText
+            android:id="@+id/etPublishDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:padding="12dp"
+            android:background="@drawable/bg_edit_text"
+            android:textSize="16sp"
+            android:focusable="false"
+            android:clickable="true"/>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/DialogButtonContainer">
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="取消"
+            android:layout_marginEnd="8dp"
+            style="@style/DialogSecondaryButton" />
+
+        <Button
+            android:id="@+id/btnConfirm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="确认"
+            android:layout_marginStart="8dp"
+            style="@style/DialogPrimaryButton" />
+    </LinearLayout>
+</LinearLayout>

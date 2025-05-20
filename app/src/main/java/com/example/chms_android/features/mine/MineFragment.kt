@@ -22,6 +22,7 @@ import com.example.chms_android.features.mine.activity.UserEditActivity
 import com.example.chms_android.features.report.activity.DailyReportActivity
 import com.example.chms_android.features.analysis.activity.ReportAnalysisShowActivity
 import com.example.chms_android.login.activity.LoginActivity
+import com.example.chms_android.utils.AccountUtil
 
 class MineFragment : Fragment() {
     private var _binding: FragmentMineBinding? = null
@@ -173,10 +174,6 @@ class MineFragment : Fragment() {
         // 退出登录
         binding.btnMineLogout.setOnClickListener {
             viewModel.logout(requireContext())
-            
-            val intent = Intent(context, LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            context?.startActivity(intent)
         }
     }
     

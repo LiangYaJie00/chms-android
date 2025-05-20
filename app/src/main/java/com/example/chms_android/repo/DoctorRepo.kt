@@ -8,8 +8,10 @@ import com.example.chms_android.common.Constants
 import com.example.chms_android.dao.DoctorDao
 import com.example.chms_android.data.Doctor
 import com.example.chms_android.database.DatabaseProvider
+import com.example.chms_android.dto.DoctorDTO
 import com.example.chms_android.utils.NetworkUtil
 import com.example.chms_android.utils.OkhttpUtil
+import com.example.chms_android.utils.ResponseHandler
 import com.example.chms_android.utils.ToastUtil
 import com.example.chms_android.vo.RespResult
 import com.google.gson.Gson
@@ -24,64 +26,183 @@ object DoctorRepo {
     private val TAG = "DoctorRepo"
     private val doctorDao: DoctorDao get() = DatabaseProvider.getDatabase().doctorDao()
 
+    // 获取所有医生（从网络）
     fun getAllNetDoctors(context: Context) {
         DoctorApi.getAllDoctors(context, object: OkhttpUtil.NetworkCallback {
             override fun onSuccess(response: String) {
-                try {
-                    // Gson 解析返回的数据
-                    val gson = Gson()
-                    val resultType = object : TypeToken<RespResult<List<Doctor>>>() {}.type
-                    val result: RespResult<List<Doctor>> = gson.fromJson(response, resultType)
-
-                    if (result.code == "200") {
-                        val doctorList = result.data
-                        // 更新用户信息到本地数据库，并在成功后执行后续操作
-                        GlobalScope.launch(Dispatchers.IO) { // 使用 IO 线程
+                ResponseHandler.processApiResponse(
+                    response = response,
+                    context = context,
+                    typeToken = object : TypeToken<RespResult<List<DoctorDTO>>>() {},
+                    onSuccess = { doctorDTOs ->
+                        // 将DTO列表转换为实体类列表
+                        val doctorList = doctorDTOs.map { it.toEntity() }
+                        
+                        // 更新本地数据库
+                        GlobalScope.launch(Dispatchers.IO) {
                             try {
                                 doctorDao.insertDoctors(doctorList)
-
-                                // 使用主线程进行 UI 操作
+                                
                                 withContext(Dispatchers.Main) {
-                                    // 弹出登录成功的提示框
-                                    ToastUtil.show(context, "getAllNetDoctors successful: 更新成功!", Toast.LENGTH_SHORT)
+                                    ToastUtil.show(context, "医生数据更新成功", Toast.LENGTH_SHORT)
                                     Log.i(TAG, "getAllNetDoctors successful: 更新成功!")
                                 }
                             } catch (e: Exception) {
                                 e.printStackTrace()
                                 withContext(Dispatchers.Main) {
-                                    // 显示错误信息
-                                    ToastUtil.show(context, "Failed to getAllNetDoctors user: ${e.message}", Toast.LENGTH_SHORT)
-                                    Log.e(TAG, "Failed to getAllNetDoctors user: ${e.message}")
+                                    ToastUtil.show(context, "Failed to update doctors: ${e.message}", Toast.LENGTH_SHORT)
+                                    Log.e(TAG, "Failed to update doctors: ${e.message}")
                                 }
                             }
                         }
-                    } else {
-                        ToastUtil.show(context, "getAllNetDoctors failed: ${result.message}", Toast.LENGTH_SHORT)
-                        Log.e(TAG, "getAllNetDoctors failed: ${result.message}")
+                    },
+                    onError = { message ->
+                        ToastUtil.show(context, "获取医生数据失败: $message", Toast.LENGTH_SHORT)
+                        Log.e(TAG, "getAllNetDoctors failed: $message")
                     }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    ToastUtil.show(context, "Failed to parse response", Toast.LENGTH_SHORT)
-                    Log.e(TAG, "Failed to parse response")
-                }
+                )
             }
 
             override fun onFailure(e: IOException) {
                 e.printStackTrace()
-                
-                // 使用网络工具类处理错误
                 NetworkUtil.handleNetworkError(TAG, context, e)
                 
-                // 如果是开发环境，可以考虑使用本地缓存数据
                 if (Constants.IS_TESTING) {
                     Log.i(TAG, "Using cached data in testing mode")
-                    // 这里可以添加使用本地缓存数据的逻辑
                 }
             }
         })
     }
+    
+    // 根据ID获取医生信息
+    fun getDoctorById(
+        doctorId: Int,
+        context: Context,
+        onSuccess: ((DoctorDTO) -> Unit)? = null,
+        onError: ((String) -> Unit)? = null
+    ) {
+        fetchDoctorData(
+            localDataFetch = { doctorDao.getDoctorById(doctorId) },
+            networkFetch = { callback -> DoctorApi.getDoctorById(doctorId, context, callback) },
+            context = context,
+            onSuccess = onSuccess,
+            onError = onError,
+            errorLogTag = "getting doctor by ID"
+        )
+    }
+    
+    // 分页获取医生列表
+    fun getDoctorsByPage(
+        offset: Int,
+        limit: Int,
+        context: Context,
+        onSuccess: ((List<DoctorDTO>) -> Unit)? = null,
+        onError: ((String) -> Unit)? = null
+    ) {
+        DoctorApi.getDoctorsByPage(offset, limit, context, object: OkhttpUtil.NetworkCallback {
+            override fun onSuccess(response: String) {
+                ResponseHandler.processApiResponse(
+                    response = response,
+                    context = context,
+                    typeToken = object : TypeToken<RespResult<List<DoctorDTO>>>() {},
+                    onSuccess = { doctorDTOs ->
+                        val doctorList = doctorDTOs.map { it.toEntity() }
+                        
+                        // 更新本地数据库
+                        GlobalScope.launch(Dispatchers.IO) {
+                            try {
+                                doctorDao.insertDoctors(doctorList)
+                                
+                                withContext(Dispatchers.Main) {
+                                    onSuccess?.invoke(doctorDTOs)
+                                }
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                                withContext(Dispatchers.Main) {
+                                    onError?.invoke("Failed to save doctors: ${e.message}")
+                                }
+                            }
+                        }
+                    },
+                    onError = { message ->
+                        onError?.invoke(message)
+                    }
+                )
+            }
 
-    // 新增一个方法从数据库获取所有医生
+            override fun onFailure(e: IOException) {
+                e.printStackTrace()
+                onError?.invoke("Network error: ${e.message}")
+            }
+        })
+    }
+    
+    // 根据用户ID获取医生信息
+    fun getDoctorByUserId(
+        userId: Int,
+        context: Context,
+        onSuccess: ((DoctorDTO) -> Unit)? = null,
+        onError: ((String) -> Unit)? = null
+    ) {
+        fetchDoctorData(
+            localDataFetch = { doctorDao.getDoctorByUserId(userId) },
+            networkFetch = { callback -> DoctorApi.getDoctorByUserId(userId, context, callback) },
+            context = context,
+            onSuccess = onSuccess,
+            onError = onError,
+            errorLogTag = "getting doctor by user ID"
+        )
+    }
+    
+    // 新增或更新医生信息
+    fun saveOrUpdateDoctor(
+        doctorDTO: DoctorDTO,
+        context: Context,
+        onSuccess: ((DoctorDTO) -> Unit)? = null,
+        onError: ((String) -> Unit)? = null
+    ) {
+        DoctorApi.saveOrUpdateDoctor(doctorDTO, context, object: OkhttpUtil.NetworkCallback {
+            override fun onSuccess(response: String) {
+                ResponseHandler.processApiResponse(
+                    response = response,
+                    context = context,
+                    typeToken = object : TypeToken<RespResult<DoctorDTO>>() {},
+                    onSuccess = { updatedDoctorDTO ->
+                        val doctor = updatedDoctorDTO.toEntity()
+                        
+                        // 更新本地数据库
+                        GlobalScope.launch(Dispatchers.IO) {
+                            try {
+                                doctorDao.insertDoctor(doctor)
+                                
+                                withContext(Dispatchers.Main) {
+                                    onSuccess?.invoke(updatedDoctorDTO)
+                                    ToastUtil.show(context, "医生履历信息保存成功", Toast.LENGTH_SHORT)
+                                }
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                                withContext(Dispatchers.Main) {
+                                    onError?.invoke("Failed to save doctor: ${e.message}")
+                                }
+                            }
+                        }
+                    },
+                    onError = { message ->
+                        onError?.invoke(message)
+                        ToastUtil.show(context, "保存医生履历信息失败: $message", Toast.LENGTH_SHORT)
+                    }
+                )
+            }
+
+            override fun onFailure(e: IOException) {
+                e.printStackTrace()
+                onError?.invoke("Network error: ${e.message}")
+                ToastUtil.show(context, "网络错误: ${e.message}", Toast.LENGTH_SHORT)
+            }
+        })
+    }
+
+    // 从数据库获取所有医生
     fun getAllDoctorsFromDb(onComplete: (List<Doctor>) -> Unit, onError: (Throwable) -> Unit) {
         GlobalScope.launch(Dispatchers.IO) {
             try {
@@ -97,7 +218,7 @@ object DoctorRepo {
         }
     }
 
-    // 新增方法来获取前7个医生
+    // 获取前7个医生
     fun getFirstSevenDoctorsFromDb(onComplete: (List<Doctor>) -> Unit, onError: (Throwable) -> Unit) {
         GlobalScope.launch(Dispatchers.IO) {
             try {
@@ -108,6 +229,129 @@ object DoctorRepo {
             } catch (exception: Exception) {
                 withContext(Dispatchers.Main) {
                     onError(exception)
+                }
+            }
+        }
+    }
+
+    // 通用的获取医生数据方法
+    private fun fetchDoctorData(
+        localDataFetch: () -> Doctor?,
+        networkFetch: (OkhttpUtil.NetworkCallback) -> Unit,
+        context: Context,
+        onSuccess: ((DoctorDTO) -> Unit)? = null,
+        onError: ((String) -> Unit)? = null,
+        errorLogTag: String
+    ) {
+        // 先从本地数据库获取数据
+        GlobalScope.launch(Dispatchers.IO) {
+            try {
+                val localDoctor = localDataFetch()
+                
+                // 如果本地有数据，先返回本地数据
+                if (localDoctor != null) {
+                    val localDoctorDTO = localDoctor.toDTO()
+                    withContext(Dispatchers.Main) {
+                        onSuccess?.invoke(localDoctorDTO)
+                    }
+                }
+                
+                // 然后请求网络获取最新数据
+                withContext(Dispatchers.Main) {
+                    networkFetch(object: OkhttpUtil.NetworkCallback {
+                        override fun onSuccess(response: String) {
+                            ResponseHandler.processApiResponse(
+                                response = response,
+                                context = context,
+                                typeToken = object : TypeToken<RespResult<DoctorDTO>>() {},
+                                onSuccess = { doctorDTO ->
+                                    val doctor = doctorDTO.toEntity()
+                                    
+                                    // 更新本地数据库
+                                    GlobalScope.launch(Dispatchers.IO) {
+                                        try {
+                                            doctorDao.insertDoctor(doctor)
+                                            
+                                            withContext(Dispatchers.Main) {
+                                                onSuccess?.invoke(doctorDTO)
+                                            }
+                                        } catch (e: Exception) {
+                                            e.printStackTrace()
+                                            // 如果更新数据库失败但已经返回了本地数据，不需要再次调用onError
+                                            if (localDoctor == null) {
+                                                withContext(Dispatchers.Main) {
+                                                    onError?.invoke("Failed to save doctor: ${e.message}")
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                onError = { message ->
+                                    // 如果网络请求失败但已经返回了本地数据，不需要再次调用onError
+                                    if (localDoctor == null) {
+                                        onError?.invoke(message)
+                                    }
+                                },
+                                // 不显示Toast消息，避免重复提示
+                                successToastMessage = null,
+                                errorToastMessage = null
+                            )
+                        }
+
+                        override fun onFailure(e: IOException) {
+                            e.printStackTrace()
+                            // 如果网络请求失败但已经返回了本地数据，不需要再次调用onError
+                            if (localDoctor == null) {
+                                onError?.invoke("Network error: ${e.message}")
+                            }
+                            
+                            // 记录网络错误日志
+                            Log.e(TAG, "Network error when $errorLogTag: ${e.message}")
+                        }
+                    })
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Log.e(TAG, "Database error when $errorLogTag: ${e.message}")
+                
+                // 如果本地数据库访问失败，直接请求网络
+                withContext(Dispatchers.Main) {
+                    networkFetch(object: OkhttpUtil.NetworkCallback {
+                        override fun onSuccess(response: String) {
+                            ResponseHandler.processApiResponse(
+                                response = response,
+                                context = context,
+                                typeToken = object : TypeToken<RespResult<DoctorDTO>>() {},
+                                onSuccess = { doctorDTO ->
+                                    val doctor = doctorDTO.toEntity()
+                                    
+                                    // 更新本地数据库
+                                    GlobalScope.launch(Dispatchers.IO) {
+                                        try {
+                                            doctorDao.insertDoctor(doctor)
+                                            
+                                            withContext(Dispatchers.Main) {
+                                                onSuccess?.invoke(doctorDTO)
+                                            }
+                                        } catch (e: Exception) {
+                                            e.printStackTrace()
+                                            withContext(Dispatchers.Main) {
+                                                onError?.invoke("Failed to save doctor: ${e.message}")
+                                            }
+                                        }
+                                    }
+                                },
+                                onError = { message ->
+                                    onError?.invoke(message)
+                                }
+                            )
+                        }
+
+                        override fun onFailure(e: IOException) {
+                            e.printStackTrace()
+                            onError?.invoke("Network error: ${e.message}")
+                        }
+                    })
                 }
             }
         }

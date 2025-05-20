@@ -58,8 +58,7 @@ class MineViewModel : ViewModel() {
     
     // 退出登录
     fun logout(context: Context) {
-        AccountUtil(context).clearUser()
-        AccountUtil(context).clearUserId()
+        AccountUtil(context).logout(context)
         _user.value = null
     }
     

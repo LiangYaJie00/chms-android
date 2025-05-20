@@ -45,4 +45,8 @@
     <dimen name="splash_logo_width">140dp</dimen>
     <dimen name="splash_logo_height">145dp</dimen>
     <dimen name="splash_logo_corner_radius">16dp</dimen>
+    
+    <!-- 卡片视图相关尺寸 -->
+    <dimen name="card_corner_radius">10dp</dimen>
+    <dimen name="card_elevation">2dp</dimen>
 </resources>
