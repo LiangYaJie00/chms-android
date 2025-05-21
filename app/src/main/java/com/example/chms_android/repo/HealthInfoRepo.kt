@@ -191,7 +191,8 @@ object HealthInfoRepo {
                         // 调用错误回调
                         onError?.invoke(message)
                         // 显示错误提示
-                        ToastUtil.show(context, "获取用户健康信息失败: $message", Toast.LENGTH_SHORT)
+//                        ToastUtil.show(context, "获取用户健康档案失败/该用户无健康档案: $message", Toast.LENGTH_SHORT)
+                        ToastUtil.show(context, "该用户无健康档案", Toast.LENGTH_SHORT)
                     },
                     // 不显示默认的Toast消息，由回调处理
                     successToastMessage = null,
