@@ -1,5 +1,6 @@
 package com.example.chms_android.features.home.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.chms_android.R
 import com.example.chms_android.data.Devices
 import com.example.chms_android.databinding.ActivityDeviceManagerBinding
+import com.example.chms_android.features.health.activity.BluetoothHealthActivity
 import com.example.chms_android.features.home.adapter.DevicesAdapter
 import com.example.chms_android.features.home.vm.DeviceManagerActivityVM
 import com.example.chms_android.utils.MyItemTouchCallback
@@ -56,6 +58,12 @@ class DeviceManagerActivity : AppCompatActivity() {
         viewModel.devicesList.observe(this, Observer { devicesList ->
             saveDevicesList(devicesList)
         })
+
+        // 添加蓝牙健康设备连接按钮点击事件
+        binding.btnBluetoothHealth.setOnClickListener {
+            val intent = Intent(this, BluetoothHealthActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 

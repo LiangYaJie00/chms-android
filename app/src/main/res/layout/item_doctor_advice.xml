@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- 标题行 - 包含标题和状态标签 -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp">
+
+            <!-- 标题部分 - 左对齐 -->
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="8dp"
+                android:layout_toStartOf="@id/layoutTags"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                tools:text="建议标题" />
+
+            <!-- 状态标签和重要标记容器 - 右对齐 -->
+            <LinearLayout
+                android:id="@+id/layoutTags"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal">
+
+                <!-- 状态信息 -->
+                <TextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:paddingStart="6dp"
+                    android:paddingEnd="6dp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:background="@drawable/bg_status_tag"
+                    android:textColor="@color/primary"
+                    android:textSize="12sp"
+                    tools:text="已读" />
+
+                <!-- 重要标记 -->
+                <TextView
+                    android:id="@+id/tvImportant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_important_tag"
+                    android:padding="2dp"
+                    android:text="重要"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <!-- 内容预览 -->
+        <TextView
+            android:id="@+id/tvContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp"
+            tools:text="建议内容预览，这里只显示部分内容..." />
+
+        <!-- 底部信息栏 - 优化版 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/bg_info_bar"
+            android:padding="8dp">
+
+            <!-- 类型信息 - 带图标 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginEnd="12dp">
+                
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    app:tint="@color/primary"
+                    android:src="@drawable/ic_category"
+                    android:layout_marginEnd="4dp"/>
+                    
+                <TextView
+                    android:id="@+id/tvType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/grey3"
+                    android:textSize="12sp"
+                    tools:text="饮食建议" />
+            </LinearLayout>
+
+            <!-- 接收者信息 - 带图标 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:src="@drawable/ic_person"
+                    app:tint="@color/primary"
+                    android:layout_marginEnd="4dp"/>
+                    
+                <TextView
+                    android:id="@+id/tvRecipient"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/grey3"
+                    android:textSize="12sp"
+                    tools:text="居民：张三" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 日期信息 - 单独一行 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="start"
+            android:layout_marginTop="6dp">
+
+<!--            <ImageView-->
+<!--                android:layout_width="20dp"-->
+<!--                android:layout_height="20dp"-->
+<!--                android:src="@drawable/ic_time_black_24dp"-->
+<!--                app:tint="@color/primary"-->
+<!--                android:layout_marginEnd="4dp"/>-->
+                
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="@dimen/title_size_14"
+                tools:text="2023-05-20 10:30" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

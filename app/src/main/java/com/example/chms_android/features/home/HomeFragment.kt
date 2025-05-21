@@ -17,12 +17,17 @@ import com.example.chms_android.MainActivity
 import com.example.chms_android.R
 import com.example.chms_android.data.User
 import com.example.chms_android.databinding.FragmentHomeBinding
+import com.example.chms_android.dto.DoctorAdviceDTO
 import com.example.chms_android.features.home.activity.CommunityActivity
 import com.example.chms_android.features.health.activity.DailyHealthReportActivity
 import com.example.chms_android.features.home.activity.DeviceManagerActivity
 import com.example.chms_android.features.home.activity.DoctorsActivity
 import com.example.chms_android.features.home.adapter.DoctorShowsAdapter
 import com.example.chms_android.features.home.vm.HomeFragmentVM
+import com.example.chms_android.features_doctor.activity.DoctorAdviceDetailActivity
+import com.example.chms_android.features_doctor.activity.DoctorAdviceListActivity
+import com.example.chms_android.features_doctor.adapter.DoctorAdviceAdapter
+import com.example.chms_android.repo.DoctorAdviceRepo
 import com.example.chms_android.repo.DoctorRepo
 import com.example.chms_android.utils.AccountUtil
 import com.example.chms_android.utils.ToastUtil
@@ -36,6 +41,9 @@ class HomeFragment : Fragment() {
     private lateinit var viewModel: HomeFragmentVM
     private var offlineBanner: View? = null
     private var isBannerVisible = false
+    
+    // 添加医生建议适配器
+    private lateinit var adviceAdapter: DoctorAdviceAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +63,7 @@ class HomeFragment : Fragment() {
         initView()
         setListener()
         initDoctorRecyclerView()
+        initAdviceRecyclerView() // 初始化医生建议列表
         setupObservers()
 
         return binding.root
@@ -91,6 +100,9 @@ class HomeFragment : Fragment() {
 
         // 在Fragment恢复时也检查离线模式
         checkOfflineMode()
+        
+        // 刷新建议列表
+        loadRecentAdvices()
     }
 
     private fun checkOfflineMode() {
@@ -156,6 +168,12 @@ class HomeFragment : Fragment() {
             }
             startActivity(intent)
         }
+
+        // 添加查看全部建议的点击事件
+        binding.tvShowAllAdvices.setOnClickListener {
+            val intent = Intent(requireContext(), DoctorAdviceListActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun initDoctorRecyclerView() {
@@ -176,6 +194,67 @@ class HomeFragment : Fragment() {
                 ToastUtil.show(requireContext(), "Error fetching doctors: ${error.message}", Toast.LENGTH_SHORT)
             }
         )
+    }
+
+    private fun initAdviceRecyclerView() {
+        // 创建适配器
+        adviceAdapter = DoctorAdviceAdapter(
+            requireContext(),
+            mutableListOf(),
+            object : DoctorAdviceAdapter.OnAdviceClickListener {
+                override fun onAdviceClick(advice: DoctorAdviceDTO) {
+                    // 点击建议项，跳转到详情页
+                    val intent = Intent(requireContext(), DoctorAdviceDetailActivity::class.java).apply {
+                        putExtra("ADVICE_ID", advice.adviceId)
+                    }
+                    startActivity(intent)
+                }
+            }
+        )
+        
+        // 设置RecyclerView
+        binding.recyclerViewAdvices.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = adviceAdapter
+        }
+        
+        // 加载数据
+        loadRecentAdvices()
+    }
+
+    private fun loadRecentAdvices() {
+        val userId = AccountUtil(requireContext()).getUserId()
+        if (userId != null) {
+            // 显示加载进度
+            binding.progressBarAdvices.visibility = View.VISIBLE
+            
+            // 获取居民收到的最新3条建议
+            DoctorAdviceRepo.getRecentAdvicesByResidentId(
+                residentId = userId.toInt(),
+                limit = 3,
+                context = requireContext(),
+                onSuccess = { advices ->
+                    binding.progressBarAdvices.visibility = View.GONE
+                    
+                    if (advices.isEmpty()) {
+                        binding.tvNoAdvices.visibility = View.VISIBLE
+                        binding.recyclerViewAdvices.visibility = View.GONE
+                    } else {
+                        binding.tvNoAdvices.visibility = View.GONE
+                        binding.recyclerViewAdvices.visibility = View.VISIBLE
+                        adviceAdapter.updateAdvices(advices)
+                    }
+                },
+                onError = { errorMsg ->
+                    binding.progressBarAdvices.visibility = View.GONE
+                    binding.tvNoAdvices.visibility = View.VISIBLE
+                    binding.recyclerViewAdvices.visibility = View.GONE
+                    binding.tvNoAdvices.text = "加载失败: $errorMsg"
+                    
+                    Log.e("HomeFragment", "Error loading advices: $errorMsg")
+                }
+            )
+        }
     }
 
     companion object {

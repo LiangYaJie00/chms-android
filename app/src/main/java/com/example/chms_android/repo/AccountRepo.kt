@@ -3,6 +3,7 @@ package com.example.chms_android.repo
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.widget.Toast
 import com.example.chms_android.MainActivity
 import com.example.chms_android.api.AccountApi
@@ -55,6 +56,11 @@ object AccountRepo {
                                 it.toString(), 
                                 userResponse.user.role.toString()
                             )
+                        }
+                        
+                        // 如果用户是医生角色，获取并保存医生ID
+                        if (userResponse.user.role == Role.doctor && userResponse.user.userId != null) {
+                            fetchAndSaveDoctorId(userResponse.user.userId, context)
                         }
                         
                         // 保存用户信息到本地数据库，并在成功后执行后续操作
@@ -130,6 +136,11 @@ object AccountRepo {
                                 it.toString(), 
                                 userResponse.user.role.toString()
                             )
+                        }
+                        
+                        // 如果用户是医生角色，获取并保存医生ID
+                        if (userResponse.user.role == Role.doctor && userResponse.user.userId != null) {
+                            fetchAndSaveDoctorId(userResponse.user.userId, context)
                         }
                         
                         // 保存用户信息到本地数据库，并在成功后执行后续操作
@@ -241,6 +252,26 @@ object AccountRepo {
                     ToastUtil.show(context, "Network error: ${e.message}", Toast.LENGTH_SHORT)
                 }
             })
+    }
+
+    // 获取并保存医生ID的方法
+    private fun fetchAndSaveDoctorId(userId: Int, context: Context) {
+        DoctorRepo.getDoctorByUserId(
+            userId = userId,
+            context = context,
+            onSuccess = { doctorDTO ->
+                // 保存医生ID到AccountUtil
+                doctorDTO.doctorId?.let { doctorId ->
+                    AccountUtil(context).saveDoctorId(doctorId)
+                    Log.d("AccountRepo", "Doctor ID saved: $doctorId for user ID: $userId")
+                }
+            },
+            onError = { errorMsg ->
+                Log.e("AccountRepo", "Failed to get doctor by user ID: $errorMsg")
+                // 如果获取失败，可能是新注册的医生还没有对应的医生记录
+                // 这种情况下，医生需要先完善个人资料
+            }
+        )
     }
 
 }

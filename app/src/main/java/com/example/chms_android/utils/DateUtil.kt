@@ -85,4 +85,18 @@ object DateUtil {
             "\"$dateWithTime\""
         }
     }
+
+    /**
+     * 将Timestamp格式化为可读的日期时间字符串
+     *
+     * @param timestamp 时间戳对象
+     * @param format 日期格式，默认为 "yyyy-MM-dd HH:mm:ss"
+     * @return 格式化后的日期时间字符串，如果时间戳为null则返回空字符串
+     */
+    fun formatTimestamp(timestamp: Timestamp, format: String = "yyyy-MM-dd HH:mm:ss"): String {
+        if (timestamp == null) return ""
+        
+        val date = Date(timestamp.time)
+        return formatDate(date, format)
+    }
 }

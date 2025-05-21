@@ -27,6 +27,13 @@ class CHMSApplication : Application(), DefaultLifecycleObserver {
         fun getInstance(): CHMSApplication {
             return instance
         }
+
+        /**
+         * 获取应用程序上下文
+         */
+        fun getAppContext(): Context {
+            return instance.applicationContext
+        }
     }
     
     override fun onCreate() {

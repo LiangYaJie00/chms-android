@@ -60,4 +60,13 @@
     <color name="red">#F44336</color>
     <color name="blue">#2196F3</color>
     <color name="gray">#9E9E9E</color>
+    <color name="light_gray">#EEEEEE</color>
+    <color name="primary_light">#F7FBFF</color>
+
+    <!-- 添加状态标签文字颜色 -->
+    <color name="status_read_text">#388E3C</color>
+    <color name="status_unread_text">#F57C00</color>
+
+    <!-- 添加缺失的文本颜色 -->
+    <color name="text_tertiary">#757575</color>
 </resources>

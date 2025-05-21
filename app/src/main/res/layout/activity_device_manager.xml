@@ -115,4 +115,21 @@
 
     </com.nambimobile.widgets.efab.ExpandableFabLayout>
 
+    <!-- 添加蓝牙健康设备连接按钮 -->
+    <Button
+        android:id="@+id/btn_bluetooth_health"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="@dimen/normal_margin_12"
+        android:layout_marginLeft="@dimen/normal_margin_16"
+        android:layout_marginRight="80dp"
+        android:background="@drawable/btn_background_login"
+        android:text="连接蓝牙健康设备"
+        android:textColor="@color/white"
+        app:icon="@drawable/ic_bluetooth"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,7 +14,19 @@ class AccountUtil(context: Context) {
     companion object {
         private const val USER_ID_KEY = "USER_ID_KEY"
         private const val USER_DATA_KEY = "USER_DATA_KEY"
+        private const val DOCTOR_ID_KEY = "DOCTOR_ID_KEY"
         private const val DEFAULT_USER_ID = -1L // Assuming userId is of type Long
+        private const val DEFAULT_DOCTOR_ID = -1 // Assuming doctorId is of type Int
+        
+        /**
+         * 获取当前登录医生的ID
+         * 静态方法，方便在不同地方调用
+         */
+        fun getCurrentDoctorId(): Int {
+            // 使用应用程序上下文获取医生ID
+            val context = com.example.chms_android.CHMSApplication.getAppContext()
+            return AccountUtil(context).getDoctorId()
+        }
     }
 
     /**
@@ -74,20 +86,42 @@ class AccountUtil(context: Context) {
     }
 
     /**
+     * 保存医生ID
+     */
+    fun saveDoctorId(doctorId: Int) {
+        spUtil.put(DOCTOR_ID_KEY, doctorId)
+    }
+
+    /**
+     * 获取保存的医生ID
+     */
+    fun getDoctorId(): Int {
+        return spUtil.get(DOCTOR_ID_KEY, Int::class.java, DEFAULT_DOCTOR_ID)
+    }
+
+    /**
+     * 清除医生ID
+     */
+    fun clearDoctorId() {
+        spUtil.put(DOCTOR_ID_KEY, DEFAULT_DOCTOR_ID)
+    }
+
+    /**
      * 退出登录，清除用户信息和ID，并跳转到登录页面
      */
     fun logout(context: Context) {
         // 清除用户数据
         clearUser()
         clearUserId()
-
+        clearDoctorId() // 同时清除医生ID
+        
         // 清除token
         TokenUtil.clearToken(context)
-
+        
         // 清除JPush别名和标签
         JPushHelper.deleteAlias(context)
         JPushHelper.cleanTags(context)
-
+        
         // 清除角标
         JPushHelper.clearBadge(context)
         

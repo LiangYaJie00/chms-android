@@ -160,4 +160,69 @@ object HealthInfoRepo {
             }
         })
     }
+
+    /**
+     * 通过用户ID获取健康信息
+     * 
+     * @param userId 用户ID
+     * @param context 上下文
+     * @param onSuccess 成功回调，返回健康信息
+     * @param onError 错误回调，返回错误信息
+     */
+    fun getHealthInfoByUserId(
+        userId: Int,
+        context: Context,
+        onSuccess: ((HealthInfo) -> Unit)? = null,
+        onError: ((String) -> Unit)? = null
+    ) {
+        HealthInfoApi.getHealthInfoByUserId(userId, context, object : OkhttpUtil.NetworkCallback {
+            override fun onSuccess(response: String) {
+                ResponseHandler.processApiResponse(
+                    response,
+                    context,
+                    object : TypeToken<RespResult<HealthInfo>>() {},
+                    onSuccess = { healthInfo ->
+                        // 保存到本地数据库
+                        healthInfoDao.insertHealthInfo(healthInfo)
+                        // 调用成功回调
+                        onSuccess?.invoke(healthInfo)
+                    },
+                    onError = { message ->
+                        // 调用错误回调
+                        onError?.invoke(message)
+                        // 显示错误提示
+                        ToastUtil.show(context, "获取用户健康信息失败: $message", Toast.LENGTH_SHORT)
+                    },
+                    // 不显示默认的Toast消息，由回调处理
+                    successToastMessage = null,
+                    errorToastMessage = null
+                )
+            }
+
+            override fun onFailure(e: IOException) {
+                e.printStackTrace()
+                Log.e(TAG, "Network error: ${e.message}")
+                // 使用网络工具类处理错误
+                NetworkUtil.handleNetworkError(TAG, context, e)
+                // 尝试从本地数据库获取
+                try {
+                    val userIdInt = userId.toInt()
+                    val localHealthInfo = healthInfoDao.getHealthInfoByUserId(userIdInt)
+                    if (localHealthInfo != null) {
+                        Log.i(TAG, "Using cached health info data for user $userId")
+                        onSuccess?.invoke(localHealthInfo)
+                    } else {
+                        // 调用错误回调
+                        onError?.invoke("网络请求失败: ${e.message}")
+                        // 本地也没有数据
+                        ToastUtil.show(context, "无法获取该用户健康信息，请检查网络连接", Toast.LENGTH_SHORT)
+                    }
+                } catch (ex: Exception) {
+                    ex.printStackTrace()
+                    onError?.invoke("获取健康信息失败: ${ex.message}")
+                    ToastUtil.show(context, "获取用户健康信息失败: ${ex.message}", Toast.LENGTH_SHORT)
+                }
+            }
+        })
+    }
 }

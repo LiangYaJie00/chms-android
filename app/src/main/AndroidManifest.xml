@@ -16,6 +16,17 @@
     <!-- Android 9以及以下系统，需要ACCESS_FINE_LOCATION -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
+    <!-- 蓝牙权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" android:usesPermissionFlags="neverForLocation" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- 声明BLE功能 -->
+    <uses-feature android:name="android.hardware.bluetooth_le" android:required="true" />
+
     <!-- 极光推送所需权限 -->
     <permission
         android:name="${applicationId}.permission.JPUSH_MESSAGE"
@@ -50,7 +61,22 @@
         tools:replace="android:allowBackup"
         tools:targetApi="31">
         <uses-library android:name="org.apache.http.legacy" android:required="false" />
-        
+        <!-- 添加医生建议列表Activity -->
+        <activity
+            android:name=".features_doctor.activity.DoctorAdviceListActivity"
+            android:exported="false" />
+        <!-- 添加医生建议详情Activity -->
+        <activity
+            android:name=".features_doctor.activity.DoctorAdviceDetailActivity"
+            android:exported="false" />
+        <!-- 添加医生建议编辑Activity -->
+        <activity
+            android:name=".features_doctor.activity.DoctorAdviceEditActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".features.health.activity.UserHealthInfoActivity"
+            android:exported="false" />
         <!-- 添加医生履历编辑Activity -->
         <activity
             android:name=".features_doctor.activity.DoctorProfileEditActivity"
@@ -126,6 +152,13 @@
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
         <activity
             android:name=".features.health.activity.HealthReportHistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".features_doctor.activity.ResidentDetailActivity"
+            android:exported="false" />
+        <!-- 蓝牙健康设备Activity -->
+        <activity
+            android:name=".features.health.activity.BluetoothHealthActivity"
             android:exported="false" />
 
         <!-- 极光推送相关配置 -->

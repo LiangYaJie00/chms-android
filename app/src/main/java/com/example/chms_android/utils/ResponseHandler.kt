@@ -30,6 +30,7 @@ object ResponseHandler {
             "yyyy-MM-dd'T'HH:mm:ss",
             "yyyy-MM-dd'T'HH:mm:ss.SSS",
             "yyyy-MM-dd'T'HH:mm:ss.SSSZ",
+            "yyyy-MM-dd HH:mm:ss", // 添加这种格式
             "yyyy-MM-dd",
             "yyyy/MM/dd"
         )
@@ -59,6 +60,7 @@ object ResponseHandler {
     // 创建自定义的Timestamp反序列化器
     private class TimestampDeserializer : JsonDeserializer<Timestamp> {
         private val dateFormats = arrayOf(
+            "yyyy-MM-dd HH:mm:ss",
             "yyyy-MM-dd'T'HH:mm:ss",
             "yyyy-MM-dd'T'HH:mm:ss.SSS",
             "yyyy-MM-dd'T'HH:mm:ss.SSSZ",

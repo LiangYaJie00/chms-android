@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.chms_android.MainActivity
 import com.example.chms_android.data.Doctor
+import com.example.chms_android.dto.DoctorAdviceDTO
 
 class HomeFragmentVM(): ViewModel() {
     val doctorList: LiveData<List<Doctor>> get() = _doctorList
@@ -19,8 +20,17 @@ class HomeFragmentVM(): ViewModel() {
     private val _connectionRetryResult = MutableLiveData<Boolean>()
     val connectionRetryResult: LiveData<Boolean> = _connectionRetryResult
 
+    // 添加医生建议相关的LiveData
+    private val _adviceList = MutableLiveData<List<DoctorAdviceDTO>>()
+    val adviceList: LiveData<List<DoctorAdviceDTO>> = _adviceList
+
     fun setDoctorList(doctorList: List<Doctor>) {
         _doctorList.value = doctorList
+    }
+    
+    // 设置医生建议列表
+    fun setAdviceList(advices: List<DoctorAdviceDTO>) {
+        _adviceList.value = advices
     }
     
     // 检查是否处于离线模式

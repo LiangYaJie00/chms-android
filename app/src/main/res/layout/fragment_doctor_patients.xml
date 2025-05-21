@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleText="患者管理"
+        app:titleText="居民管理"
         app:showBackArrow="false"
         app:mode="1" />
 
@@ -23,7 +23,7 @@
         android:layout_margin="16dp"
         android:background="@drawable/bg_search_view"
         app:iconifiedByDefault="false"
-        app:queryHint="搜索患者姓名或手机号"
+        app:queryHint="搜索居民姓名或手机号"
         app:layout_constraintTop_toBottomOf="@id/titleBar" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -60,7 +60,7 @@
         android:id="@+id/tv_empty_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="暂无患者数据"
+        android:text="暂无居民数据"
         android:textSize="16sp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"

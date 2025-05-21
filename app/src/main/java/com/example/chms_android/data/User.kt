@@ -3,6 +3,7 @@ package com.example.chms_android.data
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.time.LocalDateTime
+import java.io.Serializable
 
 @Entity(tableName = "user")
 data class User(
@@ -21,4 +22,4 @@ data class User(
     var community: String? = null,
     val isVerified: Boolean,
     val loginTime: LocalDateTime? = null
-)
+) : Serializable

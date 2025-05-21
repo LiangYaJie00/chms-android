@@ -6,6 +6,7 @@ import androidx.room.TypeConverters
 import com.example.chms_android.common.Constants
 import com.example.chms_android.dao.CommunityDao
 import com.example.chms_android.dao.DailyHealthReportDao
+import com.example.chms_android.dao.DoctorAdviceDao
 import com.example.chms_android.dao.DoctorDao
 import com.example.chms_android.dao.HealthInfoDao
 import com.example.chms_android.dao.ReportAnalysisDao
@@ -13,6 +14,7 @@ import com.example.chms_android.dao.UserDao
 import com.example.chms_android.data.Community
 import com.example.chms_android.data.DailyHealthReport
 import com.example.chms_android.data.Doctor
+import com.example.chms_android.data.DoctorAdvice
 import com.example.chms_android.data.HealthInfo
 import com.example.chms_android.data.ReportAnalysis
 import com.example.chms_android.data.User
@@ -26,7 +28,8 @@ import com.example.chms_android.data.converter.TimestampConverter
     Community::class,
     HealthInfo::class,
     DailyHealthReport::class,
-    ReportAnalysis::class],
+    ReportAnalysis::class,
+    DoctorAdvice::class],
     version = Constants.DATABASE_VERSION, exportSchema = false)
 @TypeConverters(LocalDateTimeConverter::class, TimestampConverter::class, BigDecimalConverter::class, DateConverter::class)
 abstract class AppDatabase: RoomDatabase() {
@@ -36,4 +39,5 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun healthInfoDao(): HealthInfoDao
     abstract fun dailyHealthReportDao(): DailyHealthReportDao
     abstract fun reportAnalysisDao(): ReportAnalysisDao
+    abstract fun doctorAdviceDao(): DoctorAdviceDao
 }

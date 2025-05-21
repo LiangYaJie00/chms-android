@@ -252,8 +252,45 @@
                     android:background="@color/divider"
                     android:layout_marginVertical="8dp"/>
 
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/ll_report_review"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    android:gravity="center_vertical"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:clickable="true"-->
+<!--                    android:focusable="true"-->
+<!--                    android:background="?attr/selectableItemBackground">-->
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="24dp"-->
+<!--                        android:layout_height="24dp"-->
+<!--                        android:src="@drawable/ic_report"-->
+<!--                        app:tint="@color/primary"/>-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:text="健康报告审核"-->
+<!--                        android:textSize="16sp"-->
+<!--                        android:layout_marginStart="16dp"/>-->
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="24dp"-->
+<!--                        android:layout_height="24dp"-->
+<!--                        android:src="@drawable/ic_arrow_forward_black_24dp"/>-->
+<!--                </LinearLayout>-->
+
+<!--                <View-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="1dp"-->
+<!--                    android:background="@color/divider"-->
+<!--                    android:layout_marginVertical="8dp"/>-->
+
                 <LinearLayout
-                    android:id="@+id/ll_report_review"
+                    android:id="@+id/ll_health_advice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -266,14 +303,14 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/ic_report"
+                        android:src="@drawable/ic_advice"
                         app:tint="@color/primary"/>
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="健康报告审核"
+                        android:text="健康建议管理"
                         android:textSize="16sp"
                         android:layout_marginStart="16dp"/>
 

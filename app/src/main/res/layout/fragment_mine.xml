@@ -227,6 +227,16 @@
                         app:rawMode="0" />
 
                     <com.example.chms_android.ui.components.RawContainer
+                        android:id="@+id/rc_fm_doctor_advice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        app:startIcon="@drawable/ic_analysis_report"
+                        app:title="医生建议"
+                        app:endIcon="@drawable/ic_arrow_right"
+                        app:rawMode="0" />
+
+                    <com.example.chms_android.ui.components.RawContainer
                         android:id="@+id/rc_fm_reservation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

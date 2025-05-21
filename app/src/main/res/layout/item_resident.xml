@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="2dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/iv_resident_avatar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:contentDescription="居民头像"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@mipmap/avatar_default" />
+
+        <TextView
+            android:id="@+id/tv_resident_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/iv_resident_avatar"
+            app:layout_constraintTop_toTopOf="@+id/iv_resident_avatar"
+            tools:text="张三" />
+
+        <TextView
+            android:id="@+id/tv_resident_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/tv_resident_name"
+            app:layout_constraintTop_toTopOf="@+id/tv_resident_name"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_resident_name"
+            tools:text="男" />
+
+        <TextView
+            android:id="@+id/tv_resident_community"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/iv_resident_more"
+            app:layout_constraintStart_toStartOf="@+id/tv_resident_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_resident_name"
+            tools:text="社区: 健康社区" />
+
+        <TextView
+            android:id="@+id/tv_resident_phone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/iv_resident_more"
+            app:layout_constraintStart_toStartOf="@+id/tv_resident_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_resident_community"
+            tools:text="电话: 13800138000" />
+
+        <ImageView
+            android:id="@+id/iv_resident_more"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:contentDescription="更多操作"
+            android:src="@drawable/ic_more_vert"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#757575" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

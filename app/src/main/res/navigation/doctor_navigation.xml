@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/nav_doctor_patients"
-        android:name="com.example.chms_android.features_doctor.fragment.DoctorPatientsFragment"
+        android:name="com.example.chms_android.features_doctor.fragment.DoctorResidentsFragment"
         android:label="患者管理"
-        tools:layout="@layout/fragment_doctor_patients"/>
+        tools:layout="@layout/fragment_doctor_residents"/>
 
     <fragment
         android:id="@+id/nav_doctor_appointments"

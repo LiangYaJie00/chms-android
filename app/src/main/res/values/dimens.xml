@@ -28,9 +28,12 @@
     <dimen name="normal_margin_5">5dp</dimen>
     <dimen name="normal_margin_8">8dp</dimen>
     <dimen name="normal_margin_10">10dp</dimen>
+    <dimen name="normal_margin_12">12dp</dimen>
+    <dimen name="normal_margin_14">14dp</dimen>
     <dimen name="normal_margin_16">16dp</dimen>
     <dimen name="normal_margin_18">18dp</dimen>
     <dimen name="normal_margin_20">20dp</dimen>
+    <dimen name="normal_margin_40">40dp</dimen>
 
     <!--通用内边距-->
     <dimen name="normal_padding_8">8dp</dimen>

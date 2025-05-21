@@ -117,8 +117,12 @@ class HealthReportHistoryActivity : AppCompatActivity() {
     }
     
     private fun loadData() {
-        // 获取当前用户ID
-        val userId = AccountUtil(this).getUserId().toInt()
+        // 获取传入的userId，如果没有则使用当前登录用户的ID
+        val userId = if (intent.hasExtra("userId")) {
+            intent.getIntExtra("userId", -1)
+        } else {
+            AccountUtil(this).getUserId().toInt()
+        }
         
         // 加载用户的所有健康日报
         viewModel.loadUserHealthReports(userId, this)

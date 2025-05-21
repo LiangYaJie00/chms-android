@@ -1,5 +1,6 @@
 package com.example.chms_android.features_doctor.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.chms_android.R
 import com.example.chms_android.data.User
 import com.example.chms_android.databinding.FragmentDoctorHomeBinding
+import com.example.chms_android.features_doctor.activity.DoctorAdviceListActivity
 import com.example.chms_android.features_doctor.vm.DoctorHomeViewModel
 import com.example.chms_android.utils.AccountUtil
 
@@ -100,8 +102,11 @@ class DoctorHomeFragment : Fragment() {
             navigateToFragment(R.id.nav_doctor_appointments)
         }
 
-        binding.llReportReview.setOnClickListener {
-            // 导航到报告审核页面
+        // 将报告审核改为健康建议管理
+        binding.llHealthAdvice.setOnClickListener {
+            // 跳转到健康建议列表页面
+            val intent = Intent(requireContext(), DoctorAdviceListActivity::class.java)
+            startActivity(intent)
         }
 
         // 健康数据点击监听
