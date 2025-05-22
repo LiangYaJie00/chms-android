@@ -25,6 +25,8 @@ import android.util.Log
 import android.widget.EditText
 import android.graphics.Rect
 import android.view.ViewTreeObserver
+import android.widget.TextView
+import java.util.Random
 
 class DailyHealthReportEditFragment : Fragment() {
     
@@ -79,13 +81,23 @@ class DailyHealthReportEditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
+        // 获取ViewModel
         viewModel = ViewModelProvider(requireActivity()).get(DailyHealthReportViewModel::class.java)
+        
+        // 初始化加载对话框
         loadingDialog = LoadingDialog(requireContext())
         
-        // 设置观察者和监听器
+        // 设置视图
         setupViews()
+        
+        // 设置观察者
         setupObservers()
+        
+        // 设置监听器
         setupListeners()
+        
+        // 设置生命体征标题的长按事件（仅在上报模式下有效）
+        setupDebugFeatures()
     }
     
     private fun setupViews() {
@@ -354,5 +366,156 @@ class DailyHealthReportEditFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    /**
+     * 设置调试功能
+     */
+    private fun setupDebugFeatures() {
+        try {
+            // 获取生命体征标题
+            val vitalSignsTitle = binding.root.findViewById<TextView>(R.id.tv_vital_signs_title)
+            
+            // 获取当前模式
+            val entryMode = arguments?.getInt("entryMode", 0) ?: 0
+            
+            // 只在上报模式下启用此功能（entryMode = 0 表示从上报入口进入）
+            if (entryMode == 0) {
+                vitalSignsTitle?.setOnLongClickListener {
+                    generateTestData()
+                    true
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("DailyHealthReportEdit", "Error setting up debug features", e)
+        }
+    }
+
+    /**
+     * 生成测试数据
+     */
+    private fun generateTestData() {
+        try {
+            // 使用随机数生成器
+            val random = Random()
+            
+            // 生成随机心率 (60-100)
+            val heartRate = 60 + random.nextInt(41)
+            binding.edtHeartRate.setText(heartRate.toString())
+            
+            // 生成随机收缩压 (90-140)
+            val systolic = 90 + random.nextInt(51)
+            binding.edtBloodPressureSystolic.setText(systolic.toString())
+            
+            // 生成随机舒张压 (60-90)
+            val diastolic = 60 + random.nextInt(31)
+            binding.edtBloodPressureDiastolic.setText(diastolic.toString())
+            
+            // 生成随机体温 (36.0-37.5)
+            val temperature = 36.0f + (random.nextFloat() * 1.5f)
+            val temperatureFormatted = String.format("%.1f", temperature)
+            binding.edtBodyTemperature.setText(temperatureFormatted)
+            
+            // 生成随机呼吸频率 (12-20)
+            val respiratoryRate = 12 + random.nextInt(9)
+            binding.edtRespiratoryRate.setText(respiratoryRate.toString())
+            
+            // 生成随机动脉血氧 (95-100)
+            val arterialOxygen = 95 + random.nextInt(6)
+            binding.edtArterialBloodOxygenLevel.setText(arterialOxygen.toString())
+            
+            // 生成随机静脉血氧 (70-80)
+            val venousOxygen = 70 + random.nextInt(11)
+            binding.edtVenousBloodOxygenLevel.setText(venousOxygen.toString())
+            
+            // 生成随机体重 (50-90)
+            val weight = 50 + random.nextInt(41)
+            binding.edtWeight.setText(weight.toString())
+            
+            // 生成随机血糖 (3.9-6.1)
+            val bloodSugar = 3.9f + (random.nextFloat() * 2.2f)
+            val bloodSugarFormatted = String.format("%.1f", bloodSugar)
+            binding.edtBloodSugar.setText(bloodSugarFormatted)
+            
+            // 生成随机步数 (3000-10000)
+            val steps = 3000 + random.nextInt(7001)
+            binding.edtSteps.setText(steps.toString())
+            
+            // 生成随机运动时长 (15-120分钟)
+            val exerciseDuration = 15 + random.nextInt(106)
+            binding.edtExerciseDuration.setText(exerciseDuration.toString())
+            
+            // 生成随机睡眠时长 (5-9小时，0-59分钟)
+            val sleepHours = 5 + random.nextInt(5)
+            val sleepMinutes = random.nextInt(60)
+            binding.edtSleepDurationHours.setText(sleepHours.toString())
+            binding.edtSleepDurationMinutes.setText(sleepMinutes.toString())
+            
+            // 随机选择睡眠质量
+            val sleepQualityOptions = arrayOf("差", "一般", "良好")
+            val sleepQualityIndex = random.nextInt(3)
+            val sleepQualityView = binding.edtSleepQuality
+            
+            when (sleepQualityView) {
+                is Spinner -> {
+                    sleepQualityView.setSelection(sleepQualityIndex)
+                }
+                is AutoCompleteTextView -> {
+                    sleepQualityView.setText(sleepQualityOptions[sleepQualityIndex])
+                }
+                is EditText -> {
+                    sleepQualityView.setText(sleepQualityOptions[sleepQualityIndex])
+                }
+            }
+            
+            // 生成随机卡路里摄入 (1500-3000)
+            val calories = 1500 + random.nextInt(1501)
+            binding.edtCaloriesIntake.setText(calories.toString())
+            
+            // 生成随机饮水量 (1000-3000ml)
+            val waterIntake = 1000 + random.nextInt(2001)
+            binding.edtWaterIntake.setText(waterIntake.toString())
+            
+            // 随机情绪状态
+            val emotionalStates = arrayOf("平静", "愉快", "焦虑", "疲惫", "兴奋")
+            val emotionalState = emotionalStates[random.nextInt(emotionalStates.size)]
+            binding.edtEmotionalState.setText(emotionalState)
+            
+            // 随机压力水平
+            val stressLevelOptions = arrayOf("低", "中", "高")
+            val stressLevelIndex = random.nextInt(3)
+            val stressLevelView = binding.edtStressLevel
+            
+            when (stressLevelView) {
+                is Spinner -> {
+                    stressLevelView.setSelection(stressLevelIndex)
+                }
+                is AutoCompleteTextView -> {
+                    stressLevelView.setText(stressLevelOptions[stressLevelIndex])
+                }
+                is EditText -> {
+                    stressLevelView.setText(stressLevelOptions[stressLevelIndex])
+                }
+            }
+            
+            // 随机备注
+            val noteOptions = arrayOf(
+                "今天感觉不错，精力充沛。",
+                "有点疲惫，可能是昨晚睡眠不足。",
+                "今天运动后感觉很舒适。",
+                "工作压力有点大，需要放松。",
+                "饮食规律，心情愉快。",
+                "天气变化，有点不适应。",
+                ""  // 空备注的可能性
+            )
+            val note = noteOptions[random.nextInt(noteOptions.size)]
+            binding.edtNotes.setText(note)
+            
+            // 显示提示
+            ToastUtil.show(requireContext(), "已生成测试数据")
+        } catch (e: Exception) {
+            Log.e("DailyHealthReportEdit", "Error generating test data", e)
+            ToastUtil.show(requireContext(), "生成测试数据失败: ${e.message}")
+        }
     }
 }

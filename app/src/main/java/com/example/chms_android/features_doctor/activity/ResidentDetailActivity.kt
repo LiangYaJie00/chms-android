@@ -128,7 +128,7 @@ class ResidentDetailActivity : AppCompatActivity() {
         binding.cvDataStatistics.setOnClickListener {
             val intent = Intent(this, DailyReportActivity::class.java).apply {
                 putExtra("userId", resident?.userId)
-                putExtra("status", 0) // 0表示日报，1表示月报
+                putExtra("status", 1) // 0表示日报，1表示月报
             }
             startActivity(intent)
         }
