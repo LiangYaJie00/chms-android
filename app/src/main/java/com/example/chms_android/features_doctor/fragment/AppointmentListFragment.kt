@@ -101,11 +101,11 @@ class AppointmentListFragment : Fragment(), AppointmentAdapter.OnAppointmentClic
     }
 
     override fun onAcceptAppointment(appointment: Appointment) {
-        viewModel.updateAppointmentStatus(appointment.id, AppointmentStatus.CONFIRMED)
+        viewModel.updateAppointmentStatus(appointment.appointmentId, AppointmentStatus.CONFIRMED)
     }
 
     override fun onRejectAppointment(appointment: Appointment) {
-        viewModel.updateAppointmentStatus(appointment.id, AppointmentStatus.CANCELLED)
+        viewModel.updateAppointmentStatus(appointment.appointmentId, AppointmentStatus.CANCELLED)
     }
 
     override fun onDestroyView() {

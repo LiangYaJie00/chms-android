@@ -70,6 +70,7 @@
         android:layout_margin="16dp"
         android:contentDescription="添加居民"
         android:src="@drawable/ic_add_white_24dp"
+        android:visibility="gone"
         app:backgroundTint="@color/primary"
         app:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"

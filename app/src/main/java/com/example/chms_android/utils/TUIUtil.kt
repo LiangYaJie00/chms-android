@@ -59,7 +59,7 @@ object TUIUtil {
         val context = contextRef.get() ?: throw IllegalStateException("Context is no longer valid.")
         val me = AccountUtil(context).getUser()
 
-        tuiCallKit.setSelfInfo(me?.name, "", object: Callback {
+        tuiCallKit.setSelfInfo(me?.name, me?.avatar, object: Callback {
             override fun onSuccess() {
                 Log.i("AudioCall", "用户信息设置成功。")
             }
@@ -88,9 +88,9 @@ object TUIUtil {
     }
 
     // 发起视频通话
-    fun startVideo(toDoctor: Doctor) {
+    fun startVideo(toUser: User) {
         val list = mutableListOf<String>()
-        list.add(toDoctor.doctorId.toString())
+        list.add(toUser.userId.toString())
         tuiCallKit.calls(list, TUICallDefine.MediaType.Video, null, object: Callback {
             override fun onSuccess() {
                 Log.i("VideoCall", "视频通话启动成功。")

@@ -21,6 +21,7 @@ import com.example.chms_android.features.mine.activity.ReservationManageActivity
 import com.example.chms_android.features.mine.activity.UserEditActivity
 import com.example.chms_android.features.report.activity.DailyReportActivity
 import com.example.chms_android.features.analysis.activity.ReportAnalysisShowActivity
+import com.example.chms_android.features.appointment.activity.PatientAppointmentListActivity
 import com.example.chms_android.features_doctor.activity.DoctorAdviceListActivity
 import com.example.chms_android.login.activity.LoginActivity
 import com.example.chms_android.utils.AccountUtil
@@ -168,7 +169,7 @@ class MineFragment : Fragment() {
 
         // 预约管理
         binding.rcFmReservationManage.setOnClickListener {
-            val intent = Intent(requireActivity(), ReservationManageActivity::class.java)
+            val intent = Intent(requireActivity(), PatientAppointmentListActivity::class.java)
             startActivity(intent)
         }
         

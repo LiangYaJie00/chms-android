@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/nav_doctor_appointments"
-        android:name="com.example.chms_android.features_doctor.fragment.DoctorAppointmentsFragment"
+        android:name="com.example.chms_android.features_doctor.fragment.AppointmentListFragment"
         android:label="预约管理"
         tools:layout="@layout/fragment_doctor_appointments"/>
 

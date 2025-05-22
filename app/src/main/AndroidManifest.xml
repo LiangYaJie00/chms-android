@@ -208,6 +208,35 @@
                 <action android:name="cn.jiguang.user.service.action" />
             </intent-filter>
         </service>
+
+        <!-- 预约相关Activity -->
+        <activity
+            android:name=".features.appointment.activity.CreateAppointmentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".features.appointment.activity.PatientAppointmentListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".features.appointment.activity.AppointmentDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".features_doctor.activity.DoctorAppointmentListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".features_doctor.activity.DoctorAvailableTimeActivity"
+            android:exported="false" />
+
+        <!-- 预约通知服务 -->
+        <service
+            android:name=".service.AppointmentNotificationService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <!-- 预约通知接收器 -->
+        <receiver
+            android:name=".receiver.AppointmentNotificationReceiver"
+            android:enabled="true"
+            android:exported="false" />
     </application>
 
 </manifest>

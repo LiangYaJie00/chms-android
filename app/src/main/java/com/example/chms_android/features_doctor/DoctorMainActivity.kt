@@ -15,6 +15,7 @@ import com.example.chms_android.databinding.ActivityDoctorMainBinding
 import com.example.chms_android.features_doctor.vm.DoctorMainActivityVM
 import com.example.chms_android.utils.AccountUtil
 import com.example.chms_android.utils.NotificationPermissionUtil
+import com.example.chms_android.utils.TUIUtil
 
 /**
  * 医生主界面Activity
@@ -41,6 +42,8 @@ class DoctorMainActivity : AppCompatActivity() {
         
         // 初始化导航
         initNavView()
+
+        TUIUtil.initTUI(this)
         
         // 初始化数据
         initData()

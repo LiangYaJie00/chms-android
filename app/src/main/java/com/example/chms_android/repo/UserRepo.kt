@@ -13,12 +13,14 @@ import com.example.chms_android.utils.OkhttpUtil
 import com.example.chms_android.utils.ResponseHandler
 import com.example.chms_android.utils.ToastUtil
 import com.example.chms_android.vo.RespResult
+import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
+import org.json.JSONObject
 import java.io.IOException
 
 object UserRepo {
@@ -329,5 +331,60 @@ object UserRepo {
                 }
             }
         }
+    }
+
+    /**
+     * 根据userId获取用户信息
+     * 
+     * @param userId 用户ID
+     * @param context 上下文
+     * @param onSuccess 成功回调，返回用户对象
+     * @param onError 错误回调，返回错误信息
+     */
+    fun getUserById(
+        userId: Int,
+        context: Context,
+        onSuccess: ((User) -> Unit)? = null,
+        onError: ((String) -> Unit)? = null
+    ) {
+        UserApi.getUserById(userId, context, object : OkhttpUtil.NetworkCallback {
+            override fun onSuccess(response: String) {
+                ResponseHandler.processApiResponse(
+                    response = response,
+                    context = context,
+                    typeToken = object : TypeToken<RespResult<User>>() {},
+                    onSuccess = { user ->
+                        // 保存用户到本地数据库
+                        GlobalScope.launch(Dispatchers.IO) {
+                            try {
+                                userDao.insertUser(user)
+                                
+                                // 在主线程调用成功回调
+                                withContext(Dispatchers.Main) {
+                                    onSuccess?.invoke(user)
+                                }
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                                withContext(Dispatchers.Main) {
+                                    val errorMsg = "保存用户数据失败: ${e.message}"
+                                    Log.e(TAG, errorMsg, e)
+                                    onError?.invoke(errorMsg)
+                                }
+                            }
+                        }
+                    },
+                    onError = { errorMsg ->
+                        onError?.invoke(errorMsg)
+                    },
+                    errorToastMessage = "获取用户信息失败"
+                )
+            }
+
+            override fun onFailure(e: IOException) {
+                val errorMsg = "网络请求失败: ${e.message}"
+                Log.e(TAG, errorMsg, e)
+                onError?.invoke(errorMsg)
+            }
+        })
     }
 }

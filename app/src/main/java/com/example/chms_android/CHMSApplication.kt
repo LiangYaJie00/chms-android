@@ -3,6 +3,7 @@ package com.example.chms_android
 import android.app.Application
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
@@ -14,6 +15,7 @@ import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.lifecycle.LifecycleObserver
 import cn.jpush.android.api.JPushInterface
 import com.example.chms_android.database.DatabaseProvider
+import com.example.chms_android.service.AppointmentNotificationService
 import com.example.chms_android.utils.JPushHelper
 import com.example.chms_android.utils.OkhttpUtil
 import com.example.chms_android.utils.NotificationPermissionUtil
@@ -71,6 +73,10 @@ class CHMSApplication : Application(), DefaultLifecycleObserver {
             override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
             override fun onActivityDestroyed(activity: Activity) {}
         })
+
+        // 启动预约通知服务
+        val notificationServiceIntent = Intent(this, AppointmentNotificationService::class.java)
+        startService(notificationServiceIntent)
     }
     
     // 初始化JPush

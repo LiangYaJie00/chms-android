@@ -292,4 +292,54 @@ object OkhttpUtil {
         }
     }
 
+    // 执行DELETE请求
+    fun deleteRequest(
+        uri: String,
+        context: Context,
+        callback: NetworkCallback,
+        needsToken: Boolean = true
+    ) {
+        val requestBuilder = Request.Builder()
+            .url(getUrl(uri))
+            .delete()
+
+        // 根据需要添加token头
+        if (needsToken) {
+            requestBuilder.header("Authorization", "${TokenUtil.getToken(context)}")
+        }
+
+        val request = requestBuilder.build()
+        Log.d(TAG, "DELETE Request: ${request.url}")
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.e(TAG, "DELETE Request failed for ${call.request().url}", e)
+                callback.onFailure(e)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                try {
+                    if (response.isSuccessful) {
+                        response.body?.string()?.let { responseBody ->
+                            Log.d(TAG, "DELETE Response Body: $responseBody")
+                            Log.d(TAG, "DELETE Request successful: ${call.request().url}")
+                            callback.onSuccess(responseBody)
+                        } ?: run {
+                            val error = IOException("Empty Response Body")
+                            Log.e(TAG, "DELETE Request empty body: ${call.request().url}", error)
+                            callback.onFailure(error)
+                        }
+                    } else {
+                        val error = IOException("Unexpected code $response")
+                        Log.e(TAG, "DELETE Request unsuccessful: ${call.request().url}, code: ${response.code}", error)
+                        callback.onFailure(error)
+                    }
+                } finally {
+                    // 确保响应体被关闭
+                    response.body?.close()
+                }
+            }
+        })
+    }
+
 }

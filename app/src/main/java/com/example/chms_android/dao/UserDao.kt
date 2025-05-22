@@ -11,7 +11,7 @@ import com.example.chms_android.data.Role
 
 @Dao
 interface UserDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertUser(user: User): Long
 
     /**

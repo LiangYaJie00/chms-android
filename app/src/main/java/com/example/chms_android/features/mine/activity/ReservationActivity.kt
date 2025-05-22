@@ -41,7 +41,7 @@ class ReservationActivity : AppCompatActivity() {
         binding.btnArStartVideo.setOnClickListener {
             try {
                 val len = doctorList.size
-                TUIUtil.startVideo(doctorList[len-1])
+//                TUIUtil.startVideo(doctorList[len-1])
             } catch (e: Exception) {
                 Log.e(TAG, e.message + "")
             }

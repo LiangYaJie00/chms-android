@@ -45,4 +45,15 @@ object DoctorApi {
         val jsonBody = gson.toJson(doctorDTO)
         OkhttpUtil.postRequest("/doctor/saveOrUpdate", jsonBody, context, callback, needsToken = true, useJson = true)
     }
+
+    /**
+     * 根据社区名称查询医生
+     * @param community 社区名称
+     * @param context 上下文
+     * @param callback 网络回调
+     */
+    fun getDoctorsByCommunity(community: String, context: Context, callback: OkhttpUtil.NetworkCallback) {
+        OkhttpUtil.getRequest("/doctor/getByCommunity?community=${community}", context, callback, needsToken = true)
+    }
+
 }

@@ -10,6 +10,7 @@ import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
+import com.google.gson.JsonSyntaxException
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -105,6 +106,17 @@ object ResponseHandler {
         // 确保在后台线程中执行JSON解析
         GlobalScope.launch(Dispatchers.IO) {
             try {
+                // 检查响应是否为空
+                if (response.isBlank()) {
+                    withContext(Dispatchers.Main) {
+                        val errorMsg = "服务器返回了空响应"
+                        Log.e(TAG, errorMsg)
+                        ToastUtil.show(context, errorToastMessage ?: errorMsg, Toast.LENGTH_SHORT)
+                        onError(errorMsg)
+                    }
+                    return@launch
+                }
+                
                 // 使用自定义的Gson实例，添加日期和时间戳反序列化器
                 val gson = GsonBuilder()
                     .registerTypeAdapter(Date::class.java, DateDeserializer())
@@ -140,6 +152,15 @@ object ResponseHandler {
                         ToastUtil.show(context, errorMsg, Toast.LENGTH_SHORT)
                         Log.e(TAG, "API returned non-200 code: ${result.code}, message: ${result.message}")
                     }
+                }
+            } catch (e: JsonSyntaxException) {
+                e.printStackTrace()
+                // 处理JSON语法错误
+                withContext(Dispatchers.Main) {
+                    val errorMsg = "无效的服务器响应格式: ${e.message}\n响应内容: ${response.take(100)}"
+                    Log.e(TAG, errorMsg, e)
+                    ToastUtil.show(context, errorToastMessage ?: "服务器返回了无效的数据格式", Toast.LENGTH_SHORT)
+                    onError(errorMsg)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()

@@ -11,9 +11,9 @@ import android.os.Looper
 import android.util.Log
 import cn.jpush.android.api.BasicPushNotificationBuilder
 import cn.jpush.android.api.JPushInterface
-import cn.jpush.android.api.JPushMessage
 import com.example.chms_android.R
-import java.util.HashSet
+import com.example.chms_android.features.appointment.activity.AppointmentDetailActivity
+import org.json.JSONObject
 
 /**
  * JPush 工具类，提供常用的推送相关功能
@@ -282,6 +282,124 @@ object JPushHelper {
             Log.d(TAG, "已设置推送不显示角标")
         } catch (e: Exception) {
             Log.e(TAG, "设置推送不显示角标失败", e)
+        }
+    }
+
+//    /**
+//     * 监控JPush注册ID的获取
+//     *
+//     * @param context 上下文
+//     * @param maxRetries 最大重试次数
+//     * @param delayMillis 每次重试的延迟时间（毫秒）
+//     * @param callback 回调函数，成功时返回registrationID，失败时返回null
+//     */
+//    fun monitorRegistrationID(
+//        context: Context,
+//        maxRetries: Int = 10,
+//        delayMillis: Long = 1000,
+//        callback: (String?) -> Unit
+//    ) {
+//        var retries = 0
+//
+//        fun checkRegistrationID() {
+//            val registrationID = JPushInterface.getRegistrationID(context)
+//
+//            if (registrationID.isNotEmpty()) {
+//                // 成功获取到registrationID
+//                Log.d(TAG, "获取到JPush注册ID: $registrationID")
+//                callback(registrationID)
+//            } else if (retries < maxRetries) {
+//                // 继续重试
+//                retries++
+//                Log.d(TAG, "尝试获取JPush注册ID: 第${retries}次")
+//
+//                // 延迟后再次检查
+//                Handler(context.mainLooper).postDelayed({
+//                    checkRegistrationID()
+//                }, delayMillis)
+//            } else {
+//                // 达到最大重试次数，返回失败
+//                Log.e(TAG, "无法获取JPush注册ID，已达到最大重试次数")
+//                callback(null)
+//            }
+//        }
+//
+//        // 开始检查
+//        checkRegistrationID()
+//    }
+    
+    /**
+     * 向指定用户发送通知
+     * 
+     * @param context 上下文
+     * @param userId 用户ID
+     * @param title 通知标题
+     * @param content 通知内容
+     * @param extras 额外信息（JSON字符串）
+     */
+    fun sendNotificationToUser(
+        context: Context,
+        userId: String,
+        title: String,
+        content: String,
+        extras: String? = null
+    ) {
+        // 注意：这个方法在实际应用中应该通过服务器API调用JPush的推送接口
+        // 这里仅作为示例，实际实现需要在服务器端完成
+        
+        Log.d(TAG, "向用户 $userId 发送通知: $title - $content")
+        Log.d(TAG, "额外信息: $extras")
+        
+        // 在实际应用中，这里应该调用服务器API
+        // 由于这里无法直接调用JPush的推送API，所以只记录日志
+    }
+    
+    /**
+     * 处理接收到的通知
+     * 
+     * @param context 上下文
+     * @param title 通知标题
+     * @param content 通知内容
+     * @param extras 额外信息
+     * @return 是否成功处理
+     */
+    fun handleReceivedNotification(
+        context: Context,
+        title: String?,
+        content: String?,
+        extras: String?
+    ): Boolean {
+        Log.d(TAG, "收到通知: $title - $content")
+        Log.d(TAG, "额外信息: $extras")
+        
+        try {
+            if (extras.isNullOrEmpty()) {
+                return false
+            }
+            
+            val extrasJson = JSONObject(extras)
+            val type = extrasJson.optString("type")
+            
+            if (type == "appointment") {
+                val appointmentId = extrasJson.optInt("appointmentId", 0)
+                val isPatient = extrasJson.optBoolean("isPatient", true)
+                
+                if (appointmentId > 0) {
+                    // 打开预约详情页面
+                    val intent = Intent(context, AppointmentDetailActivity::class.java).apply {
+                        putExtra("APPOINTMENT_ID", appointmentId)
+                        putExtra("IS_PATIENT", isPatient)
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    }
+                    context.startActivity(intent)
+                    return true
+                }
+            }
+            
+            return false
+        } catch (e: Exception) {
+            Log.e(TAG, "处理通知时出错: ${e.message}")
+            return false
         }
     }
 }

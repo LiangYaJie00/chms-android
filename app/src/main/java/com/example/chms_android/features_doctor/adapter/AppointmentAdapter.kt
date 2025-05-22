@@ -15,7 +15,7 @@ import com.example.chms_android.data.AppointmentStatus
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class AppointmentAdapter(
+class  AppointmentAdapter(
     private val context: Context,
     private var appointmentList: List<Appointment>,
     private val onAppointmentClickListener: OnAppointmentClickListener
@@ -40,7 +40,7 @@ class AppointmentAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_appointment, parent, false)
+            .inflate(R.layout.item_doctor_appointment, parent, false)
         return ViewHolder(view)
     }
 
@@ -48,10 +48,18 @@ class AppointmentAdapter(
         val appointment = appointmentList[position]
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
-        holder.patientName.text = appointment.patientName
-        holder.date.text = dateFormat.format(appointment.date)
-        holder.time.text = "${appointment.startTime}-${appointment.endTime}"
-        holder.reason.text = "预约原因：${appointment.reason}"
+        holder.patientName.text = appointment.patientName ?: "未知患者"
+        
+        // 使用appointmentDate而不是date
+        holder.date.text = appointment.appointmentDate?.let { dateFormat.format(it) } ?: "未知日期"
+        
+        // 格式化开始和结束时间
+        val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+        val startTimeStr = appointment.startTime?.let { timeFormat.format(it) } ?: "--:--"
+        val endTimeStr = appointment.endTime?.let { timeFormat.format(it) } ?: "--:--"
+        holder.time.text = "$startTimeStr-$endTimeStr"
+        
+        holder.reason.text = "预约原因：${appointment.reason ?: "无"}"
 
         // 设置状态文本和颜色
         when (appointment.status) {
@@ -73,6 +81,11 @@ class AppointmentAdapter(
             AppointmentStatus.CANCELLED -> {
                 holder.status.text = "已取消"
                 holder.status.setTextColor(ContextCompat.getColor(context, R.color.red))
+                holder.actionsLayout.visibility = View.GONE
+            }
+            else -> {
+                holder.status.text = "未知状态"
+                holder.status.setTextColor(ContextCompat.getColor(context, R.color.gray))
                 holder.actionsLayout.visibility = View.GONE
             }
         }

@@ -356,4 +356,81 @@ object DoctorRepo {
             }
         }
     }
+
+    /**
+     * 根据社区名称查询医生
+     *
+     * @param community 社区名称
+     * @param context 上下文
+     * @param onSuccess 成功回调，返回医生DTO列表
+     * @param onError 错误回调，返回错误信息
+     */
+    fun getDoctorsByCommunity(
+        community: String,
+        context: Context,
+        onSuccess: ((List<DoctorDTO>) -> Unit)? = null,
+        onError: ((String) -> Unit)? = null
+    ) {
+        DoctorApi.getDoctorsByCommunity(community, context, object : OkhttpUtil.NetworkCallback {
+            override fun onSuccess(response: String) {
+                ResponseHandler.processApiResponse(
+                    response = response,
+                    context = context,
+                    typeToken = object : TypeToken<RespResult<List<DoctorDTO>>>() {},
+                    onSuccess = { doctorDTOs ->
+                        // 保存医生数据到本地数据库
+                        GlobalScope.launch(Dispatchers.IO) {
+                            try {
+                                // 将DTO转换为实体对象并保存
+                                val doctorEntities = doctorDTOs.map { it.toEntity() }
+                                doctorDao.insertDoctors(doctorEntities)
+
+                                // 在主线程调用成功回调
+                                withContext(Dispatchers.Main) {
+                                    onSuccess?.invoke(doctorDTOs)
+                                }
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                                withContext(Dispatchers.Main) {
+                                    val errorMsg = "保存医生数据失败: ${e.message}"
+                                    Log.e(TAG, errorMsg, e)
+                                    onError?.invoke(errorMsg)
+                                }
+                            }
+                        }
+                    },
+                    onError = { errorMsg ->
+                        onError?.invoke(errorMsg)
+                    },
+                    errorToastMessage = "获取社区医生失败"
+                )
+            }
+
+            override fun onFailure(e: IOException) {
+                // 网络请求失败，尝试从本地获取数据
+                GlobalScope.launch(Dispatchers.Main) {
+                    try {
+                        val localDoctors = withContext(Dispatchers.IO) {
+                            doctorDao.getDoctorsByCommunity(community)
+                        }
+
+                        if (localDoctors.isNotEmpty()) {
+                            // 如果本地有数据，转换为DTO并返回
+                            val dtos = localDoctors.map { it.toDTO() }
+                            onSuccess?.invoke(dtos)
+                            return@launch
+                        }
+
+                        // 如果本地没有数据，显示错误
+                        val errorMsg = "网络请求失败: ${e.message}"
+                        Log.e(TAG, errorMsg, e)
+                        onError?.invoke(errorMsg)
+                    } catch (ex: Exception) {
+                        Log.e(TAG, "获取本地医生数据失败: ${ex.message}", ex)
+                        onError?.invoke("获取医生数据失败: ${ex.message}")
+                    }
+                }
+            }
+        })
+    }
 }

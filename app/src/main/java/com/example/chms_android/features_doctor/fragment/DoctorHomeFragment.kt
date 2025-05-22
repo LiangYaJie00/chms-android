@@ -13,6 +13,7 @@ import com.example.chms_android.R
 import com.example.chms_android.data.User
 import com.example.chms_android.databinding.FragmentDoctorHomeBinding
 import com.example.chms_android.features_doctor.activity.DoctorAdviceListActivity
+import com.example.chms_android.features_doctor.activity.DoctorAppointmentListActivity
 import com.example.chms_android.features_doctor.vm.DoctorHomeViewModel
 import com.example.chms_android.utils.AccountUtil
 
@@ -99,7 +100,10 @@ class DoctorHomeFragment : Fragment() {
         }
 
         binding.llAppointmentManagement.setOnClickListener {
-            navigateToFragment(R.id.nav_doctor_appointments)
+//            navigateToFragment(R.id.nav_doctor_appointments)
+            // 跳转到预约列表Activity
+            val intent = Intent(requireContext(), DoctorAppointmentListActivity::class.java)
+            startActivity(intent)
         }
 
         // 将报告审核改为健康建议管理

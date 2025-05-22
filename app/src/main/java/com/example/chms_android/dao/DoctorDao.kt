@@ -31,4 +31,12 @@ interface DoctorDao {
     // 根据用户ID获取医生
     @Query("SELECT * FROM doctor WHERE userId = :userId")
     fun getDoctorByUserId(userId: Int): Doctor?
+
+    /**
+     * 根据社区名称查询医生
+     * @param community 社区名称
+     * @return 医生列表
+     */
+    @Query("SELECT * FROM doctor WHERE communityName = :community")
+    fun getDoctorsByCommunity(community: String): List<Doctor>
 }

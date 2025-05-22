@@ -49,4 +49,15 @@ object UserApi {
         
         OkhttpUtil.getRequest(url, context, callback, needsToken = Constants.NEEDS_TOKEN)
     }
+
+    /**
+     * 根据userId获取用户信息
+     * @param userId 用户ID
+     * @param context 上下文
+     * @param callback 网络回调
+     */
+    fun getUserById(userId: Int, context: Context, callback: OkhttpUtil.NetworkCallback) {
+        val url = "/user/getUserById/$userId"
+        OkhttpUtil.getRequest(url, context, callback, needsToken = Constants.NEEDS_TOKEN)
+    }
 }
