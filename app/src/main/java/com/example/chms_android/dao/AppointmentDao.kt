@@ -66,4 +66,10 @@ interface AppointmentDao {
 
     @Query("DELETE FROM appointment WHERE appointmentId = :appointmentId")
     fun deleteAppointment(appointmentId: Int): Int
+
+    /**
+     * 查询指定医生和患者之间的所有预约
+     */
+    @Query("SELECT * FROM appointment WHERE doctorId = :doctorId AND patientId = :patientId ORDER BY appointmentDate DESC, startTime DESC")
+    fun getAppointmentsByDoctorAndPatientId(doctorId: Int, patientId: Int): List<Appointment>
 }

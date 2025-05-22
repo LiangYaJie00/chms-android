@@ -225,6 +225,10 @@
         <activity
             android:name=".features_doctor.activity.DoctorAvailableTimeActivity"
             android:exported="false" />
+        <activity
+            android:name=".features_doctor.activity.ResidentAppointmentListActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
         <!-- 预约通知服务 -->
         <service

@@ -191,6 +191,16 @@
                 android:textColor="@color/white"
                 android:background="@drawable/btn_background_login"/>
         </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_complete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_button_success"
+            android:text="完成预约"
+            android:textColor="@android:color/white"
+            android:visibility="gone" />
     </LinearLayout>
 
     <!-- 加载进度条 -->

@@ -143,8 +143,9 @@ class ResidentDetailActivity : AppCompatActivity() {
 
         // 预约管理
         binding.cvReservationManage.setOnClickListener {
-            val intent = Intent(this, ReservationManageActivity::class.java).apply {
+            val intent = Intent(this, ResidentAppointmentListActivity::class.java).apply {
                 putExtra("userId", resident?.userId)
+                putExtra("userName", resident?.name)
             }
             startActivity(intent)
         }

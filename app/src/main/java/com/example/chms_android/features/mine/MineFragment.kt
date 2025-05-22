@@ -151,7 +151,7 @@ class MineFragment : Fragment() {
         // 数据统计
         binding.rcFmDataStatistics.setOnClickListener {
             val intent = Intent(requireActivity(), DailyReportActivity::class.java)
-            intent.putExtra("status", 0) // 0表示日报，1表示月报
+            intent.putExtra("status", 1) // 0表示日报，1表示月报
             startActivity(intent)
         }
 

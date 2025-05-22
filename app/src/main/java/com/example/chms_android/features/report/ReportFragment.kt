@@ -16,6 +16,7 @@ import com.example.chms_android.databinding.FragmentReportBinding
 import com.example.chms_android.features.report.activity.DailyReportActivity
 import com.example.chms_android.features.analysis.activity.ReportAnalysisActivity
 import com.example.chms_android.features.analysis.activity.ReportAnalysisShowActivity
+import com.example.chms_android.features.health.activity.HealthReportHistoryActivity
 
 class ReportFragment : Fragment() {
     private var _binding: FragmentReportBinding? = null
@@ -40,9 +41,11 @@ class ReportFragment : Fragment() {
         }
         
         binding.cvDailyReport.setOnClickListener {
-            val intent = Intent(context, DailyReportActivity::class.java).apply {
-                putExtra("status", 0)
-            }
+//            val intent = Intent(context, DailyReportActivity::class.java).apply {
+//                putExtra("status", 0)
+//            }
+//            startActivity(intent)
+            val intent = Intent(context, HealthReportHistoryActivity::class.java)
             startActivity(intent)
         }
 

@@ -40,17 +40,34 @@ class CreateAppointmentActivity : AppCompatActivity() {
         setContentView(binding.root)
         window.statusBarColor = ContextCompat.getColor(this, R.color.actionbar_color)
 
-        setupAppointmentTypeSpinner()
+        // 获取传入的参数
+        val doctorId = intent.getIntExtra("DOCTOR_ID", 0)
+        val appointmentType = intent.getIntExtra("APPOINTMENT_TYPE", 0) // 默认为线下预约(0)
+
+        setupAppointmentTypeSpinner(appointmentType)
         setupDatePicker()
-        loadDoctors()
+        
+        // 如果传入了医生ID，则直接加载该医生
+        if (doctorId > 0) {
+            loadSpecificDoctor(doctorId)
+        } else {
+            loadDoctors()
+        }
+        
         setupSubmitButton()
     }
     
-    private fun setupAppointmentTypeSpinner() {
+    private fun setupAppointmentTypeSpinner(defaultType: Int) {
         val appointmentTypes = arrayOf("线下预约", "线上预约")
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, appointmentTypes)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerAppointmentType.adapter = adapter
+        
+        // 根据传入的参数设置默认选项
+        // 0 - 线下预约，1 - 线上预约
+        if (defaultType in 0..1) {
+            binding.spinnerAppointmentType.setSelection(defaultType)
+        }
     }
     
     private fun setupDatePicker() {
@@ -308,4 +325,25 @@ class CreateAppointmentActivity : AppCompatActivity() {
     }
     
     data class TimeSlotDTO(val startTime: String?, val endTime: String?)
+
+    // 加载特定医生的方法
+    private fun loadSpecificDoctor(doctorId: Int) {
+        binding.progressBar.visibility = View.VISIBLE
+        
+        DoctorRepo.getDoctorById(
+            doctorId = doctorId,
+            context = this,
+            onSuccess = { doctor ->
+                val doctors = listOf(doctor)
+                handleDoctorsLoaded(doctors)
+            },
+            onError = { errorMsg ->
+                binding.progressBar.visibility = View.GONE
+                ToastUtil.show(this, "加载医生信息失败: $errorMsg", Toast.LENGTH_SHORT)
+                
+                // 如果加载特定医生失败，则尝试加载所有医生
+                loadDoctors()
+            }
+        )
+    }
 }

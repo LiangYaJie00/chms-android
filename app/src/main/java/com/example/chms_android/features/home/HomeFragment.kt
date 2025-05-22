@@ -15,12 +15,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.chms_android.MainActivity
 import com.example.chms_android.R
+import com.example.chms_android.data.Doctor
 import com.example.chms_android.data.User
 import com.example.chms_android.databinding.FragmentHomeBinding
 import com.example.chms_android.dto.DoctorAdviceDTO
 import com.example.chms_android.features.home.activity.CommunityActivity
 import com.example.chms_android.features.health.activity.DailyHealthReportActivity
 import com.example.chms_android.features.home.activity.DeviceManagerActivity
+import com.example.chms_android.features.home.activity.DoctorDetailActivity
 import com.example.chms_android.features.home.activity.DoctorsActivity
 import com.example.chms_android.features.home.adapter.DoctorShowsAdapter
 import com.example.chms_android.features.home.vm.HomeFragmentVM
@@ -177,21 +179,103 @@ class HomeFragment : Fragment() {
     }
 
     private fun initDoctorRecyclerView() {
-        initDoctorList()
+        // 设置布局管理器
         binding.recyclerViewFhDoctor.layoutManager = LinearLayoutManager(requireContext())
-        viewModel.doctorList.observe(requireActivity(), Observer { doctorList ->
-            binding.recyclerViewFhDoctor.adapter = DoctorShowsAdapter(requireContext(), doctorList)
-        })
+        
+        // 初始化适配器（先用空列表）
+        binding.recyclerViewFhDoctor.adapter = DoctorShowsAdapter(
+            requireContext(), 
+            emptyList(),
+            object : DoctorShowsAdapter.OnDoctorClickListener {
+                override fun onDoctorClick(doctor: Doctor) {
+                    // 点击医生项，跳转到医生详情页
+                    val intent = Intent(requireContext(), DoctorDetailActivity::class.java).apply {
+                        putExtra("DOCTOR_ID", doctor.doctorId)
+                    }
+                    startActivity(intent)
+                }
+            }
+        )
+        
+        // 加载医生数据
+        loadDoctorData()
     }
 
-    private fun initDoctorList() {
+    private fun loadDoctorData() {
+        // 显示加载进度（如果有进度条）
+        // binding.progressBarDoctors.visibility = View.VISIBLE
+        
+        // 获取用户所在社区
+        val community = AccountUtil(requireContext()).getUser()?.community
+        
+        if (!community.isNullOrEmpty()) {
+            // 如果用户已选择社区，获取该社区的医生
+            DoctorRepo.getDoctorsByCommunity(
+                community = community,
+                context = requireContext(),
+                onSuccess = { doctorDTOs ->
+                    // 将DTO转换为实体对象
+                    val doctors = doctorDTOs.map { it.toEntity() }
+                    
+                    // 更新ViewModel中的医生列表
+                    viewModel.setDoctorList(doctors)
+                    
+                    // 更新适配器
+                    (binding.recyclerViewFhDoctor.adapter as? DoctorShowsAdapter)?.updateDoctors(doctors)
+                    
+                    // 隐藏加载进度
+                    // binding.progressBarDoctors.visibility = View.GONE
+                },
+                onError = { errorMsg ->
+                    // 处理错误
+                    Log.e("HomeFragment", "Error loading doctors: $errorMsg")
+                    ToastUtil.show(requireContext(), "加载医生列表失败", Toast.LENGTH_SHORT)
+                    
+                    // 尝试从本地数据库获取
+                    loadDoctorsFromDb()
+                    
+                    // 隐藏加载进度
+                    // binding.progressBarDoctors.visibility = View.GONE
+                }
+            )
+        } else {
+            // 如果用户未选择社区，获取所有医生
+            DoctorRepo.getAllDoctorsFromDb(
+                onComplete = { doctors ->
+                    // 更新ViewModel中的医生列表
+                    viewModel.setDoctorList(doctors)
+                    
+                    // 更新适配器
+                    (binding.recyclerViewFhDoctor.adapter as? DoctorShowsAdapter)?.updateDoctors(doctors)
+                    
+                    // 隐藏加载进度
+                    // binding.progressBarDoctors.visibility = View.GONE
+                },
+                onError = { error ->
+                    // 处理错误
+                    Log.e("HomeFragment", "Error fetching doctors: ${error.message}")
+                    ToastUtil.show(requireContext(), "加载医生列表失败", Toast.LENGTH_SHORT)
+                    
+                    // 隐藏加载进度
+                    // binding.progressBarDoctors.visibility = View.GONE
+                }
+            )
+        }
+    }
+
+    private fun loadDoctorsFromDb() {
         DoctorRepo.getFirstSevenDoctorsFromDb(
             onComplete = { doctors ->
+                // 更新ViewModel中的医生列表
                 viewModel.setDoctorList(doctors)
+                
+                // 更新适配器
+                (binding.recyclerViewFhDoctor.adapter as? DoctorShowsAdapter)?.updateDoctors(doctors)
             },
             onError = { error ->
                 // 处理错误
-                ToastUtil.show(requireContext(), "Error fetching doctors: ${error.message}", Toast.LENGTH_SHORT)
+                Log.e("HomeFragment", "Error fetching doctors from DB: ${error.message}")
+                ToastUtil.show(requireContext(), "无法加载医生列表", Toast.LENGTH_SHORT)
             }
         )
     }

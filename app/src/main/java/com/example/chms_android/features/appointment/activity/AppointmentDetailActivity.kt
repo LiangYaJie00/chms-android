@@ -23,12 +23,29 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 
 class AppointmentDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAppointmentDetailBinding
     private var appointmentId: Int = 0
     private var isPatient: Boolean = true
     private var appointment: AppointmentDTO? = null
+    
+    // 广播接收器，用于接收视频通话结束的广播
+    private val callEndReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            if (intent.action == "com.example.chms_android.CALL_ENDED") {
+                // 如果是医生，且预约状态为已确认，则自动将预约标记为已完成
+                if (!isPatient && appointment?.status == AppointmentStatus.CONFIRMED) {
+                    completeAppointment()
+                }
+            }
+        }
+    }
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,16 +63,29 @@ class AppointmentDetailActivity : AppCompatActivity() {
             return
         }
 
+        // 注册广播接收器
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+            callEndReceiver,
+            IntentFilter("com.example.chms_android.CALL_ENDED")
+        )
+
         setupButtons()
         loadAppointmentDetails()
     }
     
+    override fun onDestroy() {
+        super.onDestroy()
+        // 注销广播接收器
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(callEndReceiver)
+    }
+
     private fun setupButtons() {
         // 根据是否为患者设置不同的按钮
         if (isPatient) {
             binding.btnAccept.visibility = View.GONE
             binding.btnReject.visibility = View.GONE
             binding.etRejectReason.visibility = View.GONE
+            binding.btnComplete.visibility = View.GONE
             
             binding.btnCancel.setOnClickListener {
                 cancelAppointment()
@@ -85,6 +115,10 @@ class AppointmentDetailActivity : AppCompatActivity() {
             
             binding.btnStartCall.setOnClickListener {
                 startVideoCall()
+            }
+            
+            binding.btnComplete.setOnClickListener {
+                completeAppointment()
             }
         }
     }
@@ -155,6 +189,7 @@ class AppointmentDetailActivity : AppCompatActivity() {
                     // 患者可以取消待确认的预约
                     binding.btnCancel.visibility = View.VISIBLE
                     binding.btnStartCall.visibility = View.GONE
+                    binding.btnComplete.visibility = View.GONE
                 } else {
                     // 医生可以接受或拒绝待确认的预约
                     binding.btnAccept.visibility = View.VISIBLE
@@ -162,6 +197,7 @@ class AppointmentDetailActivity : AppCompatActivity() {
                     binding.etRejectReason.visibility = View.VISIBLE
                     binding.btnCancel.visibility = View.GONE
                     binding.btnStartCall.visibility = View.GONE
+                    binding.btnComplete.visibility = View.GONE
                 }
             }
             AppointmentStatus.CONFIRMED -> {
@@ -178,6 +214,13 @@ class AppointmentDetailActivity : AppCompatActivity() {
                 // 双方都可以取消已确认的预约
                 binding.btnCancel.visibility = View.VISIBLE
                 
+                // 医生可以将预约标记为已完成
+                if (!isPatient) {
+                    binding.btnComplete.visibility = View.VISIBLE
+                } else {
+                    binding.btnComplete.visibility = View.GONE
+                }
+                
                 // 隐藏接受/拒绝按钮
                 binding.btnAccept.visibility = View.GONE
                 binding.btnReject.visibility = View.GONE
@@ -190,6 +233,7 @@ class AppointmentDetailActivity : AppCompatActivity() {
                 binding.etRejectReason.visibility = View.GONE
                 binding.btnCancel.visibility = View.GONE
                 binding.btnStartCall.visibility = View.GONE
+                binding.btnComplete.visibility = View.GONE
             }
             else -> {
                 // 其他状态隐藏所有按钮
@@ -198,6 +242,7 @@ class AppointmentDetailActivity : AppCompatActivity() {
                 binding.etRejectReason.visibility = View.GONE
                 binding.btnCancel.visibility = View.GONE
                 binding.btnStartCall.visibility = View.GONE
+                binding.btnComplete.visibility = View.GONE
             }
         }
     }
@@ -361,7 +406,7 @@ class AppointmentDetailActivity : AppCompatActivity() {
                         userId = patientId,
                         context = this,
                         onSuccess = { user ->
-                            // 使用TUIUtil启动音频通话
+                            // 使用TUIUtil启动视频通话
                             TUIUtil.startVideo(user)
 
                             // 记录通话开始
@@ -398,5 +443,46 @@ class AppointmentDetailActivity : AppCompatActivity() {
             onSuccess = { /* 可以在这里处理成功回调 */ },
             onError = { /* 可以在这里处理错误回调 */ }
         )
+    }
+
+    private fun completeAppointment() {
+        AlertDialog.Builder(this)
+            .setTitle("完成预约")
+            .setMessage("确定要将此预约标记为已完成吗？")
+            .setPositiveButton("确定") { _, _ ->
+                binding.progressBar.visibility = View.VISIBLE
+                
+                // 创建AppointmentResponseDTO对象
+                val responseDTO = AppointmentResponseDTO(
+                    appointmentId = appointmentId,
+                    doctorId = AccountUtil(this).getUserId().toInt(),
+                    status = AppointmentStatus.COMPLETED,
+                    notes = "医生已确认完成预约"
+                )
+                
+                AppointmentRepo.updateAppointmentStatus(
+                    responseDTO = responseDTO,
+                    context = this,
+                    onSuccess = { updatedAppointment ->
+                        binding.progressBar.visibility = View.GONE
+                        
+                        // 更新本地数据
+                        appointment = updatedAppointment
+                        
+                        // 更新UI
+                        displayAppointmentDetails(updatedAppointment)
+                        updateButtonsVisibility(updatedAppointment)
+                        
+                        // 显示操作成功提示
+                        ToastUtil.show(this, "预约已完成", Toast.LENGTH_SHORT)
+                    },
+                    onError = { errorMsg ->
+                        binding.progressBar.visibility = View.GONE
+                        ToastUtil.show(this, "更新预约状态失败: $errorMsg", Toast.LENGTH_SHORT)
+                    }
+                )
+            }
+            .setNegativeButton("取消", null)
+            .show()
     }
 }

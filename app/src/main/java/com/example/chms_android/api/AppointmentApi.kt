@@ -89,4 +89,21 @@ object AppointmentApi {
         
         OkhttpUtil.postRequest(url, "", context, callback, needsToken = Constants.NEEDS_TOKEN, useJson = true)
     }
+    
+    /**
+     * 查询指定医生和患者之间的所有预约
+     */
+    fun getAppointmentsByDoctorAndPatient(
+        doctorId: Int, 
+        patientId: Int, 
+        context: Context, 
+        callback: OkhttpUtil.NetworkCallback
+    ) {
+        OkhttpUtil.getRequest(
+            "$BASE_PATH/doctor/$doctorId/patient/$patientId", 
+            context, 
+            callback, 
+            needsToken = Constants.NEEDS_TOKEN
+        )
+    }
 }

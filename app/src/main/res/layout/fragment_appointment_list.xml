@@ -165,6 +165,7 @@
                 android:drawablePadding="4dp"
                 android:padding="8dp"
                 android:background="@drawable/bg_button_outline"
+                android:visibility="gone"
                 android:textSize="14sp"/>
         </LinearLayout>
     </LinearLayout>
@@ -206,9 +207,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:src="@android:drawable/ic_input_add"
-        app:backgroundTint="@color/primary"
+        android:src="@android:drawable/ic_menu_my_calendar"
         app:tint="@color/white"
+        app:backgroundTint="@color/primary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

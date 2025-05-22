@@ -14,6 +14,7 @@ import com.example.chms_android.data.User
 import com.example.chms_android.databinding.FragmentDoctorHomeBinding
 import com.example.chms_android.features_doctor.activity.DoctorAdviceListActivity
 import com.example.chms_android.features_doctor.activity.DoctorAppointmentListActivity
+import com.example.chms_android.features_doctor.activity.DoctorAvailableTimeActivity
 import com.example.chms_android.features_doctor.vm.DoctorHomeViewModel
 import com.example.chms_android.utils.AccountUtil
 
@@ -100,9 +101,15 @@ class DoctorHomeFragment : Fragment() {
         }
 
         binding.llAppointmentManagement.setOnClickListener {
-//            navigateToFragment(R.id.nav_doctor_appointments)
             // 跳转到预约列表Activity
             val intent = Intent(requireContext(), DoctorAppointmentListActivity::class.java)
+            startActivity(intent)
+        }
+        
+        // 新增：预约时间管理点击事件
+        binding.llAvailableTimeManagement.setOnClickListener {
+            // 跳转到预约时间管理Activity
+            val intent = Intent(requireContext(), DoctorAvailableTimeActivity::class.java)
             startActivity(intent)
         }
 

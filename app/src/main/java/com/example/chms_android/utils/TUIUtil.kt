@@ -1,10 +1,14 @@
 package com.example.chms_android.utils
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
-import com.example.chms_android.data.Doctor
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.chms_android.data.User
 import com.tencent.cloud.tuikit.engine.call.TUICallDefine
+import com.tencent.cloud.tuikit.engine.call.TUICallEngine
+import com.tencent.cloud.tuikit.engine.call.TUICallObserver
+import com.tencent.cloud.tuikit.engine.common.TUICommonDefine
 import com.tencent.cloud.tuikit.engine.common.TUICommonDefine.Callback
 import com.tencent.qcloud.tuicore.TUILogin
 import com.tencent.qcloud.tuicore.interfaces.TUICallback
@@ -15,6 +19,7 @@ import java.lang.ref.WeakReference
 object TUIUtil {
     private const val TENCENT_TRTC_SDKAPPID = 1600078530
     private const val TENCENT_TRTC_SECRETKEY = "7187547f2eff3f4b06f3c93196ba2c678a9b5771d65749f57e0d7ff099bb9e78"
+    private const val TAG = "TUIUtil"
 
     private lateinit var contextRef: WeakReference<Context>
 
@@ -28,6 +33,7 @@ object TUIUtil {
     fun initTUI(context: Context) {
         initialize(context)
         loginTUI()
+        setupCallObserver()
     }
 
     fun initialize(context: Context) {
@@ -49,9 +55,9 @@ object TUIUtil {
                 enableIncomingBanner(true)
             }
             override fun onError(errorCode: Int, errorMessage: String) {
+                Log.e(TAG, "TUI登录失败: $errorCode, $errorMessage")
             }
         })
-
     }
 
     // 设置本人的信息
@@ -61,13 +67,12 @@ object TUIUtil {
 
         tuiCallKit.setSelfInfo(me?.name, me?.avatar, object: Callback {
             override fun onSuccess() {
-                Log.i("AudioCall", "用户信息设置成功。")
+                Log.i(TAG, "用户信息设置成功。")
             }
 
             override fun onError(errCode: Int, errMsg: String?) {
-                Log.e("AudioCall", "用户信息设置失败。错误码：$errCode，错误信息：$errMsg")
+                Log.e(TAG, "用户信息设置失败。错误码：$errCode，错误信息：$errMsg")
             }
-
         })
     }
 
@@ -77,13 +82,12 @@ object TUIUtil {
         list.add(toUser.userId.toString())
         tuiCallKit.calls(list, TUICallDefine.MediaType.Audio, null, object: Callback {
             override fun onSuccess() {
-                Log.i("AudioCall", "音频通话启动成功。")
+                Log.i(TAG, "音频通话启动成功。")
             }
 
             override fun onError(errCode: Int, errMsg: String?) {
-                Log.e("AudioCall", "音频通话启动失败。错误码：$errCode，错误信息：$errMsg")
+                Log.e(TAG, "音频通话启动失败。错误码：$errCode，错误信息：$errMsg")
             }
-
         })
     }
 
@@ -93,13 +97,12 @@ object TUIUtil {
         list.add(toUser.userId.toString())
         tuiCallKit.calls(list, TUICallDefine.MediaType.Video, null, object: Callback {
             override fun onSuccess() {
-                Log.i("VideoCall", "视频通话启动成功。")
+                Log.i(TAG, "视频通话启动成功。")
             }
 
             override fun onError(errCode: Int, errMsg: String?) {
-                Log.e("VideoCall", "视频通话启动失败。错误码：$errCode，错误信息：$errMsg")
+                Log.e(TAG, "视频通话启动失败。错误码：$errCode，错误信息：$errMsg")
             }
-
         })
     }
 
@@ -108,4 +111,29 @@ object TUIUtil {
         tuiCallKit.enableIncomingBanner(isOn)
     }
 
+    // 设置通话结束监听器
+    private fun setupCallObserver() {
+        val context = contextRef.get() ?: return
+        
+        // 使用TUICallEngine的观察者机制监听通话状态
+        val callEngine = TUICallEngine.createInstance(context)
+        
+        // 添加通话状态观察者
+        callEngine.addObserver(object : TUICallObserver() {
+            override fun onCallEnd(
+                roomId: TUICommonDefine.RoomId?,
+                callMediaType: TUICallDefine.MediaType?,
+                callRole: TUICallDefine.Role?,
+                totalTime: Long
+            ) {
+                Log.i(TAG, "通话结束，总时长: $totalTime 秒")
+                
+                // 发送通话结束广播
+                val intent = Intent("com.example.chms_android.CALL_ENDED")
+                intent.putExtra("TOTAL_TIME", totalTime)
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
+                Log.i(TAG, "通话结束，已发送广播")
+            }
+        })
+    }
 }

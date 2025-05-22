@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 聚焦状态下的背景 -->
+    <item android:state_focused="true">
+        <shape xmlns:android="http://schemas.android.com/apk/res/android">
+            <solid android:color="#2E7D32" /> <!-- 深绿色 -->
+            <corners android:radius="8dp" /> <!-- 圆角半径 -->
+        </shape>
+    </item>
+
+    <!-- 按下状态下的背景 -->
+    <item android:state_pressed="true">
+        <shape xmlns:android="http://schemas.android.com/apk/res/android">
+            <solid android:color="#1B5E20" /> <!-- 更深的绿色 -->
+            <corners android:radius="8dp" /> <!-- 圆角半径 -->
+        </shape>
+    </item>
+
+    <!-- 默认状态下的背景 -->
+    <item>
+        <shape xmlns:android="http://schemas.android.com/apk/res/android">
+            <solid android:color="#4CAF50" /> <!-- 绿色 -->
+            <corners android:radius="8dp" /> <!-- 圆角半径 -->
+        </shape>
+    </item>
+</selector>

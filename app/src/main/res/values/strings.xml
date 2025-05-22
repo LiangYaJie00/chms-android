@@ -65,7 +65,7 @@
 
     <!--统计/报告相关文案-->
     <string name="daily" translatable="false">日报</string>
-    <string name="monthly" translatable="false">月报</string>
+    <string name="monthly" translatable="false">统计</string>
 
     <!--用户信息编辑界面相关文案-->
     <string name="user_edit_title" translatable="false">用户信息编辑</string>
